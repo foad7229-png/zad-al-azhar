@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبار النحو الواضح - إعداد د. إسلام فؤاد</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #34495e;
+            --accent-color: #3498db;
+            --success-color: #27ae60;
+            --error-color: #e74c3c;
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --text-main: #333333;
+            --text-muted: #7f8c8d;
+            --border-color: #e0e0e0;
+            --font-size-base: 16px;
+        }
+
+        .dark-mode {
+            --primary-color: #1a252f;
+            --secondary-color: #2c3e50;
+            --accent-color: #2980b9;
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --text-main: #f5f6fa;
+            --text-muted: #dcdde1;
+            --border-color: #3d3d3d;
+        }
+
+        * {
+            box-sizing: border-box;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            font-size: var(--font-size-base);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .controls-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        .btn:disabled {
+            background-color: var(--text-muted);
+            cursor: not-allowed;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--accent-color);
+            border: 2px solid var(--accent-color);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+        }
+
+        .progress-container {
+            width: 100%;
+            background-color: var(--border-color);
+            border-radius: 10px;
+            margin: 20px 0;
+            height: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background-color: var(--accent-color);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .stats-bar {
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .meta-tags {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+
+        .tag {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+
+        .question-text {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        .option {
+            background-color: var(--bg-color);
+            border: 2px solid var(--border-color);
+            padding: 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            text-align: right;
+        }
+
+        .option:hover:not(.disabled) {
+            border-color: var(--accent-color);
+        }
+
+        .option.selected {
+            border-color: var(--accent-color);
+            background-color: rgba(52, 152, 219, 0.1);
+        }
+
+        .option.correct {
+            border-color: var(--success-color);
+            background-color: rgba(39, 174, 96, 0.1);
+        }
+
+        .option.wrong {
+            border-color: var(--error-color);
+            background-color: rgba(231, 76, 60, 0.1);
+        }
+
+        .option.disabled {
+            cursor: not-allowed;
+        }
+
+        .feedback-box {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+            font-weight: bold;
+        }
+
+        .feedback-box.show {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        .feedback-correct {
+            background-color: rgba(39, 174, 96, 0.2);
+            color: var(--success-color);
+            border: 1px solid var(--success-color);
+        }
+
+        .feedback-wrong {
+            background-color: rgba(231, 76, 60, 0.2);
+            color: var(--error-color);
+            border: 1px solid var(--error-color);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .results-table th, .results-table td {
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            text-align: right;
+        }
+
+        .results-table th {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .grade-badge {
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            margin: 20px 0;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (min-width: 768px) {
+            .options-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="controls-bar">
+        <div>
+            <button class="btn btn-outline" onclick="toggleTheme()">🌙 وضع ليلي</button>
+            <button class="btn btn-outline" onclick="changeFontSize(1)">A+</button>
+            <button class="btn btn-outline" onclick="changeFontSize(-1)">A-</button>
+        </div>
+        <div>
+            <span id="timer-display" style="font-weight:bold; font-size:1.2rem;">00:00</span>
+        </div>
+    </div>
+
+    <!-- Start Screen -->
+    <div id="start-screen" class="card">
+        <header>
+            <h1>اختبار النحو الواضح الشامل</h1>
+            <p>مستخرج بالكامل من تمرينات الدروس (نصب الفعل المضارع إلى النعت)[cite: 1]</p>
+        </header>
+        <div class="input-group">
+            <label for="student-name">اسم الطالب (اختياري):</label>
+            <input type="text" id="student-name" placeholder="أدخل اسمك هنا...">
+        </div>
+        <div class="input-group">
+            <label for="enable-timer">
+                <input type="checkbox" id="enable-timer"> تفعيل المؤقت الزمني (60 دقيقة)
+            </label>
+        </div>
+        <p><strong>تفاصيل الاختبار:</strong></p>
+        <ul>
+            <li>عدد الأسئلة: 50 سؤالاً (اختيار من متعدد).</li>
+            <li>مستويات الصعوبة: متدرجة (1-15 سهل، 16-35 متوسط، 36-50 صعب).</li>
+            <li>المصدر: تمرينات النحو الواضح الجزء الأول[cite: 1].</li>
+        </ul>
+        <div style="text-align: center; margin-top: 30px;">
+            <button class="btn" onclick="startQuiz()" style="font-size: 1.2rem; padding: 15px 40px;">بدء الاختبار</button>
+        </div>
+    </div>
+
+    <!-- Quiz Screen -->
+    <div id="quiz-screen" class="hidden">
+        <div class="stats-bar">
+            <span id="question-counter">السؤال 1 من 50</span>
+            <span id="score-counter">الدرجة: 0</span>
+        </div>
+        <div class="progress-container">
+            <div id="progress-bar" class="progress-bar"></div>
+        </div>
+
+        <div class="card" id="question-card">
+            <div id="meta-tags" class="meta-tags"></div>
+            <div id="question-text" class="question-text"></div>
+            <div id="options-container" class="options-grid"></div>
+            <div id="feedback-container" class="feedback-box"></div>
+        </div>
+
+        <div class="controls-bar" style="justify-content: space-between;">
+            <div>
+                <button id="btn-prev" class="btn btn-outline" onclick="navigate(-1)" disabled>السابق</button>
+                <button id="btn-next" class="btn" onclick="navigate(1)" disabled>التالي</button>
+            </div>
+            <button class="btn btn-outline" onclick="finishQuiz()" style="border-color: var(--error-color); color: var(--error-color);">إنهاء الاختبار</button>
+        </div>
+    </div>
+
+    <!-- Results Screen -->
+    <div id="results-screen" class="card hidden" style="text-align: center;">
+        <h2>النتيجة النهائية</h2>
+        <h3 id="result-student-name"></h3>
+        <div id="grade-badge" class="grade-badge"></div>
+        
+        <table class="results-table">
+            <tr>
+                <th>إجمالي الأسئلة</th>
+                <td>50</td>
+            </tr>
+            <tr>
+                <th>الإجابات الصحيحة</th>
+                <td id="correct-count" style="color: var(--success-color); font-weight:bold;">0</td>
+            </tr>
+            <tr>
+                <th>الإجابات الخاطئة</th>
+                <td id="wrong-count" style="color: var(--error-color); font-weight:bold;">0</td>
+            </tr>
+            <tr>
+                <th>النسبة المئوية</th>
+                <td id="percentage-score" style="font-weight:bold;">0%</td>
+            </tr>
+        </table>
+
+        <div style="margin-top: 30px;">
+            <button class="btn" onclick="showReview()">مراجعة الاختبار</button>
+            <button class="btn btn-outline" onclick="location.reload()">إعادة الاختبار</button>
+        </div>
+    </div>
+
+    <!-- Review Screen -->
+    <div id="review-screen" class="hidden">
+        <h2 style="text-align: center;">مراجعة الإجابات</h2>
+        <div id="review-container"></div>
+        <div style="text-align: center; margin-top: 20px;">
+            <button class="btn" onclick="location.reload()">إنهاء والعودة للرئيسية</button>
+        </div>
+    </div>
+
+    <footer style="text-align: center; margin-top: 40px; color: var(--text-muted); font-size: 0.9rem;">
+        <p>إعداد الأداة التعليمية: د. إسلام فؤاد</p>
+    </footer>
+</div>
+
+<script>
+    // --- Database of 50 Questions strictly from the exercises[cite: 1] ---
+    const questions = [
+        // Easy (1-15)
+        {qNum:1, lesson:"نصب الفعل المضارع", lNum:1, page:45, exNum:1, qInEx:1, diff:"Easy", tags:["نصب", "مضارع"], text:"عين الفعل المضارع المنصوب في: 'لَنْ يَبيع أبي حصانه'[cite: 1].", options:["يَبيعَ","أبي","حصانه","لن"], correct:0, fC:"✔ إجابة صحيحة. 'يبيعَ' مضارع منصوب لدخول 'لن' عليه[cite: 1].", fW:"✘ إجابة غير صحيحة. المضارع المنصوب هو 'يبيعَ' لسبقه بأداة النصب 'لن'[cite: 1]."},
+        {qNum:2, lesson:"نصب الفعل المضارع", lNum:1, page:45, exNum:1, qInEx:5, diff:"Easy", tags:["نصب", "مضارع"], text:"الفعل المنصوب في: 'كُنْ مُؤدَّباً كَيْ تكونَ مَحبوباً'[cite: 1] هو:", options:["تكونَ","كُنْ","محبوباً","مؤدباً"], correct:0, fC:"✔ إجابة صحيحة. 'تكونَ' منصوب لدخول 'كي' عليه[cite: 1].", fW:"✘ إجابة غير صحيحة. الفعل المنصوب 'تكونَ' لأنه مسبوق بأداة النصب 'كي'[cite: 1]."},
+        {qNum:3, lesson:"جزم الفعل المضارع", lNum:2, page:50, exNum:1, qInEx:1, diff:"Easy", tags:["جزم", "مضارع"], text:"عين الفعل المضارع المجزوم: 'غامَتِ السَّماءُ ولم تُمْطِرْ'[cite: 1].", options:["تُمْطِرْ","غامَتِ","السماءُ","لم"], correct:0, fC:"✔ إجابة صحيحة. 'تُمْطِرْ' مجزوم بـ 'لم'[cite: 1].", fW:"✘ إجابة غير صحيحة. الفعل المجزوم هو 'تُمْطِرْ' لسبقه بـ 'لم'[cite: 1]."},
+        {qNum:4, lesson:"جزم الفعل المضارع", lNum:2, page:50, exNum:1, qInEx:5, diff:"Easy", tags:["جزم", "مضارع"], text:"الفعل المجزوم في: 'العُصْفُورُ لم يُغَرِّدْ'[cite: 1]:", options:["يُغَرِّدْ","العصفور","لم","لا يوجد"], correct:0, fC:"✔ إجابة صحيحة. 'يغرد' مجزوم بـ 'لم'[cite: 1].", fW:"✘ إجابة غير صحيحة. الفعل المجزوم 'يغرد' بسبب 'لم'[cite: 1]."},
+        {qNum:5, lesson:"رفع الفعل المضارع", lNum:3, page:55, exNum:1, qInEx:2, diff:"Easy", tags:["رفع", "مضارع"], text:"الفعل المرفوع في: 'يَشُدُّ الأطفالُ الحَبْلَ'[cite: 1]:", options:["يَشُدُّ","الأطفال","الحبل","لا يوجد"], correct:0, fC:"✔ إجابة صحيحة. 'يشد' مرفوع لتجرده من النواصب والجوازم[cite: 1].", fW:"✘ إجابة غير صحيحة. 'يشد' هو الفعل لتجرده من النواصب والجوازم[cite: 1]."},
+        {qNum:6, lesson:"رفع الفعل المضارع", lNum:3, page:55, exNum:1, qInEx:4, diff:"Easy", tags:["رفع", "مضارع"], text:"الفعل المرفوع في: 'الثَّورُ يَحرُثُ الأرض'[cite: 1]:", options:["يحرثُ","الثور","الأرض","جميع ما سبق"], correct:0, fC:"✔ إجابة صحيحة. لتجرده من النصب والجزم[cite: 1].", fW:"✘ إجابة غير صحيحة. الصحيح 'يحرث' لتجرده من النصب والجزم[cite: 1]."},
+        {qNum:7, lesson:"كان وأخواتها", lNum:4, page:59, exNum:1, qInEx:1, diff:"Easy", tags:["كان", "نواسخ"], text:"بين اسم كان في: 'كان محمود شجاعاً'[cite: 1].", options:["محمود","شجاعاً","كان","ضمير مستتر"], correct:0, fC:"✔ إجابة صحيحة. 'محمود' اسم كان مرفوع[cite: 1].", fW:"✘ إجابة غير صحيحة. الاسم المرفوع بعد كان هو 'محمود'[cite: 1]."},
+        {qNum:8, lesson:"كان وأخواتها", lNum:4, page:59, exNum:1, qInEx:4, diff:"Easy", tags:["كان", "نواسخ"], text:"بين خبر بات في: 'باتَ الكَلْبُ نائماً'[cite: 1].", options:["نائماً","الكلب","بات","ضمير مستتر"], correct:0, fC:"✔ إجابة صحيحة. 'نائماً' خبر بات منصوب[cite: 1].", fW:"✘ إجابة غير صحيحة. خبر بات المنصوب هو 'نائماً'[cite: 1]."},
+        {qNum:9, lesson:"إن وأخواتها", lNum:5, page:64, exNum:1, qInEx:4, diff:"Easy", tags:["إن", "نواسخ"], text:"بين اسم إن في: 'إِنَّ النظافة واجبة'[cite: 1].", options:["النظافةَ","واجبةٌ","إنَّ","ضمير مستتر"], correct:0, fC:"✔ إجابة صحيحة. 'النظافة' اسم إن منصوب[cite: 1].", fW:"✘ إجابة غير صحيحة. اسم إن المنصوب 'النظافة'[cite: 1]."},
+        {qNum:10, lesson:"إن وأخواتها", lNum:5, page:65, exNum:1, qInEx:3, diff:"Easy", tags:["إن", "نواسخ"], text:"بين خبر لعل في: 'لَعَلَّ التَّاجر رابح'[cite: 1].", options:["رابحٌ","التاجرَ","لعلَّ","ضمير مستتر"], correct:0, fC:"✔ إجابة صحيحة. 'رابح' خبر لعل مرفوع[cite: 1].", fW:"✘ إجابة غير صحيحة. الخبر المرفوع هو 'رابح'[cite: 1]."},
+        {qNum:11, lesson:"جر الاسم", lNum:6, page:69, exNum:1, qInEx:2, diff:"Easy", tags:["جر", "حروف"], text:"عين الاسم المجرور: 'رأيتُ الطائر في القفص'[cite: 1].", options:["القفصِ","الطائرَ","في","رأيتُ"], correct:0, fC:"✔ إجابة صحيحة. 'القفص' مجرور بحرف الجر 'في'[cite: 1].", fW:"✘ إجابة غير صحيحة. الاسم المجرور هو 'القفص' بعد 'في'[cite: 1]."},
+        {qNum:12, lesson:"جر الاسم", lNum:6, page:69, exNum:1, qInEx:4, diff:"Easy", tags:["جر", "حروف"], text:"في جملة 'للبستان بابان'[cite: 1] حرف الجر والاسم المجرور هما:", options:["اللام والبستان","اللام وبابان","الباء وبابان","لا يوجد"], correct:0, fC:"✔ إجابة صحيحة. اللام حرف جر، و'البستان' اسم مجرور[cite: 1].", fW:"✘ إجابة غير صحيحة. اللام حرف جر و'البستان' مجرور بها[cite: 1]."},
+        {qNum:13, lesson:"النعت", lNum:7, page:74, exNum:1, qInEx:3, diff:"Easy", tags:["نعت", "توابع"], text:"ضع نعتاً مناسباً: 'زُرْتُ ضاحية....'[cite: 1].", options:["جميلةً","جميلةٌ","جميلةٍ","جميلٍ"], correct:0, fC:"✔ إجابة صحيحة. 'جميلةً' نعت منصوب يتبع المنعوت (ضاحيةً)[cite: 1].", fW:"✘ إجابة غير صحيحة. المنعوت مفعول به منصوب، فالنعت يجب أن يكون منصوباً 'جميلةً'[cite: 1]."},
+        {qNum:14, lesson:"النعت", lNum:7, page:74, exNum:1, qInEx:4, diff:"Easy", tags:["نعت", "توابع"], text:"ضع نعتاً: 'يَضُرُّ الصَّديقُ ... صاحِبَهُ'[cite: 1].", options:["الجاهلُ","الجاهلَ","الجاهلِ","جاهلاً"], correct:0, fC:"✔ إجابة صحيحة. 'الجاهلُ' نعت مرفوع يتبع 'الصديقُ'[cite: 1].", fW:"✘ إجابة غير صحيحة. المنعوت فاعل مرفوع، فالنعت مرفوع 'الجاهلُ'[cite: 1]."},
+        {qNum:15, lesson:"نصب الفعل المضارع", lNum:1, page:46, exNum:2, qInEx:3, diff:"Easy", tags:["نصب", "إكمال"], text:"أكمل واشكل: 'يأكل الإنسان كَيْ ....'[cite: 1].", options:["يعيشَ","يعيشُ","يعيشْ","عاش"], correct:0, fC:"✔ إجابة صحيحة. المضارع ينصب بعد 'كي'[cite: 1].", fW:"✘ إجابة غير صحيحة. يجب نصب المضارع بعد كي 'يعيشَ'[cite: 1]."},
+        
+        // Medium (16-35)
+        {qNum:16, lesson:"نصب الفعل المضارع", lNum:1, page:46, exNum:4, qInEx:1, diff:"Medium", tags:["نصب", "ضبط"], text:"ضع 'أنْ' أو 'كي' واشكل: 'أحب ... أسافر'[cite: 1].", options:["أنْ أسافرَ","أنْ أسافرُ","كَيْ أسافرْ","كَيْ أسافرُ"], correct:0, fC:"✔ إجابة صحيحة. 'أن' حرف نصب، 'أسافر' مضارع منصوب بالفتحة[cite: 1].", fW:"✘ إجابة غير صحيحة. 'أن' تنصب المضارع فتكون 'أسافرَ'[cite: 1]."},
+        {qNum:17, lesson:"نصب الفعل المضارع", lNum:1, page:47, exNum:5, qInEx:1, diff:"Medium", tags:["نصب", "ضبط"], text:"أدخل 'لن' واشكل المضارع: 'يَعُودُ الغائب'[cite: 1].", options:["لَنْ يعودَ الغائبُ","لَنْ يعودُ الغائبُ","لَنْ يعودْ الغائبُ","لَنْ يعودِ الغائبُ"], correct:0, fC:"✔ إجابة صحيحة. 'لن' تنصب المضارع بالفتحة[cite: 1].", fW:"✘ إجابة غير صحيحة. 'لن' تنصب المضارع فيصبح 'يعودَ'[cite: 1]."},
+        {qNum:18, lesson:"جزم الفعل المضارع", lNum:2, page:51, exNum:2, qInEx:4, diff:"Medium", tags:["جزم", "ضبط"], text:"أدخل 'لم' واشكل: 'القطارُ يَتَأَخَّرُ عن مَوْعِدِه'[cite: 1].", options:["لم يَتَأَخَّرْ","لم يَتَأَخَّرَ","لم يَتَأَخَّرُ","لم يَتَأَخَّري"], correct:0, fC:"✔ إجابة صحيحة. 'لم' تجزم المضارع بالسكون[cite: 1].", fW:"✘ إجابة غير صحيحة. 'لم' أداة جزم فتسكن آخر الفعل 'يتأخرْ'[cite: 1]."},
+        {qNum:19, lesson:"جزم الفعل المضارع", lNum:2, page:51, exNum:2, qInEx:1, diff:"Medium", tags:["جزم", "ضبط"], text:"ضع 'لا' الناهية واشكل: 'تُلَوِّتُ يَدَيكَ بالمداد'[cite: 1].", options:["لا تُلَوِّثْ","لا تُلَوِّثَ","لا تُلَوِّثُ","لا تُلَوِّثي"], correct:0, fC:"✔ إجابة صحيحة. 'لا' الناهية تجزم الفعل بالسكون[cite: 1].", fW:"✘ إجابة غير صحيحة. 'لا' الناهية تجزم الفعل ليصبح 'تلوّثْ'[cite: 1]."},
+        {qNum:20, lesson:"جزم الفعل المضارع", lNum:2, page:51, exNum:3, qInEx:1, diff:"Medium", tags:["جزم", "شرط"], text:"أكمل واشكل: 'إِنْ تُحْمِلْ فِي عَمَلِكَ ....'[cite: 1].", options:["تندمْ","تندمَ","تندمُ","تندمٌ"], correct:0, fC:"✔ إجابة صحيحة. 'إن' تجزم فعلين، جواب الشرط مجزوم بالسكون[cite: 1].", fW:"✘ إجابة غير صحيحة. جواب الشرط لـ 'إن' يجب أن يكون مجزوماً بالسكون 'تندمْ'[cite: 1]."},
+        {qNum:21, lesson:"رفع الفعل المضارع", lNum:3, page:55, exNum:2, qInEx:1, diff:"Medium", tags:["رفع", "إكمال"], text:"أكمل بفعل مضارع مرفوع: 'الفَلاحُ ... القطن'[cite: 1].", options:["يزرعُ","يزرعَ","يزرعْ","زرعَ"], correct:0, fC:"✔ إجابة صحيحة. يرفع لتجرده من النواصب والجوازم[cite: 1].", fW:"✘ إجابة غير صحيحة. المضارع يرفع بالضمة لتجرده من النواصب والجوازم 'يزرعُ'[cite: 1]."},
+        {qNum:22, lesson:"رفع الفعل المضارع", lNum:3, page:55, exNum:2, qInEx:3, diff:"Medium", tags:["رفع", "إكمال"], text:"أكمل بفعل مضارع: 'الحلاق ... الشَّعْرَ'[cite: 1].", options:["يقصُّ","يقصَّ","يقصْ","قصَّ"], correct:0, fC:"✔ إجابة صحيحة. مرفوع بالضمة لعدم سبقه بناصب أو جازم[cite: 1].", fW:"✘ إجابة غير صحيحة. الفعل مرفوع بالضمة 'يقصُّ'[cite: 1]."},
+        {qNum:23, lesson:"كان وأخواتها", lNum:4, page:60, exNum:2, qInEx:1, diff:"Medium", tags:["كان", "ضبط"], text:"أدخل 'كان' واشكل: 'الحارِسُ مُستيقظ'[cite: 1].", options:["كانَ الحارِسُ مُستيقظاً","كانَ الحارِسَ مُستيقظاً","كانَ الحارِسُ مُستيقظٌ","كانَ الحارِسَ مُستيقظٌ"], correct:0, fC:"✔ إجابة صحيحة. ترفع المبتدأ وتنصب الخبر[cite: 1].", fW:"✘ إجابة غير صحيحة. 'كان' ترفع المبتدأ وتنصب الخبر 'الحارسُ مستيقظاً'[cite: 1]."},
+        {qNum:24, lesson:"كان وأخواتها", lNum:4, page:60, exNum:3, qInEx:4, diff:"Medium", tags:["صار", "ضبط"], text:"أدخل 'صار' واشكل: 'الهواء بارد'[cite: 1].", options:["صارَ الهواءُ بارداً","صار الهواءَ بارداً","صار الهواءُ باردٌ","صار الهواءَ باردٌ"], correct:0, fC:"✔ إجابة صحيحة. 'صار' من أخوات كان، ترفع الأول وتنصب الثاني[cite: 1].", fW:"✘ إجابة غير صحيحة. ترفع المبتدأ وتنصب الخبر 'الهواءُ بارداً'[cite: 1]."},
+        {qNum:25, lesson:"كان وأخواتها", lNum:4, page:60, exNum:4, qInEx:1, diff:"Medium", tags:["ليس", "ضبط"], text:"أدخل 'ليس' واشكل: 'البناء قوي'[cite: 1].", options:["ليس البناءُ قوياً","ليس البناءَ قوياً","ليس البناءُ قويٌ","ليس البناءَ قويٌ"], correct:0, fC:"✔ إجابة صحيحة. ترفع اسمها وتنصب خبرها[cite: 1].", fW:"✘ إجابة غير صحيحة. ترفع الاسم وتنصب الخبر 'البناءُ قوياً'[cite: 1]."},
+        {qNum:26, lesson:"كان وأخواتها", lNum:4, page:60, exNum:5, qInEx:4, diff:"Medium", tags:["أصبح", "ضبط"], text:"أدخل 'أصبح': 'العُصْفُورُ مُغَرِّدٌ'[cite: 1].", options:["أصبح العصفورُ مغرداً","أصبح العصفورَ مغرداً","أصبح العصفورُ مغردٌ","أصبح العصفورَ مغردٌ"], correct:0, fC:"✔ إجابة صحيحة. 'أصبح' تعمل عمل كان[cite: 1].", fW:"✘ إجابة غير صحيحة. ترفع الاسم وتنصب الخبر 'العصفورُ مغرداً'[cite: 1]."},
+        {qNum:27, lesson:"إن وأخواتها", lNum:5, page:65, exNum:2, qInEx:1, diff:"Medium", tags:["إن", "ضبط"], text:"أدخل 'إنَّ': 'النُّجُومُ لامعة'[cite: 1].", options:["إنَّ النجومَ لامعةٌ","إنَّ النجومُ لامعةٌ","إنَّ النجومَ لامعةً","إنَّ النجومُ لامعةً"], correct:0, fC:"✔ إجابة صحيحة. 'إن' تنصب المبتدأ وترفع الخبر[cite: 1].", fW:"✘ إجابة غير صحيحة. تنصب المبتدأ وترفع الخبر 'النجومَ لامعةٌ'[cite: 1]."},
+        {qNum:28, lesson:"إن وأخواتها", lNum:5, page:65, exNum:3, qInEx:2, diff:"Medium", tags:["ليت", "ضبط"], text:"أدخل 'ليت': 'الشارع واسع'[cite: 1].", options:["ليتَ الشارعَ واسعٌ","ليتَ الشارعُ واسعٌ","ليتَ الشارعَ واسعاً","ليت الشارعُ واسعاً"], correct:0, fC:"✔ إجابة صحيحة. 'ليت' من أخوات إن تنصب الأول وترفع الثاني[cite: 1].", fW:"✘ إجابة غير صحيحة. تنصب المبتدأ وترفع الخبر 'الشارعَ واسعٌ'[cite: 1]."},
+        {qNum:29, lesson:"إن وأخواتها", lNum:5, page:65, exNum:4, qInEx:6, diff:"Medium", tags:["لعل", "ضبط"], text:"أدخل 'لعل': 'الدَّرسُ سَهل'[cite: 1].", options:["لعلَّ الدرسَ سهلٌ","لعلَّ الدرسُ سهلٌ","لعلَّ الدرسَ سهلاً","لعلَّ الدرسُ سهلاً"], correct:0, fC:"✔ إجابة صحيحة. تنصب الاسم وترفع الخبر[cite: 1].", fW:"✘ إجابة غير صحيحة. تنصب المبتدأ وترفع الخبر 'الدرسَ سهلٌ'[cite: 1]."},
+        {qNum:30, lesson:"جر الاسم", lNum:6, page:70, exNum:2, qInEx:4, diff:"Medium", tags:["جر", "إكمال"], text:"ضع حرف جر: 'لا تَعْتَمِدْ ... غَيْرِ نَفْسِكَ'[cite: 1].", options:["على","في","من","الباء"], correct:0, fC:"✔ إجابة صحيحة. حرف الجر المناسب للمعنى هو 'على'[cite: 1].", fW:"✘ إجابة غير صحيحة. السياق يقتضي استخدام 'على'[cite: 1]."},
+        {qNum:31, lesson:"جر الاسم", lNum:6, page:70, exNum:2, qInEx:9, diff:"Medium", tags:["جر", "إكمال"], text:"ضع حرف جر: 'عاد المسافر ... وطنه'[cite: 1].", options:["إلى","في","على","عن"], correct:0, fC:"✔ إجابة صحيحة. حرف الجر المناسب 'إلى' للانتهاء[cite: 1].", fW:"✘ إجابة غير صحيحة. الفعل عاد يتعدى بـ 'إلى'[cite: 1]."},
+        {qNum:32, lesson:"جر الاسم", lNum:6, page:70, exNum:3, qInEx:5, diff:"Medium", tags:["جر", "ضبط"], text:"ضع اسماً واشكل: 'يُستَخْرَجُ الذَّهَبُ من ...'[cite: 1].", options:["الأرضِ","الأرضَ","الأرضُ","أرضاً"], correct:0, fC:"✔ إجابة صحيحة. اسم مجرور بـ من وعلامة جره الكسرة[cite: 1].", fW:"✘ إجابة غير صحيحة. بعد حرف الجر يأتي اسم مجرور بالكسرة 'الأرضِ'[cite: 1]."},
+        {qNum:33, lesson:"جر الاسم", lNum:6, page:70, exNum:3, qInEx:6, diff:"Medium", tags:["جر", "ضبط"], text:"أكمل واشكل: 'العاقِلُ يَبْتَعِدُ عن ....'[cite: 1].", options:["الشرِّ","الشرَّ","الشرُّ","شرٌّ"], correct:0, fC:"✔ إجابة صحيحة. مجرور بعن وعلامة جره الكسرة[cite: 1].", fW:"✘ إجابة غير صحيحة. يجب أن يكون مجروراً بالكسرة 'الشرِّ'[cite: 1]."},
+        {qNum:34, lesson:"النعت", lNum:7, page:74, exNum:2, qInEx:1, diff:"Medium", tags:["نعت", "إكمال"], text:"ضع منعوتاً مناسباً: 'يُحِبُّ الناس ... العادل'[cite: 1].", options:["الحاكمَ","الحاكمُ","الحاكمِ","حاكماً"], correct:0, fC:"✔ إجابة صحيحة. مفعول به منصوب والنعت 'العادلَ' يطابقه[cite: 1].", fW:"✘ إجابة غير صحيحة. يجب أن يكون منصوباً (مفعول به) ليطابق النعت المنصوب[cite: 1]."},
+        {qNum:35, lesson:"النعت", lNum:7, page:75, exNum:2, qInEx:4, diff:"Medium", tags:["نعت", "إكمال"], text:"ضع منعوتاً مناسباً: 'تحمل الشجرة ... ناضجة'[cite: 1].", options:["ثماراً","ثمارٌ","ثمارٍ","الثمارُ"], correct:0, fC:"✔ إجابة صحيحة. مفعول به منصوب ونكرة يطابق النعت 'ناضجةً'[cite: 1].", fW:"✘ إجابة غير صحيحة. يجب أن يكون نكرة منصوبة لمطابقة النعت 'ناضجةً'[cite: 1]."},
+
+        // Hard (36-50)
+        {qNum:36, lesson:"نصب الفعل المضارع", lNum:1, page:47, exNum:8, qInEx:1, diff:"Hard", tags:["إعراب"], text:"إعراب 'يَستريحَ' في: 'جَلَسَ الوَلَدُ كَيْ يَسْتَرِيحَ'[cite: 1].", options:["فعل مضارع منصوب بكي وعلامة نصبه الفتحة","فعل مضارع مجزوم بكي","فعل مضارع مرفوع","مفعول به منصوب"], correct:0, fC:"✔ إجابة صحيحة. 'كي' حرف نصب[cite: 1].", fW:"✘ إجابة غير صحيحة. 'كي' أداة نصب فالفعل بعدها مضارع منصوب بالفتحة[cite: 1]."},
+        {qNum:37, lesson:"جزم الفعل المضارع", lNum:2, page:53, exNum:8, qInEx:1, diff:"Hard", tags:["إعراب"], text:"إعراب 'تَمْزَحْ' في: 'لا تَمْزَحْ'[cite: 1].", options:["فعل مضارع مجزوم بلا الناهية وعلامة جزمه السكون","فعل مضارع منصوب بلا","فعل مضارع مرفوع","فعل أمر مبني"], correct:0, fC:"✔ إجابة صحيحة. 'لا' الناهية تجزم المضارع[cite: 1].", fW:"✘ إجابة غير صحيحة. 'لا' هنا ناهية وتجزم الفعل المضارع بالسكون[cite: 1]."},
+        {qNum:38, lesson:"جزم الفعل المضارع", lNum:2, page:53, exNum:8, qInEx:2, diff:"Hard", tags:["إعراب"], text:"إعراب 'يُبْصِرْ' في: 'لم يُبْصِرْ حَسَنٌ فيلاً'[cite: 1].", options:["فعل مضارع مجزوم بلم وعلامة جزمه السكون","فعل مضارع مرفوع","فعل مضارع منصوب بلم","فعل ماض مبني"], correct:0, fC:"✔ إجابة صحيحة. 'لم' حرف نفي وجزم وقلب[cite: 1].", fW:"✘ إجابة غير صحيحة. 'لم' أداة جزم فالفعل مجزوم بالسكون[cite: 1]."},
+        {qNum:39, lesson:"رفع الفعل المضارع", lNum:3, page:56, exNum:6, qInEx:2, diff:"Hard", tags:["إعراب"], text:"إعراب 'يَحْرُسُ' في: 'يَحْرُسُ الخَفِيرُ المَنازِلَ'[cite: 1].", options:["فعل مضارع مرفوع لتجرده من النواصب والجوازم","فعل مضارع مجزوم","فعل أمر","مبتدأ مرفوع"], correct:0, fC:"✔ إجابة صحيحة. يرفع لعدم سبقه بناصب أو جازم[cite: 1].", fW:"✘ إجابة غير صحيحة. الفعل مرفوع لتجرده من أدوات النصب والجزم[cite: 1]."},
+        {qNum:40, lesson:"كان وأخواتها", lNum:4, page:62, exNum:10, qInEx:1, diff:"Hard", tags:["إعراب"], text:"إعراب 'مكسوراً' في: 'ليس الزجاج مكسوراً'[cite: 1].", options:["خبر ليس منصوب وعلامة نصبه الفتحة","مفعول به منصوب","حال منصوبة","صفة منصوبة"], correct:0, fC:"✔ إجابة صحيحة. ليس تنصب الخبر[cite: 1].", fW:"✘ إجابة غير صحيحة. 'مكسوراً' هو خبر 'ليس' المنصوب بالفتحة[cite: 1]."},
+        {qNum:41, lesson:"إن وأخواتها", lNum:5, page:67, exNum:10, qInEx:1, diff:"Hard", tags:["إعراب"], text:"إعراب 'شجاع' في: 'إنَّ الجنديَّ شجاعٌ'[cite: 1].", options:["خبر إن مرفوع وعلامة رفعه الضمة","اسم إن مرفوع","فاعل مرفوع","مبتدأ مرفوع"], correct:0, fC:"✔ إجابة صحيحة. إن ترفع الخبر[cite: 1].", fW:"✘ إجابة غير صحيحة. 'شجاع' هو خبر 'إن' المرفوع[cite: 1]."},
+        {qNum:42, lesson:"إن وأخواتها", lNum:5, page:65, exNum:5, qInEx:2, diff:"Hard", tags:["استدراك", "ضبط"], text:"اضبط بالشكل مستخدماً حرف استدراك: 'الوالد مُؤدَّب ... الولد قبيح'[cite: 1].", options:["لكنَّ الولدَ قبيحٌ","لكنَّ الولدُ قبيحٌ","لكنْ الولدَ قبيحٌ","لكنَّ الولدَ قبيحاً"], correct:0, fC:"✔ إجابة صحيحة. 'لكن' تنصب الاسم وترفع الخبر[cite: 1].", fW:"✘ إجابة غير صحيحة. لكن من أخوات إن تنصب الأول وترفع الثاني 'لكنَّ الولدَ قبيحٌ'[cite: 1]."},
+        {qNum:43, lesson:"جر الاسم", lNum:6, page:72, exNum:7, qInEx:1, diff:"Hard", tags:["إعراب"], text:"إعراب 'النَّارِ' في: 'لا تَلْعَبْ بالنَّارِ'[cite: 1].", options:["اسم مجرور بالباء وعلامة جره الكسرة","مفعول به مجرور","فاعل مجرور","مضاف إليه مجرور"], correct:0, fC:"✔ إجابة صحيحة. مجرور بحرف الجر الباء[cite: 1].", fW:"✘ إجابة غير صحيحة. الباء حرف جر، فالنار اسم مجرور بالكسرة[cite: 1]."},
+        {qNum:44, lesson:"النعت", lNum:7, page:75, exNum:7, qInEx:1, diff:"Hard", tags:["إعراب"], text:"إعراب 'غَزِيرٌ' في: 'نزلَ مِنَ السَّمَاءِ مَطَرٌ غَزِيرٌ'[cite: 1].", options:["نعت مرفوع وعلامة رفعه الضمة","خبر مرفوع","فاعل مرفوع","مفعول به منصوب"], correct:0, fC:"✔ إجابة صحيحة. نعت يتبع المنعوت (مطر) المرفوع[cite: 1].", fW:"✘ إجابة غير صحيحة. يصف المطر المرفوع فهو نعت مرفوع[cite: 1]."},
+        {qNum:45, lesson:"نصب الفعل المضارع", lNum:1, page:48, exNum:8, qInEx:2, diff:"Hard", tags:["إعراب"], text:"في عبارة 'إِذَنْ يَذْهَبَ التَّعبُ'[cite: 1]، إعراب 'يَذْهَبَ':", options:["فعل مضارع منصوب بإذن وعلامة نصبه الفتحة","فعل مضارع مجزوم بإذن","فعل مضارع مرفوع","مفعول به مقدم"], correct:0, fC:"✔ إجابة صحيحة. إذن من أدوات النصب[cite: 1].", fW:"✘ إجابة غير صحيحة. إذن تنصب المضارع، فالفعل منصوب بالفتحة[cite: 1]."},
+        {qNum:46, lesson:"جزم الفعل المضارع", lNum:2, page:51, exNum:3, qInEx:2, diff:"Hard", tags:["جزم", "إكمال"], text:"أكمل واشكل: 'إنْ تَسْتَحِمَّ بالماء البارد ....'[cite: 1].", options:["تَمْرَضْ","تَمْرَضَ","تَمْرَضُ","مَرِضْتَ"], correct:0, fC:"✔ إجابة صحيحة. جواب شرط مجزوم بالسكون[cite: 1].", fW:"✘ إجابة غير صحيحة. 'إن' تجزم جواب الشرط فيصبح 'تمرضْ'[cite: 1]."},
+        {qNum:47, lesson:"كان وأخواتها", lNum:4, page:61, exNum:6, qInEx:6, diff:"Hard", tags:["بات", "إكمال"], text:"أتمم واضبط: 'بات الظالم ...'[cite: 1].", options:["نادماً","نادمٌ","نادمٍ","نادمان"], correct:0, fC:"✔ إجابة صحيحة. خبر بات منصوب بالفتحة[cite: 1].", fW:"✘ إجابة غير صحيحة. بات تنصب الخبر، الصحيح 'نادماً'[cite: 1]."},
+        {qNum:48, lesson:"إن وأخواتها", lNum:5, page:66, exNum:6, qInEx:2, diff:"Hard", tags:["لكن", "إكمال"], text:"أتمم واضبط: 'الكتاب مفيد لكن الصور ...'[cite: 1].", options:["قليلةٌ","قليلةً","قليلةٍ","قليلاتٍ"], correct:0, fC:"✔ إجابة صحيحة. خبر لكن مرفوع[cite: 1].", fW:"✘ إجابة غير صحيحة. لكن ترفع الخبر، الصحيح 'قليلةٌ'[cite: 1]."},
+        {qNum:49, lesson:"النعت", lNum:7, page:75, exNum:7, qInEx:3, diff:"Hard", tags:["إعراب"], text:"إعراب 'المُثمرة' في: 'يكثرُ النَّخْلُ في البساتين المُثمرة'[cite: 1].", options:["نعت مجرور وعلامة جره الكسرة","مضاف إليه مجرور","نعت مرفوع","اسم مجرور بفي"], correct:0, fC:"✔ إجابة صحيحة. نعت يتبع المنعوت المجرور[cite: 1].", fW:"✘ إجابة غير صحيحة. يتبع المجرور (البساتين) فهو نعت مجرور[cite: 1]."},
+        {qNum:50, lesson:"جر الاسم", lNum:6, page:72, exNum:7, qInEx:4, diff:"Hard", tags:["إعراب"], text:"إعراب 'الجَرْي' في: 'تَعِبَ الولدُ من الجَرْي'[cite: 1].", options:["اسم مجرور بمن وعلامة جره الكسرة","مضاف إليه مجرور","مفعول به منصوب","فاعل مرفوع"], correct:0, fC:"✔ إجابة صحيحة. مسبوق بحرف الجر من[cite: 1].", fW:"✘ إجابة غير صحيحة. اسم مجرور بعد 'من' وعلامة جره الكسرة[cite: 1]."}
+    ];
+
+    let currentIdx = 0;
+    let score = 0;
+    let correctCount = 0;
+    let wrongCount = 0;
+    let userAnswers = new Array(questions.length).fill(null);
+    let timerInterval = null;
+    let timeRemaining = 3600; // 60 mins
+
+    const startScreen = document.getElementById('start-screen');
+    const quizScreen = document.getElementById('quiz-screen');
+    const resultsScreen = document.getElementById('results-screen');
+    const reviewScreen = document.getElementById('review-screen');
+    const qCounter = document.getElementById('question-counter');
+    const sCounter = document.getElementById('score-counter');
+    const pBar = document.getElementById('progress-bar');
+    const qText = document.getElementById('question-text');
+    const optsContainer = document.getElementById('options-container');
+    const metaTags = document.getElementById('meta-tags');
+    const feedbackBox = document.getElementById('feedback-container');
+    const btnNext = document.getElementById('btn-next');
+    const btnPrev = document.getElementById('btn-prev');
+    const timerDisplay = document.getElementById('timer-display');
+
+    function startQuiz() {
+        const enableTimer = document.getElementById('enable-timer').checked;
+        if(enableTimer) {
+            timerInterval = setInterval(updateTimer, 1000);
+        } else {
+            timerDisplay.style.display = 'none';
+        }
+        startScreen.classList.add('hidden');
+        quizScreen.classList.remove('hidden');
+        loadQuestion();
+    }
+
+    function updateTimer() {
+        if(timeRemaining <= 0) {
+            clearInterval(timerInterval);
+            finishQuiz();
+            return;
+        }
+        timeRemaining--;
+        let m = Math.floor(timeRemaining / 60).toString().padStart(2, '0');
+        let s = (timeRemaining % 60).toString().padStart(2, '0');
+        timerDisplay.textContent = `${m}:${s}`;
+    }
+
+    function loadQuestion() {
+        const q = questions[currentIdx];
+        qCounter.textContent = `السؤال ${currentIdx + 1} من 50`;
+        pBar.style.width = `${((currentIdx + 1) / 50) * 100}%`;
+        sCounter.textContent = `الدرجة: ${score}`;
+
+        metaTags.innerHTML = `
+            <span class="tag">الدرس: ${q.lesson}</span>
+            <span class="tag">الصعوبة: ${q.diff}</span>
+            <span class="tag">رقم التمرين: ${q.exNum}</span>
+            <span class="tag">صفحة: ${q.page}</span>
+        `;
+        
+        qText.innerHTML = `${currentIdx + 1}. ${q.text}`;
+        optsContainer.innerHTML = '';
+        feedbackBox.className = 'feedback-box hidden';
+        feedbackBox.innerHTML = '';
+
+        q.options.forEach((opt, idx) => {
+            const btn = document.createElement('div');
+            btn.className = 'option';
+            btn.textContent = opt;
+            btn.onclick = () => selectOption(idx, btn);
+            optsContainer.appendChild(btn);
+        });
+
+        btnPrev.disabled = currentIdx === 0;
+        btnNext.disabled = userAnswers[currentIdx] === null;
+
+        // Load prev state if visited
+        if (userAnswers[currentIdx] !== null) {
+            restoreState();
+        }
+    }
+
+    function selectOption(selectedIdx, btnElement) {
+        if(userAnswers[currentIdx] !== null) return; // prevent multiple clicks
+
+        const q = questions[currentIdx];
+        userAnswers[currentIdx] = selectedIdx;
+        
+        const opts = optsContainer.children;
+        for(let i=0; i<opts.length; i++) {
+            opts[i].classList.add('disabled');
+        }
+
+        if(selectedIdx === q.correct) {
+            btnElement.classList.add('correct');
+            score++;
+            correctCount++;
+            showFeedback(true, q.fC);
+        } else {
+            btnElement.classList.add('wrong');
+            opts[q.correct].classList.add('correct');
+            wrongCount++;
+            showFeedback(false, q.fW);
+        }
+        
+        sCounter.textContent = `الدرجة: ${score}`;
+        btnNext.disabled = false;
+    }
+
+    function restoreState() {
+        const q = questions[currentIdx];
+        const selected = userAnswers[currentIdx];
+        const opts = optsContainer.children;
+
+        for(let i=0; i<opts.length; i++) {
+            opts[i].classList.add('disabled');
+        }
+
+        if(selected === q.correct) {
+            opts[selected].classList.add('correct');
+            showFeedback(true, q.fC);
+        } else {
+            opts[selected].classList.add('wrong');
+            opts[q.correct].classList.add('correct');
+            showFeedback(false, q.fW);
+        }
+        btnNext.disabled = false;
+    }
+
+    function showFeedback(isCorrect, text) {
+        feedbackBox.textContent = text;
+        feedbackBox.className = `feedback-box show ${isCorrect ? 'feedback-correct' : 'feedback-wrong'}`;
+    }
+
+    function navigate(step) {
+        currentIdx += step;
+        if(currentIdx >= questions.length) {
+            finishQuiz();
+        } else {
+            loadQuestion();
+        }
+    }
+
+    function finishQuiz() {
+        if(timerInterval) clearInterval(timerInterval);
+        quizScreen.classList.add('hidden');
+        resultsScreen.classList.remove('hidden');
+
+        const sName = document.getElementById('student-name').value;
+        const nameEl = document.getElementById('result-student-name');
+        nameEl.textContent = sName.trim() !== '' ? `الطالب: ${sName}` : 'الطالب: غير مسجل';
+
+        document.getElementById('correct-count').textContent = correctCount;
+        document.getElementById('wrong-count').textContent = wrongCount;
+        
+        const percentage = (score / 50) * 100;
+        document.getElementById('percentage-score').textContent = `${percentage}%`;
+
+        const badge = document.getElementById('grade-badge');
+        if(percentage >= 90) { badge.textContent = "ممتاز"; badge.style.backgroundColor = "#27ae60"; }
+        else if(percentage >= 80) { badge.textContent = "جيد جداً"; badge.style.backgroundColor = "#2980b9"; }
+        else if(percentage >= 70) { badge.textContent = "جيد"; badge.style.backgroundColor = "#f39c12"; }
+        else if(percentage >= 60) { badge.textContent = "مقبول"; badge.style.backgroundColor = "#d35400"; }
+        else { badge.textContent = "يحتاج إلى مراجعة"; badge.style.backgroundColor = "#c0392b"; }
+    }
+
+    function showReview() {
+        resultsScreen.classList.add('hidden');
+        reviewScreen.classList.remove('hidden');
+        const container = document.getElementById('review-container');
+        container.innerHTML = '';
+
+        questions.forEach((q, i) => {
+            const uAns = userAnswers[i];
+            const isCorr = uAns === q.correct;
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.style.borderLeft = `5px solid ${isCorr ? 'var(--success-color)' : 'var(--error-color)'}`;
+            
+            let html = `<h3>السؤال ${i+1}: ${q.text}</h3>`;
+            if (uAns === null) {
+                html += `<p style="color:var(--error-color);">لم تتم الإجابة.</p>`;
+                html += `<p>الإجابة الصحيحة: <strong>${q.options[q.correct]}</strong></p>`;
+            } else {
+                html += `<p>إجابتك: <strong style="color:${isCorr ? 'var(--success-color)' : 'var(--error-color)'}">${q.options[uAns]}</strong></p>`;
+                if(!isCorr) {
+                    html += `<p>الإجابة الصحيحة: <strong style="color:var(--success-color)">${q.options[q.correct]}</strong></p>`;
+                }
+            }
+            html += `<p style="background:#f4f7f6; padding:10px; border-radius:5px; color:#333;"><strong>التعليل:</strong> ${isCorr ? q.fC : q.fW}</p>`;
+            card.innerHTML = html;
+            container.appendChild(card);
+        });
+    }
+
+    function toggleTheme() {
+        document.body.classList.toggle('dark-mode');
+    }
+
+    function changeFontSize(step) {
+        const root = document.documentElement;
+        let currentSize = parseFloat(getComputedStyle(root).getPropertyValue('--font-size-base'));
+        currentSize += step * 2;
+        if(currentSize >= 12 && currentSize <= 24) {
+            root.style.setProperty('--font-size-base', `${currentSize}px`);
+        }
+    }
+</script>
+
+</body>
+</html>
