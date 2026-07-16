@@ -1,355 +1,961 @@
-<!DOCTYPE html>
+html_content = """<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>اختبار النحو الواضح - المرحلة الابتدائية</title>
+    <title>اختبار النحو الواضح - الجزء الثاني</title>
     <style>
         :root {
-            --primary-color: #2c3e50; --secondary-color: #34495e; --accent-color: #27ae60;
-            --error-color: #e74c3c; --bg-color: #f4f7f6; --card-bg: #ffffff;
-            --text-color: #333; --transition: all 0.3s ease;
+            --primary-color: #2c3e50;
+            --secondary-color: #34495e;
+            --accent-color: #3498db;
+            --success-color: #2ecc71;
+            --danger-color: #e74c3c;
+            --bg-color: #ecf0f1;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+            --border-color: #bdc3c7;
+            --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --transition-speed: 0.3s;
         }
-        .dark-mode {
-            --primary-color: #ecf0f1; --secondary-color: #bdc3c7; --accent-color: #2ecc71;
-            --error-color: #ff4757; --bg-color: #1a1a2e; --card-bg: #16213e; --text-color: #e0e0e0;
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --primary-color: #ecf0f1;
+                --secondary-color: #bdc3c7;
+                --accent-color: #2980b9;
+                --success-color: #27ae60;
+                --danger-color: #c0392b;
+                --bg-color: #1a1a1a;
+                --card-bg: #2c2c2c;
+                --text-color: #ecf0f1;
+                --border-color: #444444;
+            }
         }
-        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background-color: var(--bg-color); color: var(--text-color); margin: 0; padding: 20px; transition: var(--transition); }
-        .container { max-width: 900px; margin: 0 auto; }
-        header { text-align: center; margin-bottom: 30px; }
-        .card { background: var(--card-bg); padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); margin-bottom: 20px; transition: var(--transition); }
-        h1 { color: var(--accent-color); }
-        .setup-screen, .quiz-screen, .result-screen, .review-screen { display: none; }
-        .active { display: block; animation: fadeIn 0.5s ease; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .btn { padding: 12px 25px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; transition: var(--transition); margin: 5px; display: inline-flex; align-items: center; gap: 8px; }
-        .btn-primary { background: var(--accent-color); color: white; }
-        .btn-primary:hover { opacity: 0.9; transform: scale(1.05); }
-        .btn-secondary { background: var(--secondary-color); color: white; }
-        .btn-nav { background: #3498db; color: white; }
-        .btn:disabled { background: #95a5a6; cursor: not-allowed; transform: none; }
-        input[type="text"], select { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; background: var(--card-bg); color: var(--text-color); }
-        .progress-container { margin: 20px 0; }
-        .progress-bar { height: 10px; background: #eee; border-radius: 5px; overflow: hidden; }
-        .progress-fill { height: 100%; background: var(--accent-color); width: 0%; transition: width 0.4s ease; }
-        .stats-bar { display: flex; justify-content: space-between; margin-bottom: 10px; font-weight: bold; }
-        .question-meta { font-size: 0.85em; color: #7f8c8d; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
-        .option { display: block; padding: 15px; margin: 10px 0; border: 2px solid #eee; border-radius: 10px; cursor: pointer; transition: var(--transition); font-size: 1.1em;}
-        .option:hover { border-color: var(--accent-color); background: rgba(39, 174, 96, 0.05); }
-        .option.selected { border-color: var(--accent-color); background: rgba(39, 174, 96, 0.1); }
-        .feedback { margin-top: 20px; padding: 15px; border-radius: 10px; display: none; }
-        .feedback.correct { background: rgba(46, 204, 113, 0.2); color: #27ae60; border: 1px solid #2ecc71; display: block; }
-        .feedback.incorrect { background: rgba(231, 76, 60, 0.2); color: #c0392b; border: 1px solid #e74c3c; display: block; }
-        .timer { font-size: 1.2em; color: var(--error-color); text-align: center; margin-bottom: 15px; font-weight: bold; }
-        .settings-panel { position: fixed; top: 20px; left: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 100;}
-        .review-item { border-bottom: 2px solid #eee; padding: 20px 0; }
-        .badge { padding: 4px 8px; border-radius: 4px; font-size: 0.8em; margin-right: 5px; color: white; }
-        .badge-med { background: #f1c40f; color: #333;}
-        .badge-hard { background: #e67e22; }
-        .badge-vhard { background: #e74c3c; }
-        @media (max-width: 600px) { body { padding: 10px; } .card { padding: 15px; } .btn { width: 100%; margin: 5px 0; } .settings-panel { position: static; flex-direction: row; justify-content: center; margin-bottom: 15px; } }
+
+        body.dark-mode {
+            --primary-color: #ecf0f1;
+            --secondary-color: #bdc3c7;
+            --accent-color: #2980b9;
+            --success-color: #27ae60;
+            --danger-color: #c0392b;
+            --bg-color: #1a1a1a;
+            --card-bg: #2c2c2c;
+            --text-color: #ecf0f1;
+            --border-color: #444444;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            transition: background-color var(--transition-speed), color var(--transition-speed);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            margin: 20px;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .header {
+            background-color: var(--primary-color);
+            color: var(--card-bg);
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header h1 {
+            margin: 0 0 10px 0;
+            font-size: 1.8rem;
+        }
+
+        .header p {
+            margin: 0;
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .controls-top {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 20px;
+            background-color: var(--secondary-color);
+            color: var(--card-bg);
+            font-size: 0.9rem;
+        }
+
+        .toggle-dark-mode, .font-size-btn {
+            background: none;
+            border: 1px solid var(--card-bg);
+            color: var(--card-bg);
+            border-radius: 4px;
+            cursor: pointer;
+            padding: 2px 8px;
+            margin-right: 5px;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .start-screen, .quiz-screen, .result-screen, .review-screen {
+            display: none;
+            animation: fadeIn var(--transition-speed) ease-in-out;
+        }
+
+        .active-screen {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+
+        .btn {
+            background-color: var(--accent-color);
+            color: #fff;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: background-color var(--transition-speed), transform 0.1s;
+            font-family: inherit;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background-color: #2980b9;
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .btn:disabled {
+            background-color: var(--border-color);
+            cursor: not-allowed;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--accent-color);
+            border: 2px solid var(--accent-color);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--accent-color);
+            color: #fff;
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 8px;
+            background-color: var(--bg-color);
+            border-radius: 4px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background-color: var(--accent-color);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .question-card {
+            margin-bottom: 25px;
+        }
+
+        .question-meta {
+            font-size: 0.8rem;
+            color: var(--secondary-color);
+            margin-bottom: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            background: var(--bg-color);
+            padding: 8px;
+            border-radius: 4px;
+        }
+
+        .question-meta span {
+            background: var(--card-bg);
+            padding: 2px 6px;
+            border-radius: 3px;
+            border: 1px solid var(--border-color);
+        }
+
+        .difficulty-Medium { color: #f39c12; }
+        .difficulty-hard { color: #e67e22; }
+        .difficulty-Very-hard { color: #c0392b; font-weight: bold; }
+
+        .question-text {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            padding: 15px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all var(--transition-speed);
+            background-color: var(--bg-color);
+            font-size: 1.05rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .option:hover {
+            border-color: var(--accent-color);
+            background-color: rgba(52, 152, 219, 0.05);
+        }
+
+        .option.selected {
+            border-color: var(--accent-color);
+            background-color: rgba(52, 152, 219, 0.1);
+            font-weight: bold;
+        }
+
+        .option.correct {
+            border-color: var(--success-color);
+            background-color: rgba(46, 204, 113, 0.1);
+        }
+
+        .option.wrong {
+            border-color: var(--danger-color);
+            background-color: rgba(231, 76, 60, 0.1);
+        }
+
+        .feedback {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+            animation: fadeIn 0.3s;
+        }
+
+        .feedback.success {
+            display: block;
+            background-color: rgba(46, 204, 113, 0.15);
+            border-right: 4px solid var(--success-color);
+        }
+
+        .feedback.error {
+            display: block;
+            background-color: rgba(231, 76, 60, 0.15);
+            border-right: 4px solid var(--danger-color);
+        }
+
+        .feedback-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .feedback.success .feedback-title { color: var(--success-color); }
+        .feedback.error .feedback-title { color: var(--danger-color); }
+
+        .navigation-btns {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .result-details {
+            text-align: center;
+        }
+
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 8px solid var(--accent-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 20px;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .score-circle span {
+            font-size: 2.5rem;
+            color: var(--accent-color);
+        }
+
+        .grade {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .stat-box {
+            background-color: var(--bg-color);
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .stat-box.correct { border-bottom: 4px solid var(--success-color); }
+        .stat-box.wrong { border-bottom: 4px solid var(--danger-color); }
+
+        .review-item {
+            margin-bottom: 25px;
+            padding: 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background-color: var(--bg-color);
+        }
+
+        .review-item h4 {
+            margin-top: 0;
+        }
+
+        .review-item p {
+            margin: 5px 0;
+        }
+
+        .text-success { color: var(--success-color); font-weight: bold; }
+        .text-danger { color: var(--danger-color); font-weight: bold; }
+
+        @media (max-width: 600px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            .navigation-btns {
+                flex-direction: column-reverse;
+                gap: 10px;
+            }
+            .navigation-btns .btn {
+                width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
 
-    <div class="settings-panel">
-        <button class="btn btn-secondary" onclick="toggleDarkMode()">🌙 وضع ليلي</button>
-        <button class="btn btn-secondary" onclick="changeFontSize(1)">A+</button>
-        <button class="btn btn-secondary" onclick="changeFontSize(-1)">A-</button>
+<div class="container">
+    <div class="header">
+        <h1>اختبار النحو الواضح</h1>
+        <p>الجزء الثاني - من (الصحيح والمعتل) إلى (بناء الفعل الماضي)</p>
+    </div>
+    <div class="controls-top">
+        <div>
+            <button class="toggle-dark-mode" onclick="toggleDarkMode()">الوضع الليلي 🌓</button>
+            <button class="font-size-btn" onclick="changeFontSize(1)">A+</button>
+            <button class="font-size-btn" onclick="changeFontSize(-1)">A-</button>
+        </div>
+        <div id="timer-display" style="display: none;">الزمن: <span id="time-left">00:00</span></div>
     </div>
 
-    <div class="container">
-        <!-- شاشة البداية -->
-        <div id="setupScreen" class="setup-screen active card">
-            <header>
-                <h1>اختبار النحو الواضح الشامل</h1>
-                <p>الجزء الثاني: من تقسيم الفعل إلى صحيح ومعتل حتى بناء الماضي</p>
-            </header>
-            <div>
-                <label>اسم الطالب (اختياري):</label>
-                <input type="text" id="studentName" placeholder="أدخل اسمك هنا...">
-                
-                <label>تفعيل المؤقت الزمني؟</label>
-                <select id="timerOption">
-                    <option value="0">بدون مؤقت</option>
-                    <option value="30">30 دقيقة</option>
-                    <option value="45">45 دقيقة</option>
-                    <option value="60">ساعة كاملة</option>
-                </select>
-
-                <div style="margin-top: 20px;">
-                    <p><strong>تفاصيل الاختبار:</strong></p>
-                    <ul>
-                        <li>عدد الأسئلة: 50 سؤالاً (مستخرجة حصراً من التمرينات)</li>
-                        <li>المستويات: 1-5 Medium، 6-10 Hard، 11-50 Very Hard</li>
-                    </ul>
-                </div>
-                
-                <button class="btn btn-primary" onclick="startQuiz()" style="width: 100%; margin-top: 20px; font-size: 1.2em;">ابدأ الاختبار الآن</button>
-            </div>
-        </div>
-
-        <!-- شاشة الأسئلة -->
-        <div id="quizScreen" class="quiz-screen">
-            <div class="stats-bar">
-                <span id="questionCountDisplay">السؤال 1 من 50</span>
-                <span id="scoreDisplay">الدرجة: 0</span>
+    <div class="content">
+        <!-- Start Screen -->
+        <div id="start-screen" class="start-screen active-screen">
+            <h2>مرحباً بك في الاختبار الإلكتروني</h2>
+            <p>يحتوي هذا الاختبار على 30 سؤالاً من تمرينات كتاب النحو الواضح (الجزء الثاني).</p>
+            <ul style="line-height: 1.8;">
+                <li>جميع الأسئلة اختيار من متعدد.</li>
+                <li>تتدرج الصعوبة من المتوسط إلى الصعب جداً.</li>
+                <li>يوجد وقت مقترح للاختبار (30 دقيقة) اختياري.</li>
+            </ul>
+            
+            <div class="input-group">
+                <label for="student-name">اسم الطالب (اختياري):</label>
+                <input type="text" id="student-name" placeholder="أدخل اسمك هنا...">
             </div>
             
+            <div class="input-group">
+                <label>
+                    <input type="checkbox" id="enable-timer" checked>
+                    تفعيل المؤقت الزمني (30 دقيقة)
+                </label>
+            </div>
+
+            <button class="btn" onclick="startQuiz()">ابدأ الاختبار الآن</button>
+        </div>
+
+        <!-- Quiz Screen -->
+        <div id="quiz-screen" class="quiz-screen">
+            <div class="quiz-header">
+                <div>السؤال: <span id="current-q-num">1</span> / <span id="total-q-num">30</span></div>
+                <div>الدرجة الحالية: <span id="current-score">0</span></div>
+            </div>
             <div class="progress-container">
-                <div class="progress-bar"><div id="progressFill" class="progress-fill"></div></div>
+                <div class="progress-bar" id="progress-bar"></div>
             </div>
 
-            <div id="timerDisplay" class="timer" style="display: none;">الوقت المتبقي: 00:00</div>
-
-            <div class="card" id="questionCard">
-                <div id="metaDisplay" class="question-meta"></div>
-                <h2 id="questionText" style="line-height: 1.5; margin-bottom: 25px;"></h2>
-                <div id="optionsContainer"></div>
-                <div id="feedbackBox" class="feedback"></div>
+            <div id="question-container" class="question-card">
+                <!-- Question content will be injected here -->
             </div>
 
-            <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
-                <button class="btn btn-nav" id="prevBtn" onclick="prevQuestion()" disabled>السابق</button>
-                <div style="flex-grow: 1; text-align: center;">
-                    <button class="btn btn-primary" id="submitBtn" onclick="checkAnswer()">تأكيد الإجابة</button>
-                    <button class="btn btn-nav" id="nextBtn" onclick="nextQuestion()" style="display: none;">التالي</button>
+            <div id="feedback-container" class="feedback">
+                <div class="feedback-title" id="feedback-title"></div>
+                <div id="feedback-text"></div>
+            </div>
+
+            <div class="navigation-btns">
+                <button class="btn btn-outline" id="btn-prev" onclick="prevQuestion()" disabled>السابق</button>
+                <button class="btn btn-outline" id="btn-end" onclick="endQuiz()" style="color:var(--danger-color); border-color:var(--danger-color);">إنهاء الاختبار</button>
+                <button class="btn" id="btn-next" onclick="nextQuestion()">التالي</button>
+            </div>
+        </div>
+
+        <!-- Result Screen -->
+        <div id="result-screen" class="result-screen">
+            <h2 style="text-align: center;">نتيجة الاختبار</h2>
+            <h3 id="result-name" style="text-align: center; color: var(--accent-color);"></h3>
+            
+            <div class="result-details">
+                <div class="score-circle">
+                    <span id="final-score-val">0</span>
+                    <div style="font-size:1rem; color:var(--text-color);">من 30</div>
                 </div>
-                <button class="btn btn-secondary" onclick="confirmFinish()">إنهاء الاختبار</button>
-            </div>
-        </div>
-
-        <!-- شاشة النتائج -->
-        <div id="resultScreen" class="result-screen card">
-            <h2 id="resultTitle" style="text-align: center; color: var(--accent-color);">انتهى الاختبار!</h2>
-            <div id="resultContent" style="font-size: 1.2em; line-height: 1.8; text-align: center; margin: 20px 0;"></div>
-            <div style="display: flex; justify-content: center; gap: 15px;">
-                <button class="btn btn-primary" onclick="showReview()">مراجعة الإجابات</button>
-                <button class="btn btn-secondary" onclick="location.reload()">إعادة الاختبار</button>
-            </div>
-        </div>
-
-        <!-- شاشة المراجعة -->
-        <div id="reviewScreen" class="review-screen card">
-            <h2 style="text-align: center;">مراجعة الإجابات التفصيلية</h2>
-            <div id="reviewContainer"></div>
-            <div style="text-align: center; margin-top: 30px;">
-                <button class="btn btn-primary" onclick="location.reload()">العودة للرئيسية</button>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        const questions = [
-            // 1-5 Medium
-            { id: 1, lesson: "الصحيح والمعتل", lessonNo: 1, page: 130, exercise: 1, item: 1, difficulty: "Medium", tags: ["صحيح الآخر"], question: "في عبارة «خَرَجَ فريد يتنزه»، ما نوع الفعل (خَرَجَ) من حيث الحرف الأخير؟", options: [{text: "صحيح الآخر", isCorrect: true, rationale: "لأنه ينتهي بحرف الجيم، وهو ليس من أحرف العلة."}, {text: "معتل بالألف", isCorrect: false, rationale: "آخره جيم وليس ألف."}, {text: "معتل بالواو", isCorrect: false, rationale: "آخره جيم وليس واو."}, {text: "معتل بالياء", isCorrect: false, rationale: "آخره جيم وليس ياء."}] },
-            { id: 2, lesson: "الصحيح والمعتل", lessonNo: 1, page: 130, exercise: 1, item: 2, difficulty: "Medium", tags: ["صحيح الآخر"], question: "في عبارة «خَرَجَ فريد يتنزه»، الفعل (يَتَنَزَّهُ) يعتبر:", options: [{text: "صحيح الآخر", isCorrect: true, rationale: "لأنه ينتهي بحرف الهاء الأصلية، وهي ليست حرف علة."}, {text: "معتل الآخر بالواو", isCorrect: false, rationale: "الضمة في آخره حركة إعراب وليست حرف واو."}, {text: "معتل الآخر بالألف", isCorrect: false, rationale: "لا يوجد ألف في آخره."}, {text: "معتل الآخر بالياء", isCorrect: false, rationale: "ينتهي بالهاء وليس بالياء."}] },
-            { id: 3, lesson: "الصحيح والمعتل", lessonNo: 1, page: 130, exercise: 1, item: 3, difficulty: "Medium", tags: ["معتل الآخر"], question: "في عبارة «يَجْرِي ماؤه»، الفعل (يَجْرِي) نوعه:", options: [{text: "معتل الآخر بالياء", isCorrect: true, rationale: "لأن الياء في آخره حرف علة ثابت في النطق والكتابة."}, {text: "صحيح الآخر", isCorrect: false, rationale: "الياء من حروف العلة الثلاثة."}, {text: "معتل الآخر بالألف", isCorrect: false, rationale: "يُنطق ياءً مكسوراً ما قبلها، وليس ألفاً."}, {text: "فعل أجوف", isCorrect: false, rationale: "الاعتلال في آخره (ناقص) وليس في وسطه."}] },
-            { id: 4, lesson: "الصحيح والمعتل", lessonNo: 1, page: 130, exercise: 1, item: 4, difficulty: "Medium", tags: ["معتل الآخر"], question: "في جملة «تَعْدُو آمنة»، الفعل (تَعْدُو):", options: [{text: "معتل الآخر بالواو", isCorrect: true, rationale: "لأن آخره حرف الواو وهو من أحرف العلة."}, {text: "صحيح الآخر", isCorrect: false, rationale: "ينتهي بحرف علة."}, {text: "معتل الآخر بالياء", isCorrect: false, rationale: "ينتهي بالواو."}, {text: "مبني على الضم", isCorrect: false, rationale: "هو فعل مضارع مرفوع بضمة مقدرة، وليس مبنياً."}] },
-            { id: 5, lesson: "الصحيح والمعتل", lessonNo: 1, page: 130, exercise: 1, item: 5, difficulty: "Medium", tags: ["معتل الآخر"], question: "في عبارة «رَأَى أشجاراً»، الفعل (رأى) يُعد:", options: [{text: "معتل الآخر بالألف", isCorrect: true, rationale: "لأن العبرة بالنطق، وهو يُنطق ألفاً وإن رُسم ياءً."}, {text: "معتل الآخر بالياء", isCorrect: false, rationale: "كتابته على صورة الياء لا تجعله معتلاً بالياء؛ فالعبرة بالنطق."}, {text: "صحيح الآخر", isCorrect: false, rationale: "آخره حرف علة (ألف)."}, {text: "مهموز الآخر", isCorrect: false, rationale: "الهمزة في وسطه وليست في آخره."}] },
-            
-            // 6-10 Hard
-            { id: 6, lesson: "الصحيح والمعتل", lessonNo: 1, page: 131, exercise: 6, item: 1, difficulty: "Hard", tags: ["تحويل", "مضارع"], question: "عند صياغة المضارع من الفعل الماضي المعتل (دَعَا)، يصبح:", options: [{text: "يَدْعُو (معتل بالواو)", isCorrect: true, rationale: "الألف في (دعا) أصلها واو، فتُرد لأصلها في المضارع."}, {text: "يَدْعِي (معتل بالياء)", isCorrect: false, rationale: "أصل الألف واو وليس ياء."}, {text: "يَدْعَى (معتل بالألف)", isCorrect: false, rationale: "هذا مضارع الفعل المبني للمجهول، أما المبني للمعلوم فهو يدعو."}, {text: "يَدْعَ (صحيح الآخر)", isCorrect: false, rationale: "لا يُحذف حرف العلة إلا في حالة الجزم."}] },
-            { id: 7, lesson: "المبني والمعرب", lessonNo: 2, page: 134, exercise: 1, item: 1, difficulty: "Hard", tags: ["إعراب"], question: "لماذا عُدّت كلمة (الدراجة) في جملة «الدراجة مسرعة» معربة؟", options: [{text: "لأن آخرها يتغير بتغير العوامل", isCorrect: true, rationale: "الاسم المعرب هو ما يتغير آخره؛ هنا رُفعت بالضمة لأنها مبتدأ."}, {text: "لأنها اسم مؤنث", isCorrect: false, rationale: "التأنيث لا علاقة له بالإعراب والبناء."}, {text: "لأنها مبتدأ فقط", isCorrect: false, rationale: "الإعراب صفة للكلمة تتغير حسب موقعها، وليس لكونها مبتدأ فقط."}, {text: "لأنها خالية من التنوين", isCorrect: false, rationale: "الخلو من التنوين لوجود (أل) وليس دليلاً على الإعراب بحد ذاته."}] },
-            { id: 8, lesson: "المبني والمعرب", lessonNo: 2, page: 134, exercise: 1, item: 4, difficulty: "Hard", tags: ["بناء", "أسماء"], question: "في جملة «جاء مَنْ ناديته»، كلمة (مَنْ) مبنية لأنها:", options: [{text: "يلزم آخرها حالة واحدة (السكون)", isCorrect: true, rationale: "المبني هو ما يثبت آخره على حالة واحدة في جميع التراكيب."}, {text: "وقعت فاعلاً", isCorrect: false, rationale: "الفاعل معرب في الأصل، ووقوعها فاعلاً (في محل رفع) لا يعلّل البناء."}, {text: "حرف جر", isCorrect: false, rationale: "(مَنْ) هنا اسم موصول بمعنى الذي، وليست حرف جر (مِنْ)."}, {text: "اسم موصول معرب", isCorrect: false, rationale: "الأسماء الموصولة مبنية (عدا المثنى منها)."}] },
-            { id: 9, lesson: "أنواع البناء", lessonNo: 3, page: 137, exercise: 1, item: 1, difficulty: "Hard", tags: ["بناء", "حروف"], question: "في عبارة «لا يستطيع الإنسان أن يعيش منفرداً»، الكلمة المبنية على السكون هي:", options: [{text: "لا ، أنْ", isCorrect: true, rationale: "الحروف (لا) النافية و (أنْ) المصدرية مبنية على السكون."}, {text: "الإنسان", isCorrect: false, rationale: "الإنسان اسم معرب (فاعل مرفوع)."}, {text: "يستطيع", isCorrect: false, rationale: "فعل مضارع معرب (مرفوع بالضمة)."}, {text: "منفرداً", isCorrect: false, rationale: "اسم معرب (حال منصوبة)."}] },
-            { id: 10, lesson: "أنواع البناء", lessonNo: 3, page: 137, exercise: 1, item: 4, difficulty: "Hard", tags: ["بناء", "ضمائر"], question: "في جملة «نَحْنُ نحب الوطن»، ما الكلمة المبنية على الضم؟", options: [{text: "نَحْنُ", isCorrect: true, rationale: "نحنُ ضمير منفصل مبني دائماً على الضم."}, {text: "نُحِبُّ", isCorrect: false, rationale: "نحبُّ فعل مضارع معرب مرفوع بالضمة، وليس مبنياً."}, {text: "الوطن", isCorrect: false, rationale: "الوطن اسم معرب منصوب بالفتحة."}, {text: "لا يوجد", isCorrect: false, rationale: "الضمير نحن مبني على الضم."}] },
-
-            // 11-50 Very Hard
-            { id: 11, lesson: "الصحيح والمعتل", lessonNo: 1, page: 130, exercise: 1, item: 6, difficulty: "Very Hard", tags: ["معتل الآخر"], question: "في جملة «تَدْنُو أثمارها»، الفعل (تَدْنُو) فعل مضارع:", options: [{text: "معتل الآخر بالواو", isCorrect: true, rationale: "ينتهي بواو أصلية وهي من أحرف العلة."}, {text: "صحيح الآخر", isCorrect: false, rationale: "آخره حرف علة."}, {text: "معتل الآخر بالألف", isCorrect: false, rationale: "ينتهي بواو وليس بألف."}, {text: "مرفوع بثبوت النون", isCorrect: false, rationale: "مرفوع بالضمة المقدرة وليس من الأفعال الخمسة."}] },
-            { id: 12, lesson: "الصحيح والمعتل", lessonNo: 1, page: 130, exercise: 1, item: 7, difficulty: "Very Hard", tags: ["صحيح الآخر"], question: "في جملة «وَقَفَ عندها ساعة»، الفعل (وَقَفَ) يُعد فعلاً:", options: [{text: "صحيح الآخر", isCorrect: true, rationale: "لأنه ينتهي بحرف الفاء وهو حرف صحيح، والاعتلال في أوله لا يجعله معتل الآخر."}, {text: "معتل الآخر بالواو", isCorrect: false, rationale: "الواو في أوله (مثال) والقاعدة هنا تخص الحرف الأخير."}, {text: "معتل الآخر بالألف", isCorrect: false, rationale: "لا ينتهي بألف."}, {text: "صحيح مضعف", isCorrect: false, rationale: "لا يوجد فيه تضعيف."}] },
-            { id: 13, lesson: "الصحيح والمعتل", lessonNo: 1, page: 131, exercise: 6, item: 2, difficulty: "Very Hard", tags: ["مضارع", "معتل"], question: "ما المضارع من الفعل (رَضِيَ)؟ وما نوع آخره؟", options: [{text: "يَرْضَى - معتل بالألف", isCorrect: true, rationale: "الياء في رضي تُقلب ألفاً في المضارع يرضى لفتح ما قبلها، فالعبرة بالنطق."}, {text: "يَرْضِي - معتل بالياء", isCorrect: false, rationale: "النطق الصحيح يرضَى بالألف."}, {text: "يَرْضُو - معتل بالواو", isCorrect: false, rationale: "أصل الفعل من الرضوان لكن مضارعه يرضى."}, {text: "يرضَ - صحيح", isCorrect: false, rationale: "حذف العلة يكون في الجزم فقط."}] },
-            { id: 14, lesson: "الصحيح والمعتل", lessonNo: 1, page: 131, exercise: 6, item: 3, difficulty: "Very Hard", tags: ["مضارع", "معتل"], question: "عند الإتيان بمضارع الفعل (سَقَى)، يكون:", options: [{text: "يَسْقِي (معتل بالياء)", isCorrect: true, rationale: "الألف في سقى أصلها ياء، فتظهر في المضارع يسقي."}, {text: "يَسْقَى (معتل بالألف)", isCorrect: false, rationale: "المضارع يسقي بكسر القاف وليس فتحها."}, {text: "يَسْقُو (معتل بالواو)", isCorrect: false, rationale: "أصل الألف ياء بدليل المصدر: السقاية."}, {text: "يَسْقِ (صحيح)", isCorrect: false, rationale: "الحذف للجزم فقط."}] },
-            { id: 15, lesson: "الصحيح والمعتل", lessonNo: 1, page: 131, exercise: 7, item: 1, difficulty: "Very Hard", tags: ["ماضي", "معتل"], question: "الماضي من الفعل (يَقْضِي) ونوع آخره:", options: [{text: "قَضَى - معتل بالألف", isCorrect: true, rationale: "الياء في يقضي تُقلب ألفاً في الماضي لفتح ما قبلها (قضَى)."}, {text: "قَضِيَ - معتل بالياء", isCorrect: false, rationale: "نقول قضَى بالألف وليس قضي."}, {text: "قَضَو - معتل بالواو", isCorrect: false, rationale: "أصل العلة ياء."}, {text: "قاضٍ - اسم", isCorrect: false, rationale: "المطلوب الفعل الماضي وليس اسم الفاعل."}] },
-            { id: 16, lesson: "المبني والمعرب", lessonNo: 2, page: 134, exercise: 1, item: 6, difficulty: "Very Hard", tags: ["بناء", "أسماء"], question: "في جملة «الجائزة لِمَنْ يسبق»، لماذا (مَنْ) مبنية؟", options: [{text: "لأن آخرها يلزم السكون دائماً رغم دخول حرف الجر", isCorrect: true, rationale: "المبني لا يتغير آخره بدخول العوامل عليه، فـ (من) مبنية في محل جر."}, {text: "لأنها حرف جر", isCorrect: false, rationale: "(مَنْ) بفتح الميم اسم موصول وليست (مِنْ) الحرفية."}, {text: "لأنها معربة بعلامة مقدرة", isCorrect: false, rationale: "هي مبنية بناءً أصلياً وليست معربة."}, {text: "لأنها اتصلت باللام", isCorrect: false, rationale: "الاتصال باللام لا يوجب البناء."}] },
-            { id: 17, lesson: "المبني والمعرب", lessonNo: 2, page: 135, exercise: 2, item: 1, difficulty: "Very Hard", tags: ["إعراب"], question: "كيف نستدل عملياً على أن كلمة (السماء) معربة؟", options: [{text: "بتغير حركة آخرها في التراكيب (السماءُ، السماءَ، السماءِ)", isCorrect: true, rationale: "تتغير حركة الهمزة بتغير موقعها (رفعاً ونصباً وجراً)."}, {text: "بدخول (أل) عليها", isCorrect: false, rationale: "(أل) تدخل على المبني أيضاً كالذي والتي."}, {text: "بأنها تنتهي بهمزة", isCorrect: false, rationale: "هناك مبنيات تنتهي بهمزة مثل (هؤلاء)."}, {text: "لأنها مفردة", isCorrect: false, rationale: "الإفراد لا علاقة له بالإعراب والبناء."}] },
-            { id: 18, lesson: "المبني والمعرب", lessonNo: 2, page: 135, exercise: 2, item: 3, difficulty: "Very Hard", tags: ["إعراب", "أفعال"], question: "الفعل (يَكْتُبُ) معرب، فكيف نستدل على ذلك؟", options: [{text: "بتغير آخره بدخول النواصب والجوازم (يكتبُ، لن يكتبَ، لم يكتبْ)", isCorrect: true, rationale: "المضارع الذي لم تتصل به نون النسوة ولا التوكيد يتغير آخره بالعوامل."}, {text: "لأنه يدل على الحاضر", isCorrect: false, rationale: "الدلالة الزمنية لا تحدد الإعراب عملياً."}, {text: "لأنه يبدأ بياء المضارعة", isCorrect: false, rationale: "الفعل المضارع قد يبنى إذا اتصلت به النون."}, {text: "لأنه صحيح الآخر", isCorrect: false, rationale: "الصحة والاعتلال لا تمنع الإعراب."}] },
-            { id: 19, lesson: "المبني والمعرب", lessonNo: 2, page: 135, exercise: 3, item: 1, difficulty: "Very Hard", tags: ["بناء", "أسماء"], question: "كيف نستدل عملياً على أن اسم الاستفهام (كَيْفَ) مبني؟", options: [{text: "يلزم آخرها الفتح في جميع التراكيب ولا يتأثر بالعوامل", isCorrect: true, rationale: "تبقى الفاء مفتوحة دائماً مهما كان موقع (كيف) الإعرابي."}, {text: "لأنه مبدوء بكاف", isCorrect: false, rationale: "لا علاقة للبداية بالبناء."}, {text: "لأنه لا يجمع", isCorrect: false, rationale: "هناك معربات لا تجمع، والبناء يُعرف بثبات الآخر."}, {text: "لأنه من الأسماء الخمسة", isCorrect: false, rationale: "(كيف) ليس من الأسماء الخمسة."}] },
-            { id: 20, lesson: "المبني والمعرب", lessonNo: 2, page: 135, exercise: 3, item: 4, difficulty: "Very Hard", tags: ["بناء", "أفعال"], question: "الفعل الماضي (كَتَبَ) مبني، الدليل العملي على ذلك:", options: [{text: "لزوم آخره الفتحة إذا لم يتصل به شيء في أي جملة", isCorrect: true, rationale: "الفعل الماضي يبنى على الفتح دائماً ما لم يتصل بضمير يغير بناءه."}, {text: "لأنه يدل على المضي", isCorrect: false, rationale: "الدلالة لا تشكل دليلاً عملياً لفظياً."}, {text: "لأنه يقبل تاء التأنيث", isCorrect: false, rationale: "قبول التاء علامة الماضي وليس علامة بنائه."}, {text: "لأنه ثلاثي", isCorrect: false, rationale: "عدد الحروف لا علاقة له بالبناء."}] },
-            { id: 21, lesson: "أنواع البناء", lessonNo: 3, page: 137, exercise: 2, item: 1, difficulty: "Very Hard", tags: ["بناء", "أسماء"], question: "اسم الموصول (الَّذِي) مبني على:", options: [{text: "السكون", isCorrect: true, rationale: "ينتهي بياء مد ساكنة في جميع التراكيب."}, {text: "الكسر", isCorrect: false, rationale: "الكسر لا يظهر على الياء للثقل، بل هي ساكنة."}, {text: "الفتح", isCorrect: false, rationale: "لم يُنطق بفتح الياء."}, {text: "الضم", isCorrect: false, rationale: "لم يُنطق بضم الياء."}] },
-            { id: 22, lesson: "أنواع البناء", lessonNo: 3, page: 137, exercise: 2, item: 4, difficulty: "Very Hard", tags: ["بناء", "أسماء إشارة"], question: "اسم الإشارة (هَؤُلاءِ) يلازم حالة بناء واحدة هي:", options: [{text: "الكسر", isCorrect: true, rationale: "الهمزة مكسورة دائماً (جاء هؤلاءِ، رأيت هؤلاءِ، مررت بهؤلاءِ)."}, {text: "السكون", isCorrect: false, rationale: "الهمزة متحركة بالكسر وليست ساكنة."}, {text: "الفتح", isCorrect: false, rationale: "لا تُفتح في لغة العرب."}, {text: "الضم", isCorrect: false, rationale: "لا تُضم في لغة العرب."}] },
-            { id: 23, lesson: "أنواع البناء", lessonNo: 3, page: 137, exercise: 1, item: 2, difficulty: "Very Hard", tags: ["بناء", "أفعال"], question: "في جملة «استراح المريض ونام نوماً هادئاً»، الكلمات المبنية على الفتح هي:", options: [{text: "استراحَ ، نامَ", isCorrect: true, rationale: "كلاهما فعل ماض لم يتصل بآخره شيء، فيبنى على الفتح."}, {text: "المريضُ", isCorrect: false, rationale: "المريض فاعل معرب مرفوع بالضمة."}, {text: "نوماً هادئاً", isCorrect: false, rationale: "اسمان معربان منصوبان بالفتحة."}, {text: "لا يوجد", isCorrect: false, rationale: "الأفعال الماضية هنا مبنية على الفتح."}] },
-            { id: 24, lesson: "أنواع البناء", lessonNo: 3, page: 138, exercise: 3, item: 5, difficulty: "Very Hard", tags: ["بناء", "حروف"], question: "من الحروف المبنية على الكسر الدائمة:", options: [{text: "الباء و اللام الجارتان (بِـ ، لِـ)", isCorrect: true, rationale: "حرفا الجر الباء واللام يُبنيان على الكسر غالباً."}, {text: "عنْ ، مِنْ", isCorrect: false, rationale: "مبنيان على السكون."}, {text: "في ، إلى", isCorrect: false, rationale: "مبنيان على السكون (حروف مد)."}, {text: "أنَّ ، ليتَ", isCorrect: false, rationale: "مبنيان على الفتح."}] },
-            { id: 25, lesson: "أنواع الإعراب", lessonNo: 4, page: 141, exercise: 1, item: 1, difficulty: "Very Hard", tags: ["إعراب"], question: "«على الإنسان أن يراعي»، ما الحالة الإعرابية لكلمة (الإنسان)؟", options: [{text: "الجر", isCorrect: true, rationale: "سبقها حرف الجر (على) فهي اسم مجرور وعلامة جره الكسرة."}, {text: "الرفع", isCorrect: false, rationale: "ليست فاعلاً ولا مبتدأ."}, {text: "النصب", isCorrect: false, rationale: "لم يسبقها ناصب أو تقع مفعولاً."}, {text: "مبنية", isCorrect: false, rationale: "الإنسان اسم معرب يتغير آخره."}] },
-            { id: 26, lesson: "أنواع الإعراب", lessonNo: 4, page: 141, exercise: 1, item: 1, difficulty: "Very Hard", tags: ["إعراب", "أفعال"], question: "«أن يراعيَ»، ما الحالة الإعرابية للفعل (يراعي)؟", options: [{text: "النصب", isCorrect: true, rationale: "سبقه حرف النصب (أن)، وعلامة نصبه الفتحة الظاهرة لأنه معتل بالياء."}, {text: "الرفع", isCorrect: false, rationale: "دخل عليه ناصب فزال عنه الرفع."}, {text: "الجزم", isCorrect: false, rationale: "(أن) ناصبة وليست جازمة."}, {text: "مبني على الفتح", isCorrect: false, rationale: "الفعل المضارع معرب هنا، والفتحة علامة إعراب وليست بناء."}] },
-            { id: 27, lesson: "أنواع الإعراب", lessonNo: 4, page: 141, exercise: 1, item: 2, difficulty: "Very Hard", tags: ["إعراب", "نواسخ"], question: "«إنَّ المُزَاحَ يجلب البغضاء»، الحالة الإعرابية لكلمة (المزاح):", options: [{text: "النصب", isCorrect: true, rationale: "لأنها اسم (إنَّ) منصوب وعلامة نصبه الفتحة الظاهرة."}, {text: "الرفع", isCorrect: false, rationale: "اسم إن يكون منصوباً وليس مرفوعاً."}, {text: "الجر", isCorrect: false, rationale: "لم تُسبق بحرف جر أو إضافة."}, {text: "مبنية", isCorrect: false, rationale: "المزاح اسم معرب."}] },
-            { id: 28, lesson: "أنواع الإعراب", lessonNo: 4, page: 141, exercise: 4, item: 1, difficulty: "Very Hard", tags: ["أنواع الإعراب"], question: "الاسم (القطار) المعرب يدخله من أنواع الإعراب:", options: [{text: "الرفع والنصب والجر", isCorrect: true, rationale: "الأسماء المعربة يدخلها الرفع والنصب والجر، ولا يدخلها الجزم."}, {text: "الرفع والنصب والجزم", isCorrect: false, rationale: "الجزم مختص بالأفعال."}, {text: "الجر والجزم فقط", isCorrect: false, rationale: "الأسماء لا تجزم."}, {text: "جميع أنواع الإعراب", isCorrect: false, rationale: "الجزم لا يدخل الأسماء."}] },
-            { id: 29, lesson: "أنواع الإعراب", lessonNo: 4, page: 142, exercise: 5, item: 2, difficulty: "Very Hard", tags: ["أنواع الإعراب"], question: "الفعل المضارع (يَفْتَحُ) يدخله من أنواع الإعراب:", options: [{text: "الرفع والنصب والجزم", isCorrect: true, rationale: "الأفعال المضارعة المعربة يدخلها الرفع والنصب والجزم، ولا يدخلها الجر."}, {text: "الرفع والنصب والجر", isCorrect: false, rationale: "الجر مختص بالأسماء."}, {text: "الرفع والجزم فقط", isCorrect: false, rationale: "يدخله النصب أيضاً عند دخول نواصب المضارع."}, {text: "جميع أنواع الإعراب", isCorrect: false, rationale: "الجر لا يدخل الأفعال."}] },
-            { id: 30, lesson: "أنواع الإعراب", lessonNo: 4, page: 142, exercise: 6, item: 1, difficulty: "Very Hard", tags: ["اختصاص الإعراب"], question: "في عبارة «يجب على الإنسان...»، استخرج الكلمة المعربة التي لا يدخلها الجزم:", options: [{text: "الإنسان", isCorrect: true, rationale: "لأنها اسم، والأسماء يدخلها الجر ويُمتنع عنها الجزم."}, {text: "يجب", isCorrect: false, rationale: "فعل مضارع يدخله الجزم (لم يجب)."}, {text: "على", isCorrect: false, rationale: "حرف مبني وليس معرباً."}, {text: "أن", isCorrect: false, rationale: "حرف مبني."}] },
-            { id: 31, lesson: "أحوال بناء الماضي", lessonNo: 5, page: 146, exercise: 1, item: 1, difficulty: "Very Hard", tags: ["بناء الماضي"], question: "«خَرَجْتُ من المنزل»، الفعل (خرجتُ) مبني على:", options: [{text: "السكون", isCorrect: true, rationale: "الفعل الماضي يُبنى على السكون لاتصاله بتاء الفاعل المتحركة."}, {text: "الفتح", isCorrect: false, rationale: "يمنع البناء على الفتح توالي أربع متحركات فيما هو كالكلمة الواحدة."}, {text: "الضم", isCorrect: false, rationale: "الضم يكون مع واو الجماعة فقط."}, {text: "الكسر", isCorrect: false, rationale: "الفعل الماضي لا يُبنى على الكسر."}] },
-            { id: 32, lesson: "أحوال بناء الماضي", lessonNo: 5, page: 146, exercise: 1, item: 2, difficulty: "Very Hard", tags: ["بناء الماضي"], question: "«فصادفني في الطريق»، الفعل الماضي (صادف) هنا مبني على:", options: [{text: "الفتح", isCorrect: true, rationale: "لم يتصل به ضمير رفع متحرك أو واو الجماعة (النون للوقاية والياء مفعول به)."}, {text: "السكون", isCorrect: false, rationale: "لم يتصل بضمير رفع متحرك."}, {text: "الكسر", isCorrect: false, rationale: "الفعل مكسور النون (للوقاية) لكن الفعل نفسه صادفَ مبني على الفتح."}, {text: "الضم", isCorrect: false, rationale: "لم يتصل بواو الجماعة."}] },
-            { id: 33, lesson: "أحوال بناء الماضي", lessonNo: 5, page: 146, exercise: 1, item: 3, difficulty: "Very Hard", tags: ["بناء الماضي"], question: "«عَرَفْتُهُمْ وعَرَفُونِي»، الفعلان (عرفت) و (عرفوا) مبنيان على الترتيب:", options: [{text: "السكون - الضم", isCorrect: true, rationale: "الأول اتصل بتاء الفاعل فبني على السكون، والثاني اتصل بواو الجماعة فبني على الضم."}, {text: "الفتح - الضم", isCorrect: false, rationale: "الأول لا يبنى على الفتح لاتصاله بتاء الفاعل."}, {text: "السكون - السكون", isCorrect: false, rationale: "الثاني اتصل بواو الجماعة فيبنى على الضم."}, {text: "الضم - الضم", isCorrect: false, rationale: "الأول اتصل بتاء الفاعل."}] },
-            { id: 34, lesson: "أحوال بناء الماضي", lessonNo: 5, page: 146, exercise: 1, item: 4, difficulty: "Very Hard", tags: ["بناء الماضي"], question: "«فَقَبِلُوا الفكرة وفَرِحُوا بها»، الفعلان مبنيان على:", options: [{text: "الضم", isCorrect: true, rationale: "كلاهما فعل ماض اتصلت به واو الجماعة."}, {text: "الفتح", isCorrect: false, rationale: "واو الجماعة توجب ضم ما قبلها للمناسبة."}, {text: "السكون", isCorrect: false, rationale: "السكون يكون لضمائر الرفع المتحركة."}, {text: "حذف النون", isCorrect: false, rationale: "هذا علامة إعراب/بناء في المضارع والأمر وليس الماضي."}] },
-            { id: 35, lesson: "أحوال بناء الماضي", lessonNo: 5, page: 146, exercise: 1, item: 5, difficulty: "Very Hard", tags: ["بناء الماضي"], question: "«سِرْنَا جميعاً إليها»، الفعل الماضي (سِرْنَا) مبني على:", options: [{text: "السكون", isCorrect: true, rationale: "لاتصاله بـ (نا) الدالة على الفاعلين."}, {text: "الفتح", isCorrect: false, rationale: "إذا بني على الفتح تكون (نا) للمفعولين، وهنا هم من ساروا (فاعلون)."}, {text: "الضم", isCorrect: false, rationale: "لا يوجد واو جماعة."}, {text: "الكسر", isCorrect: false, rationale: "الراء ساكنة والسين مكسورة كحركة أصلية في الفعل الأجوف عند إسناده."}] },
-            { id: 36, lesson: "أحوال بناء الماضي", lessonNo: 5, page: 146, exercise: 2, item: 1, difficulty: "Very Hard", tags: ["بناء الماضي"], question: "الفعل (غَرِقَ)، عند إسناده لواو الجماعة يصير:", options: [{text: "غَرِقُوا (مبني على الضم)", isCorrect: true, rationale: "يُضم آخر الماضي عند اتصاله بواو الجماعة للمناسبة."}, {text: "غَرَقُوا (مبني على الضم)", isCorrect: false, rationale: "عين الفعل (الراء) مكسورة أصلاً فلا تفتح."}, {text: "غَرِقْوا (مبني على السكون)", isCorrect: false, rationale: "الماضي مع واو الجماعة يُبنى على الضم."}, {text: "يغرقون (معرب)", isCorrect: false, rationale: "المطلوب إسناد الماضي وليس تحويله لمضارع."}] },
-            { id: 37, lesson: "أحوال بناء الماضي", lessonNo: 5, page: 146, exercise: 4, item: 3, difficulty: "Very Hard", tags: ["بناء الماضي", "نون النسوة"], question: "عند إسناد الفعل الماضي (اجْتَمَعَ) إلى نون النسوة، يُبنى على:", options: [{text: "السكون (اجْتَمَعْنَ)", isCorrect: true, rationale: "الفعل الماضي يُبنى على السكون عند اتصاله بنون النسوة."}, {text: "الفتح (اجْتَمَعَنَ)", isCorrect: false, rationale: "يمنع توالي المتحركات فيبنى على السكون."}, {text: "الضم (اجْتَمَعُنَ)", isCorrect: false, rationale: "الضم يختص بواو الجماعة."}, {text: "ثبوت النون", isCorrect: false, rationale: "هذا في المضارع (الأفعال الخمسة)."}] },
-            { id: 38, lesson: "الصحيح والمعتل", lessonNo: 1, page: 130, exercise: 1, item: 8, difficulty: "Very Hard", tags: ["معتل الآخر"], question: "الفعل (تَرْعَى) في «ترعى الكلأ» يعتبر:", options: [{text: "معتل الآخر بالألف", isCorrect: true, rationale: "لأنه ينتهي بألف مقصورة ثابتة في النطق."}, {text: "معتل الآخر بالياء", isCorrect: false, rationale: "رسمت ياءً لكنها تُنطق ألفاً فالعبرة بالنطق."}, {text: "صحيح الآخر", isCorrect: false, rationale: "آخره حرف علة."}, {text: "معتل بالواو", isCorrect: false, rationale: "لا ينطق واواً."}] },
-            { id: 39, lesson: "الصحيح والمعتل", lessonNo: 1, page: 130, exercise: 1, item: 9, difficulty: "Very Hard", tags: ["صحيح الآخر"], question: "الفعل (قَفَلَ) في عبارة «قَفَلَ راجعاً» نوعه:", options: [{text: "صحيح الآخر", isCorrect: true, rationale: "لأنه ينتهي بحرف اللام وهو ليس من أحرف العلة."}, {text: "معتل بالألف", isCorrect: false, rationale: "اللام حرف صحيح."}, {text: "مهموز", isCorrect: false, rationale: "لا توجد همزة في الفعل."}, {text: "مضعف", isCorrect: false, rationale: "حروفه أصلية غير مكررة."}] },
-            { id: 40, lesson: "الصحيح والمعتل", lessonNo: 1, page: 131, exercise: 6, item: 5, difficulty: "Very Hard", tags: ["مضارع", "معتل"], question: "الفعل المضارع (يَهْدِي) ماضيه ونوع آخره:", options: [{text: "هَدَى - معتل بالألف", isCorrect: true, rationale: "الألف في هدى تُنطق ألفاً وأصلها ياء كما ظهر في المضارع يهدي."}, {text: "هَدِيَ - معتل بالياء", isCorrect: false, rationale: "الماضي ينطق هَدَى بالفتح وليس بالكسر."}, {text: "هَدَوْ - معتل بالواو", isCorrect: false, rationale: "أصل العلة ياء بدليل يهدي والهدية."}, {text: "يَهْدِ - صحيح", isCorrect: false, rationale: "هذا مجزوم بحذف العلة وليس الفعل الأصلي."}] },
-            { id: 41, lesson: "المبني والمعرب", lessonNo: 2, page: 135, exercise: 2, item: 5, difficulty: "Very Hard", tags: ["إعراب", "أفعال"], question: "الفعل (يَزْرَعُ) معرب، فكيف يكون حاله مجزوماً كدليل على إعرابه؟", options: [{text: "لَمْ يَزْرَعْ (بالسكون)", isCorrect: true, rationale: "لأنه صحيح الآخر، علامة جزمه السكون، وتغيره دليل إعرابه."}, {text: "لَنْ يَزْرَعَ", isCorrect: false, rationale: "هذا في حالة النصب وليس الجزم."}, {text: "يَزْرَعُون", isCorrect: false, rationale: "هذا إسناد لواو الجماعة في الرفع."}, {text: "مبني على السكون", isCorrect: false, rationale: "هو مجزوم (معرب) وليس مبنياً."}] },
-            { id: 42, lesson: "أنواع البناء", lessonNo: 3, page: 137, exercise: 1, item: 3, difficulty: "Very Hard", tags: ["بناء", "حروف"], question: "«إذا زار إنسان مريضاً وجب...»، الكلمة المبنية على السكون من الحروف هي:", options: [{text: "إذَا", isCorrect: true, rationale: "إذا ظرف لما يستقبل من الزمان يتضمن معنى الشرط مبني على السكون لاتصاله بالألف."}, {text: "زارَ", isCorrect: false, rationale: "فعل ماض مبني على الفتح."}, {text: "إنسانٌ", isCorrect: false, rationale: "اسم معرب مرفوع."}, {text: "وَجَبَ", isCorrect: false, rationale: "فعل مبني على الفتح."}] },
-            { id: 43, lesson: "أنواع البناء", lessonNo: 3, page: 137, exercise: 2, item: 3, difficulty: "Very Hard", tags: ["بناء", "أسماء إشارة"], question: "اسم الإشارة (هَذَا) يوضع في التركيب ويكون:", options: [{text: "مبنياً على السكون دائماً", isCorrect: true, rationale: "ينتهي بألف مد ساكنة، فيلزم السكون في محل رفع أو نصب أو جر."}, {text: "مبنياً على الفتح", isCorrect: false, rationale: "الألف ساكنة وليست مفتوحة."}, {text: "معرباً يعامل معاملة المفرد", isCorrect: false, rationale: "أسماء الإشارة مبنية عدا المثنى منها (هذان، هاتان)."}, {text: "مبنياً على الضم المقدر", isCorrect: false, rationale: "البناء يكون على السكون الظاهر على الألف."}] },
-            { id: 44, lesson: "أنواع الإعراب", lessonNo: 4, page: 141, exercise: 4, item: 3, difficulty: "Very Hard", tags: ["إعراب", "أسماء"], question: "كلمة (الكتاب) اسم معرب، الجملة التي جاء فيها مجروراً:", options: [{text: "قرأتُ في الكتابِ", isCorrect: true, rationale: "سُبق بحرف الجر (في) فعلامة جره الكسرة."}, {text: "الكتابُ مفيد", isCorrect: false, rationale: "مرفوع (مبتدأ)."}, {text: "اشتريتُ الكتابَ", isCorrect: false, rationale: "منصوب (مفعول به)."}, {text: "كان الكتابُ جديداً", isCorrect: false, rationale: "مرفوع (اسم كان)."}] },
-            { id: 45, lesson: "أنواع الإعراب", lessonNo: 4, page: 141, exercise: 5, item: 3, difficulty: "Very Hard", tags: ["إعراب", "أفعال"], question: "الفعل المضارع المعرب (يُنَظِّفُ)، الجملة التي وقع فيها منصوباً:", options: [{text: "لَنْ يُنَظِّفَ العاملُ الشارع", isCorrect: true, rationale: "سُبق بأداة النصب (لن) فعلامة نصبه الفتحة."}, {text: "يُنَظِّفُ العاملُ الشارع", isCorrect: false, rationale: "مرفوع لخلوه من الناصب والجازم."}, {text: "لَمْ يُنَظِّفْ العاملُ", isCorrect: false, rationale: "مجزوم بـ (لم) وعلامة جزمه السكون."}, {text: "نَظَّفَ العاملُ", isCorrect: false, rationale: "فعل ماض مبني على الفتح."}] },
-            { id: 46, lesson: "أنواع الإعراب", lessonNo: 4, page: 142, exercise: 6, item: 2, difficulty: "Very Hard", tags: ["إعراب", "أفعال"], question: "في «وأن يعمَلَ على ما يجلب السعادة»، الفعل (يعمل) معرب، فما علامته؟", options: [{text: "النصب بالفتحة", isCorrect: true, rationale: "لأنه مسبوق بأداة النصب (أن)."}, {text: "الرفع بالضمة", isCorrect: false, rationale: "دخلت عليه (أن) الناصبة."}, {text: "الجزم بالسكون", isCorrect: false, rationale: "(أن) ناصبة وليست جازمة."}, {text: "مبني على الفتح", isCorrect: false, rationale: "هو فعل مضارع معرب وليس مبنياً (لم تتصل به نون التوكيد)."}] },
-            { id: 47, lesson: "أحوال بناء الماضي", lessonNo: 5, page: 146, exercise: 1, item: 6, difficulty: "Very Hard", tags: ["بناء الماضي"], question: "«دَخَلْنَاهَا وشَاهَدْنَا ما فيها»، الفعلان مبنيان على:", options: [{text: "السكون", isCorrect: true, rationale: "لاتصالهما بـ (نا) الفاعلين (الضمير المتصل في محل رفع فاعل)."}, {text: "الفتح", isCorrect: false, rationale: "لو كان الفتح لكانت (نا) للمفعولين."}, {text: "الضم", isCorrect: false, rationale: "لا توجد واو جماعة."}, {text: "حذف حرف العلة", isCorrect: false, rationale: "الفعلان صحيحان (دخل، شاهد)."}] },
-            { id: 48, lesson: "أحوال بناء الماضي", lessonNo: 5, page: 146, exercise: 1, item: 7, difficulty: "Very Hard", tags: ["بناء الماضي"], question: "«قَضَيْنَاهُمَا هُنالك»، الفعل (قضى) عند اتصاله بـ (نا) الفاعلين، كيف بُني؟", options: [{text: "السكون على الياء التي رُدّت لأصلها", isCorrect: true, rationale: "قضى فعل معتل، رُدت ألفه ياء لاتصاله بضمير الرفع وبُني على السكون."}, {text: "الفتح المقدر", isCorrect: false, rationale: "اتصال ضمير الرفع المتحرك يوجب بناء الماضي على السكون."}, {text: "الكسر", isCorrect: false, rationale: "لا يبنى الماضي على الكسر."}, {text: "حذف حرف العلة", isCorrect: false, rationale: "حرف العلة قُلب ولم يُحذف."}] },
-            { id: 49, lesson: "أحوال بناء الماضي", lessonNo: 5, page: 146, exercise: 1, item: 8, difficulty: "Very Hard", tags: ["بناء الماضي"], question: "«عادَ كُلٌّ منا»، الفعل (عاد) مبني على الفتح، السبب:", options: [{text: "لأنه لم يتصل بآخره شيء", isCorrect: true, rationale: "الفعل الماضي الصحيح الآخر يبنى على الفتح إذا لم يتصل به شيء."}, {text: "لأنه معتل أجوف", isCorrect: false, rationale: "الاعتلال في الوسط لا يمنع ظهور الفتحة في الآخر (الدال)."}, {text: "لأنه فعل ثلاثي", isCorrect: false, rationale: "عدد الحروف لا يؤثر في قاعدة البناء."}, {text: "لاتصاله بضمير مستتر", isCorrect: false, rationale: "الضمير المستتر لا يؤثر في اللفظ، وبناء الفتح هو الأصل."}] },
-            { id: 50, lesson: "أحوال بناء الماضي", lessonNo: 5, page: 146, exercise: 2, item: 4, difficulty: "Very Hard", tags: ["بناء الماضي"], question: "ضع الفعل (انخدع) في جملة بحيث يُبنى على السكون:", options: [{text: "انْخَدَعْتُ بالمظهر الكاذب", isCorrect: true, rationale: "اتصاله بتاء الفاعل المتحركة يوجب بناءه على السكون."}, {text: "انْخَدَعَ الرجلُ", isCorrect: false, rationale: "مبني على الفتح."}, {text: "انْخَدَعُوا بالعدو", isCorrect: false, rationale: "مبني على الضم."}, {text: "لم يَنْخَدِعْ", isCorrect: false, rationale: "هذا فعل مضارع مجزوم، والمطلوب ماضٍ مبني."}] }
-        ];
-
-        let currentIdx = 0; let score = 0; let userAnswers = []; let timerInterval; let totalTime; let fontSize = 16;
-
-        function toggleDarkMode() { document.body.classList.toggle('dark-mode'); }
-        function changeFontSize(delta) { fontSize += delta; document.body.style.fontSize = fontSize + 'px'; }
-
-        function startQuiz() {
-            document.getElementById('setupScreen').classList.remove('active');
-            document.getElementById('quizScreen').classList.add('active');
-            const timerVal = parseInt(document.getElementById('timerOption').value);
-            if(timerVal > 0) startTimer(timerVal * 60);
-            showQuestion();
-        }
-
-        function startTimer(seconds) {
-            totalTime = seconds;
-            document.getElementById('timerDisplay').style.display = 'block';
-            timerInterval = setInterval(() => {
-                let mins = Math.floor(totalTime / 60); let secs = totalTime % 60;
-                document.getElementById('timerDisplay').innerText = `الوقت المتبقي: ${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-                if(totalTime <= 0) { clearInterval(timerInterval); finishQuiz(); }
-                totalTime--;
-            }, 1000);
-        }
-
-        function showQuestion() {
-            const q = questions[currentIdx];
-            document.getElementById('questionCountDisplay').innerText = `السؤال ${currentIdx + 1} من 50`;
-            document.getElementById('progressFill').style.width = `${((currentIdx + 1) / 50) * 100}%`;
-            document.getElementById('metaDisplay').innerHTML = `درس: ${q.lesson} (#${q.lessonNo}) | صفحة: ${q.page} | تمرين: ${q.exercise} <span class="badge ${q.difficulty === 'Medium' ? 'badge-med' : q.difficulty === 'Hard' ? 'badge-hard' : 'badge-vhard'}">${q.difficulty}</span>`;
-            document.getElementById('questionText').innerText = q.question;
-            
-            const optionsBox = document.getElementById('optionsContainer');
-            optionsBox.innerHTML = '';
-            
-            q.options.forEach((opt, i) => {
-                const div = document.createElement('div');
-                div.className = 'option'; div.innerText = opt.text;
-                div.onclick = () => selectOption(i);
-                if(userAnswers[currentIdx] === i) div.classList.add('selected');
-                optionsBox.appendChild(div);
-            });
-
-            document.getElementById('feedbackBox').style.display = 'none';
-            document.getElementById('submitBtn').style.display = 'inline-block';
-            document.getElementById('nextBtn').style.display = 'none';
-            document.getElementById('prevBtn').disabled = currentIdx === 0;
-            
-            // تعطيل التأكيد إذا مجاب مسبقاً
-            if(userAnswers[currentIdx] !== undefined && document.getElementById('feedbackBox').innerHTML !== "") {
-               document.getElementById('submitBtn').style.display = 'none';
-               document.getElementById('nextBtn').style.display = 'inline-block';
-               showStoredFeedback();
-            }
-        }
-
-        function selectOption(idx) {
-            if(document.getElementById('submitBtn').style.display === 'none') return; // منع التعديل بعد التأكيد
-            const opts = document.querySelectorAll('.option');
-            opts.forEach(o => o.classList.remove('selected'));
-            opts[idx].classList.add('selected');
-            userAnswers[currentIdx] = idx;
-        }
-
-        function checkAnswer() {
-            if(userAnswers[currentIdx] === undefined) { alert("يرجى اختيار إجابة أولاً"); return; }
-            const q = questions[currentIdx]; const selectedIdx = userAnswers[currentIdx];
-            const isCorrect = q.options[selectedIdx].isCorrect;
-            
-            const feedback = document.getElementById('feedbackBox');
-            feedback.className = `feedback ${isCorrect ? 'correct' : 'incorrect'}`;
-            feedback.innerHTML = `<strong>${isCorrect ? '✔ إجابة صحيحة' : '✘ إجابة غير صحيحة'}</strong><br>${q.options[selectedIdx].rationale}`;
-            
-            // تعليم الخيار الصحيح للمستخدم
-            const opts = document.querySelectorAll('.option');
-            opts.forEach((o, i) => {
-                if(q.options[i].isCorrect) o.style.borderColor = '#2ecc71';
-                else if(i === selectedIdx && !isCorrect) o.style.borderColor = '#e74c3c';
-            });
-
-            if(isCorrect) score++;
-            document.getElementById('scoreDisplay').innerText = `الدرجة: ${score}`;
-            document.getElementById('submitBtn').style.display = 'none';
-            document.getElementById('nextBtn').style.display = 'inline-block';
-        }
-
-        function showStoredFeedback() {
-            const q = questions[currentIdx]; const selectedIdx = userAnswers[currentIdx];
-            const isCorrect = q.options[selectedIdx].isCorrect;
-            const feedback = document.getElementById('feedbackBox');
-            feedback.className = `feedback ${isCorrect ? 'correct' : 'incorrect'}`;
-            feedback.innerHTML = `<strong>${isCorrect ? '✔ إجابة صحيحة' : '✘ إجابة غير صحيحة'}</strong><br>${q.options[selectedIdx].rationale}`;
-            const opts = document.querySelectorAll('.option');
-            opts.forEach((o, i) => {
-                if(q.options[i].isCorrect) o.style.borderColor = '#2ecc71';
-                else if(i === selectedIdx && !isCorrect) o.style.borderColor = '#e74c3c';
-            });
-        }
-
-        function nextQuestion() {
-            if(currentIdx < 49) { currentIdx++; showQuestion(); } 
-            else finishQuiz();
-        }
-
-        function prevQuestion() { if(currentIdx > 0) { currentIdx--; showQuestion(); } }
-
-        function confirmFinish() { if(confirm("هل أنت متأكد من إنهاء الاختبار الآن؟")) finishQuiz(); }
-
-        function finishQuiz() {
-            clearInterval(timerInterval);
-            document.getElementById('quizScreen').classList.remove('active');
-            document.getElementById('resultScreen').classList.add('active');
-            
-            const percent = (score / 50) * 100; let grade = "";
-            if(percent >= 90) grade = "ممتاز 🌟"; else if(percent >= 80) grade = "جيد جداً 👍";
-            else if(percent >= 65) grade = "جيد 😊"; else if(percent >= 50) grade = "مقبول 😐"; else grade = "يحتاج إلى مراجعة 📚";
-
-            document.getElementById('resultContent').innerHTML = `
-                <p>الطالب: <strong>${document.getElementById('studentName').value || 'زائر'}</strong></p>
-                <p>الدرجة النهائية: <strong>${score} من 50</strong></p>
-                <p>النسبة المئوية: <strong>%${percent.toFixed(1)}</strong></p>
-                <p>التقدير: <strong style="color: var(--accent-color);">${grade}</strong></p>
-                <hr style="border: 1px solid #eee; margin: 20px 0;">
-                <p style="color: #27ae60;">الإجابات الصحيحة: ${score}</p>
-                <p style="color: #e74c3c;">الإجابات الخاطئة: ${50 - score}</p>
-            `;
-        }
-
-        function showReview() {
-            document.getElementById('resultScreen').classList.remove('active');
-            document.getElementById('reviewScreen').classList.add('active');
-            const container = document.getElementById('reviewContainer');
-            container.innerHTML = '';
-
-            questions.forEach((q, i) => {
-                const userAnsIdx = userAnswers[i];
-                const correctAnsIdx = q.options.findIndex(o => o.isCorrect);
-                const item = document.createElement('div');
-                item.className = 'review-item';
-                item.innerHTML = `
-                    <p style="font-size: 1.1em; font-weight: bold; color: var(--accent-color);">س${i+1}: ${q.question}</p>
-                    <p style="color: ${userAnsIdx === correctAnsIdx ? '#27ae60' : '#e74c3c'}">
-                        <strong>إجابتك:</strong> ${userAnsIdx !== undefined ? q.options[userAnsIdx].text : 'لم تجب'}
-                    </p>
-                    <p style="color: #27ae60"><strong>الإجابة الصحيحة:</strong> ${q.options[correctAnsIdx].text}</p>
-                    <div style="font-size: 0.95em; background: rgba(0,0,0,0.05); padding: 15px; border-radius: 8px; margin-top: 10px;">
-                        <strong>التعليل النحوي:</strong> ${q.options[correctAnsIdx].rationale}
+                <div class="grade" id="final-grade">ممتاز</div>
+                
+                <div class="stats-grid">
+                    <div class="stat-box correct">
+                        إجابات صحيحة
+                        <div style="font-size:1.5rem; font-weight:bold; color:var(--success-color);" id="correct-count">0</div>
                     </div>
-                `;
-                container.appendChild(item);
-            });
+                    <div class="stat-box wrong">
+                        إجابات خاطئة
+                        <div style="font-size:1.5rem; font-weight:bold; color:var(--danger-color);" id="wrong-count">0</div>
+                    </div>
+                    <div class="stat-box">
+                        النسبة المئوية
+                        <div style="font-size:1.5rem; font-weight:bold;" id="percentage-val">0%</div>
+                    </div>
+                    <div class="stat-box">
+                        الوقت المستغرق
+                        <div style="font-size:1.5rem; font-weight:bold;" id="time-taken">00:00</div>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                    <button class="btn" onclick="showReview()">مراجعة الاختبار</button>
+                    <button class="btn btn-outline" onclick="location.reload()">إعادة الاختبار</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Review Screen -->
+        <div id="review-screen" class="review-screen">
+            <h2>مراجعة الإجابات</h2>
+            <div id="review-container">
+                <!-- Review items will be injected here -->
+            </div>
+            <button class="btn" style="margin-top: 20px;" onclick="location.reload()">العودة للبداية / إعادة الاختبار</button>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    const questionsData = [
+        {
+            num: 1, lessonName: "الفعل الصحيح والمعتل", lessonNum: 1, page: 130, exerciseNum: 1, questionInExercise: 1, difficulty: "Medium", tags: ["الفعل", "الصحيح", "الماضي"],
+            text: "الفعل (خَرَجَ) في عبارة (خَرَجَ فريد يتنزه) هو:",
+            options: ["صحيح الآخر", "معتل الآخر بالألف", "معتل الآخر بالواو", "معتل الآخر بالياء"],
+            correctIndex: 0,
+            explanation: "الفعل (خَرَجَ) ماضٍ ليس في آخره حرف من حروف العلة (الألف، الواو، الياء) لذا فهو صحيح الآخر."
+        },
+        {
+            num: 2, lessonName: "الفعل الصحيح والمعتل", lessonNum: 1, page: 130, exerciseNum: 1, questionInExercise: 2, difficulty: "Medium", tags: ["المضارع", "المعتل", "الياء"],
+            text: "الفعل (يَجْرِي) في عبارة (يَجْرِي ماؤه) هو:",
+            options: ["صحيح الآخر", "معتل الآخر بالياء", "معتل الآخر بالواو", "معتل الآخر بالألف"],
+            correctIndex: 1,
+            explanation: "الفعل (يَجْرِي) آخره ياء، والياء من حروف العلة، فهو معتل الآخر بالياء."
+        },
+        {
+            num: 3, lessonName: "الفعل الصحيح والمعتل", lessonNum: 1, page: 130, exerciseNum: 1, questionInExercise: 3, difficulty: "Medium", tags: ["المضارع", "المعتل", "الواو"],
+            text: "الفعل (تَعْدُو) في عبارة (وتَعْدُو آمنةً) هو:",
+            options: ["صحيح الآخر", "معتل الآخر بالياء", "معتل الآخر بالواو", "معتل الآخر بالألف"],
+            correctIndex: 2,
+            explanation: "الفعل (تَعْدُو) آخره واو، والواو من حروف العلة، فهو معتل الآخر بالواو."
+        },
+        {
+            num: 4, lessonName: "الفعل الصحيح والمعتل", lessonNum: 1, page: 132, exerciseNum: 6, questionInExercise: 1, difficulty: "Medium", tags: ["المضارع", "الماضي", "المعتل"],
+            text: "الفعل المضارع من الماضي المعتل (دَعَا) هو:",
+            options: ["يَدْعِي (معتل بالياء)", "يَدْعَى (معتل بالألف)", "يَدْعُوْن (صحيح الآخر)", "يَدْعُو (معتل بالواو)"],
+            correctIndex: 3,
+            explanation: "المضارع من (دعا) هو (يدعو)، وأصله واو، فهو معتل الآخر بالواو."
+        },
+        {
+            num: 5, lessonName: "الفعل الصحيح والمعتل", lessonNum: 1, page: 132, exerciseNum: 7, questionInExercise: 1, difficulty: "Medium", tags: ["الماضي", "المضارع", "المعتل"],
+            text: "الفعل الماضي من المضارع (يَقْضِي) هو:",
+            options: ["قَضَى (معتل بالألف)", "قَضِيَ (معتل بالياء)", "قَضُوَ (معتل بالواو)", "يَقْضِ (صحيح الآخر)"],
+            correctIndex: 0,
+            explanation: "الماضي من (يقضي) هو (قضى) وهو معتل الآخر بالألف."
+        },
+        {
+            num: 6, lessonName: "الفعل الصحيح والمعتل", lessonNum: 1, page: 132, exerciseNum: 6, questionInExercise: 3, difficulty: "hard", tags: ["المضارع", "المعتل"],
+            text: "الفعل المضارع من (رَضِيَ) هو:",
+            options: ["يَرْضَى (معتل بالألف)", "يَرْضِي (معتل بالياء)", "يَرْضُو (معتل بالواو)", "يَرْضِ (صحيح الآخر)"],
+            correctIndex: 0,
+            explanation: "المضارع من (رضي) هو (يرضى)، فينتهي بألف مقصورة، فهو معتل الآخر بالألف."
+        },
+        {
+            num: 7, lessonName: "الفعل الصحيح والمعتل", lessonNum: 1, page: 132, exerciseNum: 7, questionInExercise: 2, difficulty: "hard", tags: ["الماضي", "المعتل"],
+            text: "الفعل الماضي من (يَبْقَى) هو:",
+            options: ["بَقَى (معتل بالألف)", "بَقُوَ (معتل بالواو)", "بَقِيَ (معتل بالياء)", "أبْقَى (معتل بالألف)"],
+            correctIndex: 2,
+            explanation: "الماضي من (يبقى) هو (بقي)، وينتهي بياء، فهو معتل الآخر بالياء."
+        },
+        {
+            num: 8, lessonName: "الفعل الصحيح والمعتل", lessonNum: 1, page: 130, exerciseNum: 1, questionInExercise: 4, difficulty: "hard", tags: ["المضارع", "المعتل"],
+            text: "الفعل (تَرْعَى) في عبارة (تَرْعَى الكَلأَ) هو:",
+            options: ["معتل الآخر بالياء", "معتل الآخر بالألف", "معتل الآخر بالواو", "صحيح الآخر"],
+            correctIndex: 1,
+            explanation: "الفعل (ترعى) يُنطق آخره ألفاً، والمعول عليه هو النطق لا الكتابة، فهو معتل الآخر بالألف."
+        },
+        {
+            num: 9, lessonName: "الفعل الصحيح والمعتل", lessonNum: 1, page: 132, exerciseNum: 6, questionInExercise: 7, difficulty: "hard", tags: ["المضارع", "المعتل"],
+            text: "الفعل المضارع من (عَمِيَ) هو:",
+            options: ["يَعْمِي (معتل بالياء)", "يَعْمُو (معتل بالواو)", "يَعْمَ (صحيح الآخر)", "يَعْمَى (معتل بالألف)"],
+            correctIndex: 3,
+            explanation: "المضارع من (عمي) هو (يعمى) بالألف المقصورة، فهو معتل الآخر بالألف."
+        },
+        {
+            num: 10, lessonName: "الفعل الصحيح والمعتل", lessonNum: 1, page: 132, exerciseNum: 7, questionInExercise: 3, difficulty: "hard", tags: ["الماضي", "المعتل"],
+            text: "الفعل الماضي من (يَسْهُو) هو:",
+            options: ["سَهَا (معتل بالألف)", "سَهِيَ (معتل بالياء)", "سَهُوَ (معتل بالواو)", "أَسْهَى (معتل بالألف)"],
+            correctIndex: 0,
+            explanation: "الماضي من (يسهو) هو (سها) بالألف الممدودة، فهو معتل الآخر بالألف."
+        },
+        {
+            num: 11, lessonName: "المبني والمعرب", lessonNum: 2, page: 134, exerciseNum: 1, questionInExercise: 1, difficulty: "Very hard", tags: ["الأسماء", "الإعراب", "البناء"],
+            text: "كلمة (الدَّرَّاجَة) في الجمل الآتية (الدراجةُ مسرعةٌ، ركب على الدراجةِ، فرح الولد بالدراجةِ) تعتبر:",
+            options: ["مبنية لأن آخرها يثبت على حالة واحدة", "معربة لأنها اسم جماد", "مبنية لأنها لا تتأثر بالعوامل", "معربة لأن آخرها يتغير بتغير موقعها"],
+            correctIndex: 3,
+            explanation: "الكلمة المُعربة هي ما يتغير آخرها بتغير مكانها من الجملة (الرفع والنصب والجر)."
+        },
+        {
+            num: 12, lessonName: "المبني والمعرب", lessonNum: 2, page: 134, exerciseNum: 1, questionInExercise: 2, difficulty: "Very hard", tags: ["الأسماء", "البناء"],
+            text: "كلمة (مَنْ) في الجمل الآتية (جاء مَنْ ناديته، أحب مَنْ يعلمني، الجائزة لمَنْ يسبق) تعتبر:",
+            options: ["مبنية لأن آخرها يثبت على السكون في جميع التراكيب", "معربة لأنها تقع فاعلاً ومفعولاً ومجروراً", "مبنية على الفتح في جميع التراكيب", "معربة لأنها اسم موصول"],
+            correctIndex: 0,
+            explanation: "كلمة (مَنْ) تلازم حالة واحدة وهي السكون في كل التراكيب، فهي مبنية."
+        },
+        {
+            num: 13, lessonName: "أنواع البناء", lessonNum: 3, page: 137, exerciseNum: 1, questionInExercise: 1, difficulty: "Very hard", tags: ["الفعل", "الماضي", "البناء"],
+            text: "الفعل (اسْتَرَاحَ) في جملة (اسْتَرَاحَ المريضُ) مبني على:",
+            options: ["السكون", "الضم", "الكسر", "الفتح"],
+            correctIndex: 3,
+            explanation: "الفعل الماضي لم يتصل بآخره شيء، فيبنى على الفتح."
+        },
+        {
+            num: 14, lessonName: "أنواع البناء", lessonNum: 3, page: 137, exerciseNum: 1, questionInExercise: 2, difficulty: "Very hard", tags: ["الحروف", "البناء"],
+            text: "الحرف (لا) في جملة (لا يستطيع الإنسان أن يعيش منفرداً) مبني على:",
+            options: ["السكون", "الفتح", "الكسر", "الضم"],
+            correctIndex: 0,
+            explanation: "حرف (لا) آخره ألف ساكنة، فيكون مبنياً على السكون."
+        },
+        {
+            num: 15, lessonName: "أنواع البناء", lessonNum: 3, page: 137, exerciseNum: 1, questionInExercise: 3, difficulty: "Very hard", tags: ["الضمائر", "البناء"],
+            text: "الكلمة (نَحْنُ) في جملة (نَحْنُ نُحِبُّ الوَطَنَ) مبنية على:",
+            options: ["الفتح", "السكون", "الضم", "الكسر"],
+            correctIndex: 2,
+            explanation: "كلمة (نحن) تلازم الضم في آخرها دائماً، فهي مبنية على الضم."
+        },
+        {
+            num: 16, lessonName: "أنواع البناء", lessonNum: 3, page: 137, exerciseNum: 1, questionInExercise: 4, difficulty: "Very hard", tags: ["الماضي", "البناء"],
+            text: "الفعل (وَجَبَ) في جملة (وَجَبَ أن يجعل الزيارة قصيرة) مبني على:",
+            options: ["الفتح", "السكون", "الضم", "الكسر"],
+            correctIndex: 0,
+            explanation: "فعل ماض لم يتصل بآخره شيء فبني على الفتح."
+        },
+        {
+            num: 17, lessonName: "أنواع الإعراب", lessonNum: 4, page: 141, exerciseNum: 1, questionInExercise: 1, difficulty: "Very hard", tags: ["الإعراب", "الجر"],
+            text: "كلمة (الإنسان) في عبارة (على الإنسان أن يراعي...) معربة ونوع إعرابها:",
+            options: ["الرفع", "النصب", "الجزم", "الجر"],
+            correctIndex: 3,
+            explanation: "سبقها حرف الجر (على)، فالجر نوع من أنواع الإعراب يختص بالأسماء."
+        },
+        {
+            num: 18, lessonName: "أنواع الإعراب", lessonNum: 4, page: 141, exerciseNum: 1, questionInExercise: 2, difficulty: "Very hard", tags: ["المضارع", "الإعراب"],
+            text: "الفعل (يُرَاعِي) في عبارة (أن يراعي في الملابس...) معرب ونوع إعرابه:",
+            options: ["النصب", "الرفع", "الجزم", "الجر"],
+            correctIndex: 0,
+            explanation: "سبقه (أن) الناصبة، والنصب نوع من أنواع الإعراب المشتركة بين الأسماء والأفعال."
+        },
+        {
+            num: 19, lessonName: "أنواع الإعراب", lessonNum: 4, page: 141, exerciseNum: 1, questionInExercise: 3, difficulty: "Very hard", tags: ["المضارع", "الرفع"],
+            text: "الفعل (يَجْلِبُ) في عبارة (إن المزاح يجلب البغضاء...) معرب ونوع إعرابه:",
+            options: ["النصب", "الجزم", "الجر", "الرفع"],
+            correctIndex: 3,
+            explanation: "فعل مضارع لم يسبقه ناصب ولا جازم، فهو مرفوع."
+        },
+        {
+            num: 20, lessonName: "أنواع الإعراب", lessonNum: 4, page: 142, exerciseNum: 6, questionInExercise: 1, difficulty: "Very hard", tags: ["خصائص الإعراب"],
+            text: "الكلمات المعربة التي لا يدخلها الجزم في عبارة (يجب على الإنسان...) هي:",
+            options: ["الأفعال الماضية", "الأفعال المضارعة", "الحروف", "الأسماء"],
+            correctIndex: 3,
+            explanation: "الجزم يختص بالأفعال المعربة (المضارع)، ولا يدخل الأسماء."
+        },
+        {
+            num: 21, lessonName: "أنواع الإعراب", lessonNum: 4, page: 142, exerciseNum: 6, questionInExercise: 2, difficulty: "Very hard", tags: ["خصائص الإعراب"],
+            text: "الكلمات المعربة التي لا يدخلها الجر في العبارة السابقة هي:",
+            options: ["الأسماء", "الأفعال الماضية", "الحروف", "الأفعال المضارعة"],
+            correctIndex: 3,
+            explanation: "الجر يختص بالأسماء المعربة، ولا يدخل الأفعال المعربة (المضارع)."
+        },
+        {
+            num: 22, lessonName: "أحوال بناء الفعل الماضي", lessonNum: 5, page: 145, exerciseNum: 1, questionInExercise: 1, difficulty: "Very hard", tags: ["الماضي", "البناء"],
+            text: "الفعل (خَرَجْتُ) في عبارة (خَرَجْتُ من المنزل عصراً) مبني على:",
+            options: ["الفتح لأنه لم يتصل به شيء", "الضم لاتصاله بتاء الفاعل", "السكون لاتصاله بنون النسوة", "السكون لاتصاله بالتاء المتحركة"],
+            correctIndex: 3,
+            explanation: "الفعل الماضي يبنى على السكون إذا اتصلت به التاء المتحركة (تاء الفاعل)."
+        },
+        {
+            num: 23, lessonName: "أحوال بناء الفعل الماضي", lessonNum: 5, page: 145, exerciseNum: 1, questionInExercise: 2, difficulty: "Very hard", tags: ["الماضي", "البناء"],
+            text: "الفعل (صَادَفَنِي) في عبارة (فصادفني في الطريق ثلاثة غلمان) مبني على:",
+            options: ["الفتح", "السكون", "الكسر", "الضم"],
+            correctIndex: 0,
+            explanation: "لم يتصل بآخره (الفاء) ما يوجب سكونه أو ضمه (النون هنا نون الوقاية، والياء مفعول به)، فبني على الفتح."
+        },
+        {
+            num: 24, lessonName: "أحوال بناء الفعل الماضي", lessonNum: 5, page: 146, exerciseNum: 1, questionInExercise: 3, difficulty: "Very hard", tags: ["الماضي", "البناء"],
+            text: "الفعل (عَرَفْتُهُمْ) في عبارة (عرفتهم وعرفوني) مبني على:",
+            options: ["الفتح", "الضم", "السكون لاتصاله بميم الجمع", "السكون لاتصاله بالتاء المتحركة"],
+            correctIndex: 3,
+            explanation: "اتصلت به التاء المتحركة (تاء الفاعل)، فيبنى على السكون (عرفْـتُ)."
+        },
+        {
+            num: 25, lessonName: "أحوال بناء الفعل الماضي", lessonNum: 5, page: 146, exerciseNum: 1, questionInExercise: 4, difficulty: "Very hard", tags: ["الماضي", "البناء"],
+            text: "الفعل (عَرَفُونِي) في عبارة (عرفوني) مبني على:",
+            options: ["السكون", "الفتح", "ثبوت النون", "الضم لاتصاله بواو الجماعة"],
+            correctIndex: 3,
+            explanation: "الفعل الماضي يبنى على الضم إذا اتصلت به واو الجماعة."
+        },
+        {
+            num: 26, lessonName: "أحوال بناء الفعل الماضي", lessonNum: 5, page: 146, exerciseNum: 1, questionInExercise: 5, difficulty: "Very hard", tags: ["الماضي", "البناء"],
+            text: "الفعل (سِرْنَا) في عبارة (ثم سرنا جميعاً إليها) مبني على:",
+            options: ["الفتح", "الضم", "السكون لاتصاله بنون النسوة", "السكون لاتصاله بـ (نا) الدالة على الفاعل"],
+            correctIndex: 3,
+            explanation: "الفعل الماضي يبنى على السكون إذا اتصلت به (نا) الدالة على الفاعل."
+        },
+        {
+            num: 27, lessonName: "أحوال بناء الفعل الماضي", lessonNum: 5, page: 146, exerciseNum: 1, questionInExercise: 6, difficulty: "Very hard", tags: ["الماضي", "البناء"],
+            text: "الفعل (قَضَيْنَاهُمَا) في عبارة (وبعد ساعتين قضيناهما هنالك) مبني على:",
+            options: ["الفتح", "الضم", "السكون لاتصاله بنون النسوة", "السكون لاتصاله بـ (نا) الدالة على الفاعل"],
+            correctIndex: 3,
+            explanation: "اتصل بـ (نا) الدالة على الفاعل فيبنى على السكون (قضيْـنا)."
+        },
+        {
+            num: 28, lessonName: "أحوال بناء الفعل الماضي", lessonNum: 5, page: 146, exerciseNum: 1, questionInExercise: 7, difficulty: "Very hard", tags: ["الماضي", "البناء"],
+            text: "الفعل (عَادَ) في عبارة (عاد كل منا إلى أهله) مبني على:",
+            options: ["السكون", "الضم", "الفتح المقدر", "الفتح لأنه لم يتصل بآخره شيء"],
+            correctIndex: 3,
+            explanation: "الفعل الماضي يبنى على الفتح إذا لم يتصل به واو الجماعة أو ضمائر الرفع المتحركة."
+        },
+        {
+            num: 29, lessonName: "أحوال بناء الفعل الماضي", lessonNum: 5, page: 146, exerciseNum: 1, questionInExercise: 8, difficulty: "Very hard", tags: ["الماضي", "البناء"],
+            text: "الفعل (اقْتَرَحْتُ) في عبارة (اقترحت عليهم) مبني على:",
+            options: ["الضم", "الفتح", "السكون لاتصاله بـ (نا)", "السكون لاتصاله بالتاء المتحركة"],
+            correctIndex: 3,
+            explanation: "الفعل الماضي يبنى على السكون عند اتصاله بالتاء المتحركة."
+        },
+        {
+            num: 30, lessonName: "أحوال بناء الفعل الماضي", lessonNum: 5, page: 146, exerciseNum: 1, questionInExercise: 9, difficulty: "Very hard", tags: ["الماضي", "البناء"],
+            text: "الفعل (قَبِلُوا) في عبارة (فقبلوا الفكرة) مبني على:",
+            options: ["السكون", "الفتح", "حذف النون", "الضم لاتصاله بواو الجماعة"],
+            correctIndex: 3,
+            explanation: "الفعل الماضي يبنى على الضم عند اتصاله بواو الجماعة."
         }
-    </script>
+    ];
+
+    let currentQuestionIndex = 0;
+    let score = 0;
+    let userAnswers = new Array(questionsData.length).fill(null);
+    let quizInterval;
+    let timeRemaining = 30 * 60; // 30 minutes
+    let startTime;
+    let isAnswerSubmitted = false;
+
+    // Theme & Font
+    function toggleDarkMode() {
+        document.body.classList.toggle('dark-mode');
+    }
+
+    let currentFontSize = 16;
+    function changeFontSize(step) {
+        currentFontSize += step * 2;
+        if(currentFontSize < 12) currentFontSize = 12;
+        if(currentFontSize > 24) currentFontSize = 24;
+        document.documentElement.style.fontSize = currentFontSize + 'px';
+    }
+
+    function startQuiz() {
+        const studentName = document.getElementById('student-name').value;
+        const useTimer = document.getElementById('enable-timer').checked;
+        
+        if(studentName) {
+            document.getElementById('result-name').innerText = "الطالب: " + studentName;
+        }
+
+        document.getElementById('start-screen').classList.remove('active-screen');
+        document.getElementById('quiz-screen').classList.add('active-screen');
+
+        if(useTimer) {
+            document.getElementById('timer-display').style.display = 'block';
+            startTimer();
+        }
+        startTime = new Date();
+        loadQuestion();
+    }
+
+    function startTimer() {
+        updateTimerDisplay();
+        quizInterval = setInterval(() => {
+            timeRemaining--;
+            updateTimerDisplay();
+            if (timeRemaining <= 0) {
+                clearInterval(quizInterval);
+                endQuiz();
+            }
+        }, 1000);
+    }
+
+    function updateTimerDisplay() {
+        const m = Math.floor(timeRemaining / 60).toString().padStart(2, '0');
+        const s = (timeRemaining % 60).toString().padStart(2, '0');
+        document.getElementById('time-left').innerText = `${m}:${s}`;
+    }
+
+    function loadQuestion() {
+        const q = questionsData[currentQuestionIndex];
+        isAnswerSubmitted = userAnswers[currentQuestionIndex] !== null;
+
+        document.getElementById('current-q-num').innerText = currentQuestionIndex + 1;
+        document.getElementById('progress-bar').style.width = ((currentQuestionIndex + 1) / questionsData.length) * 100 + '%';
+        
+        const container = document.getElementById('question-container');
+        let tagsHtml = q.tags.map(t => `<span>${t}</span>`).join('');
+
+        container.innerHTML = `
+            <div class="question-meta">
+                <span>الدرس: ${q.lessonName}</span>
+                <span>ص: ${q.page}</span>
+                <span>تمرين: ${q.exerciseNum}</span>
+                <span class="difficulty-${q.difficulty}">صعوبة: ${q.difficulty}</span>
+                ${tagsHtml}
+            </div>
+            <div class="question-text">${q.num}. ${q.text}</div>
+            <div class="options" id="options-container">
+                ${q.options.map((opt, i) => `
+                    <div class="option" onclick="selectOption(${i})" id="opt-${i}">
+                        ${String.fromCharCode(162 - i + 1605)} ${opt}
+                    </div>
+                `).join('')}
+            </div>
+        `;
+
+        document.getElementById('btn-prev').disabled = currentQuestionIndex === 0;
+        
+        if(currentQuestionIndex === questionsData.length - 1) {
+            document.getElementById('btn-next').style.display = 'none';
+        } else {
+            document.getElementById('btn-next').style.display = 'inline-block';
+        }
+
+        document.getElementById('feedback-container').style.display = 'none';
+        document.getElementById('feedback-container').className = 'feedback';
+
+        // Restore if already answered
+        if(isAnswerSubmitted) {
+            const selectedIdx = userAnswers[currentQuestionIndex];
+            showFeedback(selectedIdx, q.correctIndex, q.explanation);
+        }
+    }
+
+    function selectOption(idx) {
+        if(isAnswerSubmitted) return; // prevent changing answer
+
+        userAnswers[currentQuestionIndex] = idx;
+        isAnswerSubmitted = true;
+        const q = questionsData[currentQuestionIndex];
+        
+        if(idx === q.correctIndex) {
+            score++;
+            document.getElementById('current-score').innerText = score;
+        }
+
+        showFeedback(idx, q.correctIndex, q.explanation);
+    }
+
+    function showFeedback(selectedIdx, correctIdx, explanation) {
+        const opts = document.querySelectorAll('.option');
+        opts.forEach(opt => opt.onclick = null); // disable further clicks
+
+        opts[correctIdx].classList.add('correct');
+        
+        const feedbackContainer = document.getElementById('feedback-container');
+        const feedbackTitle = document.getElementById('feedback-title');
+        const feedbackText = document.getElementById('feedback-text');
+
+        if(selectedIdx === correctIdx) {
+            feedbackContainer.className = 'feedback success';
+            feedbackTitle.innerHTML = '✔ إجابة صحيحة';
+        } else {
+            if(selectedIdx !== null) {
+                opts[selectedIdx].classList.add('wrong');
+            }
+            feedbackContainer.className = 'feedback error';
+            feedbackTitle.innerHTML = '✘ إجابة غير صحيحة';
+        }
+
+        feedbackText.innerHTML = explanation;
+        feedbackContainer.style.display = 'block';
+    }
+
+    function nextQuestion() {
+        if(currentQuestionIndex < questionsData.length - 1) {
+            currentQuestionIndex++;
+            loadQuestion();
+        }
+    }
+
+    function prevQuestion() {
+        if(currentQuestionIndex > 0) {
+            currentQuestionIndex--;
+            loadQuestion();
+        }
+    }
+
+    function endQuiz() {
+        clearInterval(quizInterval);
+        
+        document.getElementById('quiz-screen').classList.remove('active-screen');
+        document.getElementById('result-screen').classList.add('active-screen');
+
+        const answeredCount = userAnswers.filter(a => a !== null).length;
+        const correctCount = score;
+        const wrongCount = answeredCount - correctCount;
+        const percentage = Math.round((correctCount / questionsData.length) * 100);
+
+        document.getElementById('final-score-val').innerText = score;
+        document.getElementById('correct-count').innerText = correctCount;
+        document.getElementById('wrong-count').innerText = questionsData.length - correctCount; // Unanswered treated as wrong
+        document.getElementById('percentage-val').innerText = percentage + '%';
+
+        const endTime = new Date();
+        const diffInSeconds = Math.floor((endTime - startTime) / 1000);
+        const m = Math.floor(diffInSeconds / 60).toString().padStart(2, '0');
+        const s = (diffInSeconds % 60).toString().padStart(2, '0');
+        document.getElementById('time-taken').innerText = `${m}:${s}`;
+
+        let grade = "";
+        if(percentage >= 90) grade = "ممتاز 🏆";
+        else if(percentage >= 80) grade = "جيد جداً 🌟";
+        else if(percentage >= 70) grade = "جيد 👍";
+        else if(percentage >= 50) grade = "مقبول 🤔";
+        else grade = "يحتاج إلى مراجعة 📚";
+        
+        document.getElementById('final-grade').innerText = grade;
+    }
+
+    function showReview() {
+        document.getElementById('result-screen').classList.remove('active-screen');
+        document.getElementById('review-screen').classList.add('active-screen');
+
+        const container = document.getElementById('review-container');
+        let html = '';
+
+        questionsData.forEach((q, i) => {
+            const uAns = userAnswers[i];
+            const isCorrect = uAns === q.correctIndex;
+            
+            let uAnsText = uAns !== null ? q.options[uAns] : "لم يتم الإجابة";
+            let statusClass = isCorrect ? 'text-success' : 'text-danger';
+
+            html += `
+                <div class="review-item">
+                    <h4>س${q.num}: ${q.text}</h4>
+                    <p>إجابتك: <span class="${statusClass}">${uAnsText}</span></p>
+                    ${!isCorrect ? `<p>الإجابة الصحيحة: <span class="text-success">${q.options[q.correctIndex]}</span></p>` : ''}
+                    <div style="margin-top: 10px; padding: 10px; background: rgba(0,0,0,0.05); border-radius: 4px;">
+                        <strong>التعليل:</strong> ${q.explanation}
+                    </div>
+                </div>
+            `;
+        });
+
+        container.innerHTML = html;
+    }
+
+</script>
 </body>
 </html>
+"""
+
+file_path = "/mnt/data/Al-Nahw_Al-Wadeh_Quiz_Part2.html"
+with open(file_path, "w", encoding="utf-8") as f:
+    f.write(html_content)
+
+print(f"[file-tag: {file_path}]")
