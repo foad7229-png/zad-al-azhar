@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المؤقت التنازلي</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f4f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            text-align: center;
+            width: 380px;
+        }
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        input[type="number"] {
+            width: 80%;
+            padding: 10px;
+            font-size: 18px;
+            text-align: center;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            outline: none;
+        }
+        input[type="number"]:focus {
+            border-color: #4CAF50;
+        }
+        #display {
+            font-size: 60px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 20px;
+            transition: color 0.3s ease;
+        }
+        #display.warning {
+            color: #e74c3c;
+        }
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        button {
+            flex: 1;
+            color: white;
+            border: none;
+            padding: 12px 15px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.1s;
+        }
+        button:active {
+            transform: scale(0.95);
+        }
+        #startBtn { background-color: #4CAF50; }
+        #startBtn:hover:not(:disabled) { background-color: #45a049; }
+        
+        #pauseBtn { background-color: #f39c12; }
+        #pauseBtn:hover:not(:disabled) { background-color: #e67e22; }
+        
+        #resetBtn { background-color: #e74c3c; }
+        #resetBtn:hover:not(:disabled) { background-color: #c0392b; }
+        
+        button:disabled {
+            background-color: #bdc3c7 !important;
+            color: #7f8c8d;
+            cursor: not-allowed;
+            transform: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>أدخل الوقت (بالدقائق)</h2>
+        <input type="number" id="timeInput" min="0.1" step="any" placeholder="مثال: 5 أو 1.5">
+        <div id="display">00:00</div>
+        
+        <div class="btn-group">
+            <button id="startBtn" onclick="startTimer()">بدء</button>
+            <button id="pauseBtn" onclick="togglePause()" disabled>إيقاف مؤقت</button>
+            <button id="resetBtn" onclick="resetTimer()" disabled>إنهاء</button>
+        </div>
+    </div>
+
+    <script>
+        let timeLeft = 0;
+        let timerInterval = null;
+        let isPaused = false;
+        let audioCtx = null;
+
+        // إعداد نظام الصوت
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
+        // دالة إنشاء التكتة
+        function playTickSound() {
+            if (!audioCtx) return;
+            const oscillator = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            oscillator.type = 'sine';
+            oscillator.frequency.setValueAtTime(800, audioCtx.currentTime);
+            gainNode.gain.setValueAtTime(1, audioCtx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05);
+            oscillator.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+            oscillator.start();
+            oscillator.stop(audioCtx.currentTime + 0.05);
+        }
+
+        // دالة صوت الانتهاء
+        function playEndSound() {
+            if (!audioCtx) return;
+            const oscillator = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            oscillator.type = 'square';
+            oscillator.frequency.setValueAtTime(1000, audioCtx.currentTime);
+            gainNode.gain.setValueAtTime(1, audioCtx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1.5);
+            oscillator.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+            oscillator.start();
+            oscillator.stop(audioCtx.currentTime + 1.5);
+        }
+
+        function updateDisplay(seconds) {
+            const display = document.getElementById("display");
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            display.textContent = 
+                String(mins).padStart(2, '0') + ":" + String(secs).padStart(2, '0');
+        }
+
+        function startTimer() {
+            const input = document.getElementById("timeInput");
+            const startBtn = document.getElementById("startBtn");
+            const pauseBtn = document.getElementById("pauseBtn");
+            const resetBtn = document.getElementById("resetBtn");
+            const display = document.getElementById("display");
+            
+            if (timerInterval) return; // يمنع تشغيل مؤقتين معاً
+
+            // حساب الوقت فقط إذا كان المؤقت يبدأ من الصفر (ليس بعد إيقاف مؤقت)
+            if (timeLeft === 0) {
+                const inputMins = parseFloat(input.value);
+                if (isNaN(inputMins) || inputMins <= 0) {
+                    alert("الرجاء إدخال رقم صحيح أو عشري موجب للدقائق.");
+                    return;
+                }
+                timeLeft = Math.floor(inputMins * 60); // تحويل الدقائق لثواني
+            }
+
+            initAudio();
+
+            // تحديث حالة الأزرار
+            input.disabled = true;
+            startBtn.disabled = true;
+            pauseBtn.disabled = false;
+            resetBtn.disabled = false;
+            isPaused = false;
+            pauseBtn.textContent = "إيقاف مؤقت";
+            display.classList.remove("warning");
+
+            updateDisplay(timeLeft);
+
+            timerInterval = setInterval(() => {
+                if (isPaused) return;
+
+                timeLeft--;
+                updateDisplay(timeLeft);
+
+                if (timeLeft <= 30 && timeLeft > 0) {
+                    display.classList.add("warning");
+                    playTickSound();
+                }
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    timerInterval = null;
+                    playEndSound();
+                    
+                    // إعادة تهيئة الواجهة مع الاحتفاظ بالقيمة المدخلة
+                    input.disabled = false;
+                    startBtn.disabled = false;
+                    pauseBtn.disabled = true;
+                    resetBtn.disabled = true;
+                    display.classList.remove("warning");
+                    
+                    setTimeout(() => alert("انتهى الوقت!"), 100);
+                }
+            }, 1000);
+        }
+
+        function togglePause() {
+            isPaused = !isPaused;
+            const pauseBtn = document.getElementById("pauseBtn");
+            pauseBtn.textContent = isPaused ? "متابعة" : "إيقاف مؤقت";
+            
+            if (!isPaused) initAudio(); // تنشيط الصوت في حال العودة
+        }
+
+        function resetTimer() {
+            const input = document.getElementById("timeInput");
+            const startBtn = document.getElementById("startBtn");
+            const pauseBtn = document.getElementById("pauseBtn");
+            const resetBtn = document.getElementById("resetBtn");
+            const display = document.getElementById("display");
+
+            // إيقاف وتصفير العداد البرمجي
+            clearInterval(timerInterval);
+            timerInterval = null;
+            isPaused = false;
+            timeLeft = 0; 
+
+            // إعادة الواجهة لحالتها الطبيعية
+            input.disabled = false;
+            startBtn.disabled = false;
+            pauseBtn.disabled = true;
+            resetBtn.disabled = true;
+            pauseBtn.textContent = "إيقاف مؤقت";
+            display.classList.remove("warning");
+            
+            // قراءة القيمة الموجودة في الحقل لعرضها على الشاشة استعداداً للتشغيل الجديد
+            const inputMins = parseFloat(input.value);
+            if (!isNaN(inputMins) && inputMins > 0) {
+                updateDisplay(Math.floor(inputMins * 60));
+            } else {
+                display.textContent = "00:00";
+            }
+        }
+
+        // إضافة مستمع حدث لتحديث الشاشة فوراً عند تغيير الرقم في الحقل
+        document.getElementById("timeInput").addEventListener('input', function(e) {
+            if (timeLeft === 0 && !timerInterval) {
+                const val = parseFloat(e.target.value);
+                if (!isNaN(val) && val > 0) {
+                    updateDisplay(Math.floor(val * 60));
+                } else {
+                    document.getElementById("display").textContent = "00:00";
+                }
+            }
+        });
+    </script>
+</body>
+</html>
