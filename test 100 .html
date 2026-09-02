@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الاختبار الشامل: الممنوع من الصرف</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --bg-color: #f3f4f6;
+            --card-bg: #ffffff;
+            --text-main: #1f2937;
+            --text-muted: #6b7280;
+            --success: #10b981;
+            --success-bg: #d1fae5;
+            --danger: #ef4444;
+            --danger-bg: #fee2e2;
+            --border: #e5e7eb;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .quiz-container {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            width: 100%;
+            max-width: 650px;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .header h1 {
+            color: var(--primary);
+            margin: 0 0 10px 0;
+            font-size: 1.5rem;
+        }
+
+        .progress-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .question-box h2 {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .word-highlight {
+            color: var(--primary);
+            font-size: 1.8rem;
+            display: inline-block;
+            margin: 0 5px;
+            background: #eff6ff;
+            padding: 5px 15px;
+            border-radius: 8px;
+            border: 1px dashed var(--primary);
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            background-color: var(--bg-color);
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            padding: 15px 20px;
+            font-size: 1.1rem;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: right;
+            font-weight: 500;
+            color: var(--text-main);
+        }
+
+        .option:hover:not(:disabled) {
+            background-color: #eff6ff;
+            border-color: #bfdbfe;
+        }
+
+        .option.selected {
+            border-color: var(--primary);
+            background-color: #eff6ff;
+        }
+
+        .option.correct {
+            background-color: var(--success-bg);
+            border-color: var(--success);
+            color: #065f46;
+        }
+
+        .option.wrong {
+            background-color: var(--danger-bg);
+            border-color: var(--danger);
+            color: #991b1b;
+        }
+
+        .option:disabled {
+            cursor: not-allowed;
+            opacity: 0.8;
+        }
+
+        .feedback-box {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+            line-height: 1.6;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .feedback-box.show {
+            display: block;
+        }
+
+        .feedback-box h4 {
+            margin: 0 0 8px 0;
+            font-size: 1.1rem;
+        }
+
+        .action-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            font-family: inherit;
+            cursor: pointer;
+            margin-top: 25px;
+            width: 100%;
+            font-weight: bold;
+            transition: background-color 0.2s;
+            display: none;
+        }
+
+        .action-btn:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .result-container {
+            text-align: center;
+            display: none;
+        }
+
+        .result-container h2 {
+            font-size: 2rem;
+            color: var(--primary);
+        }
+
+        .score-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: #eff6ff;
+            border: 5px solid var(--primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin: 20px auto;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 480px) {
+            .quiz-container { padding: 20px; }
+            .word-highlight { font-size: 1.5rem; }
+            .option { font-size: 1rem; padding: 12px 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="quiz-container">
+        
+        <div id="quiz-screen">
+            <div class="header">
+                <h1>🏆 الاختبار الشامل: الممنوع من الصرف</h1>
+                <p style="margin:0; color:var(--text-muted); font-size:0.9rem;">١٠٠ كلمة للتطبيق النحوي والصرفي</p>
+            </div>
+
+            <div class="progress-container">
+                <span id="question-counter">السؤال 1 من 100</span>
+                <span id="score-counter">النقاط: 0</span>
+            </div>
+
+            <div class="question-box">
+                <h2>ما هي الحالة الإعرابية للاسم <span id="word-display" class="word-highlight">---</span> ؟</h2>
+                
+                <div class="options" id="options-container">
+                    <button class="option" onclick="selectAnswer('ممنوع من الصرف')">ممنوع من الصرف</button>
+                    <button class="option" onclick="selectAnswer('مصروف')">مصروف</button>
+                    <button class="option" onclick="selectAnswer('يجوز فيه الوجهان')">يجوز فيه الوجهان</button>
+                </div>
+            </div>
+
+            <div id="feedback" class="feedback-box">
+                <h4 id="feedback-title"></h4>
+                <p id="feedback-reason"></p>
+            </div>
+
+            <button id="next-btn" class="action-btn" onclick="nextQuestion()">التالي</button>
+        </div>
+
+        <div id="result-screen" class="result-container">
+            <h2>انتهى الاختبار! 🎉</h2>
+            <div class="score-circle" id="final-score">0</div>
+            <p id="final-message" style="font-size:1.2rem; color:var(--text-muted); margin-bottom: 25px;"></p>
+            <button class="action-btn" style="display: block;" onclick="location.reload()">إعادة الاختبار</button>
+        </div>
+
+    </div>
+
+    <script>
+        // قاعدة البيانات الكاملة لـ 100 كلمة
+        const quizData = [
+            { word: "زينب", correct: "ممنوع من الصرف", reason: "للعلتَين: العلمية والتأنيث المعنوي الزائد على ثلاثة أحرف." },
+            { word: "معاوية", correct: "ممنوع من الصرف", reason: "للعلتَين: العلمية والتأنيث اللفظي (مختوم بتاء التأنيث)." },
+            { word: "سفيان", correct: "ممنوع من الصرف", reason: "للعلتَين: العلمية وزيادة الألف والنون في آخره." },
+            { word: "يزيد", correct: "ممنوع من الصرف", reason: "للعلتَين: العلمية ووزن الفعل (منقول عن فعل مضارع) [27، 73]." },
+            { word: "أقل", correct: "ممنوع من الصرف", reason: "للعلتَين: الوصفية ووزن الفعل (على وزن أفعل)." },
+            { word: "غضبان", correct: "ممنوع من الصرف", reason: "للعلتَين: الوصفية وزيادة الألف والنون (على وزن فعلان ومؤنثه غضبى) [73، 112]." },
+            { word: "شبعان", correct: "ممنوع من الصرف", reason: "للعلتَين: الوصفية وزيادة الألف والنون (على وزن فعلان ومؤنثه شبعى) [73، 261]." },
+            { word: "زُحَلُ", correct: "ممنوع من الصرف", reason: "للعلتَين: العلمية والعدل (معدول عن زاحل على وزن فُعَل) [52، 73]." },
+            { word: "كواكب", correct: "ممنوع من الصرف", reason: "لعلة واحدة: صيغة منتهى الجموع (على وزن مفاعل بعد ألفه حرفان) [73، 146]." },
+            { word: "أكثر", correct: "ممنوع من الصرف", reason: "للعلتَين: الوصفية ووزن الفعل (على وزن أفعل الذي لا تلحق التاء مؤنثه)." },
+            { word: "حدائق", correct: "ممنوع من الصرف", reason: "لعلة واحدة: صيغة منتهى الجموع (بعد ألف الجمع حرفان)." },
+            { word: "فيحاء", correct: "ممنوع من الصرف", reason: "لعلة واحدة: ختمه بألف التأنيث الممدودة الزائدة." },
+            { word: "غَنَّاءَ", correct: "ممنوع من الصرف", reason: "لعلة واحدة: ختمه بألف التأنيث الممدودة." },
+            { word: "حمراء", correct: "ممنوع من الصرف", reason: "لعلة واحدة: مختوم بألف التأنيث الممدودة صفةً [12، 73]." },
+            { word: "صفراء", correct: "ممنوع من الصرف", reason: "لعلة واحدة: مختوم بألف التأنيث الممدودة." },
+            { word: "زرقاء", correct: "ممنوع من الصرف", reason: "لعلة واحدة: مختوم بألف التأنيث الممدودة." },
+            { word: "ليفربول", correct: "ممنوع من الصرف", reason: "للعلتَين: العلمية والعجمة الزائدة على ثلاثة أحرف." },
+            { word: "سَحْبانُ", correct: "ممنوع من الصرف", reason: "للعلتَين: العلمية وزيادة الألف والنون." },
+            { word: "خطباء", correct: "ممنوع من الصرف", reason: "لعلة واحدة: مختوم بألف التأنيث الممدودة." },
+            { word: "رُبَاعَ", correct: "ممنوع من الصرف", reason: "للعلتَين: الوصفية والعدل (معدول في الأعداد على وزن فُعال) [73، 144]." },
+            { word: "مخمس", correct: "ممنوع من الصرف", reason: "للعلتَين: الوصفية والعدل (معدول في الأعداد على وزن مَفْعَل) [73، 144]." },
+            { word: "حُظْوَى", correct: "ممنوع من الصرف", reason: "لعلة واحدة: مختوم بألف التأنيث المقصورة." },
+            { word: "ذکری", correct: "ممنوع من الصرف", reason: "لعلة واحدة: مختوم بألف التأنيث المقصورة [3، 73]." },
+            { word: "شعبان", correct: "ممنوع من الصرف", reason: "للعلتَين: العلمية وزيادة الألف والنون في آخره." },
+            { word: "رمسيس", correct: "ممنوع من الصرف", reason: "للعلتَين: العلمية والعجمة الزائدة على ثلاثة أحرف." },
+            { word: "يثرب", correct: "ممنوع من الصرف", reason: "للعلتَين: العلمية ووزن الفعل [72، 74]." },
+            { word: "أجمل", correct: "ممنوع من الصرف", reason: "للعلتَين: الوصفية ووزن الفعل (على وزن أفعل)." },
+            { word: "مُضَر", correct: "ممنوع من الصرف", reason: "للعلتَين: العلمية والعدل (معدول عن ماضر على وزن فُعَل) [74، 166]." },
+            { word: "إبراهيم", correct: "ممنوع من الصرف", reason: "للعلتَين: العلمية والعجمة وهو زائد على ثلاثة أحرف [32، 74]." },
+            { word: "بتروغراد", correct: "ممنوع من الصرف", reason: "للعلتَين: العلمية والتركيب المزجي." },
+            { word: "عريان", correct: "مصروف", reason: "لأن مؤنثه بالتاء المربوطة (عريانة)، فصُرِف لزوال شرط مشابهة ألف التأنيث." },
+            { word: "كنائس", correct: "ممنوع من الصرف", reason: "لعلة واحدة: صيغة منتهى الجموع." },
+            { word: "شقراء", correct: "ممنوع من الصرف", reason: "لعلة واحدة: مختوم بألف التأنيث الممدودة صفةً." },
+            { word: "رضوان", correct: "مصروف", reason: "لأن النون أصلية فيه وليست زائدة (من الرضا والرضوان)." },
+            { word: "قراطيس", correct: "ممنوع من الصرف", reason: "لعلة واحدة: صيغة منتهى الجموع على وزن مفاعيل." },
+            { word: "شكوى", correct: "ممنوع من الصرف", reason: "لعلة واحدة: مختوم بألف التأنيث المقصورة." },
+            { word: "سداس", correct: "ممنوع من الصرف", reason: "للعلتَين: الوصفية والعدل (معدول على وزن فعال في الأعداد)." },
+            { word: "بستان", correct: "مصروف", reason: "لأن النون فيه أصلية وليست زائدة (الكلمة ليست علمية ولا وصفية بزيادة)." },
+            { word: "قزح", correct: "ممنوع من الصرف", reason: "للعلتَين: العلمية والعدل (معدول على وزن فُعَل)." },
+            { word: "حيران", correct: "ممنوع من الصرف", reason: "للعلتَين: الوصفية وزيادة الألف والنون (مؤنثه حيرى بغير تاء)." },
+            { word: "إسحاق", correct: "ممنوع من الصرف", reason: "للعلتَين: العلمية والعجمة الزائدة على ثلاثة أحرف." },
+            { word: "رباع", correct: "ممنوع من الصرف", reason: "للعلتَين: الوصفية والعدل في الأعداد." },
+            { word: "قام", correct: "مصروف", reason: "لأنه علم أعجمي على ثلاثة أحرف ساكن الوسط." },
+            { word: "غرف", correct: "مصروف", reason: "لأنه ليس علماً ولا معدولاً (اسم جنس مصروف عادي)." },
+            { word: "أعداء", correct: "مصروف", reason: "لأن ألفه ممدودة ليست للتأنيث بل منقلبة عن أصل (عدو - أعداو) فصُرِف." },
+            { word: "جبان", correct: "مصروف", reason: "لأن النون أصلية فيه والكلمة ليست على وزن فعلان المزيد." },
+            { word: "إنشاء", correct: "مصروف", reason: "لأن همزته أصلية من الفعل (أنشأ - ينشئ) وليست همزة تأنيث زائدة [74، 270]." },
+            { word: "جاك", correct: "مصروف", reason: "لأنه علم أعجمي على ثلاثة أحرف ساكن الوسط." },
+            { word: "أفصح", correct: "ممنوع من الصرف", reason: "للعلتَين: الوصفية ووزن الفعل (على وزن أفعل)." },
+            { word: "صور", correct: "مصروف", reason: "لأن الكلمة ليست معدولة ولا علماً ممنوعاً." },
+            { word: "قناديل", correct: "ممنوع من الصرف", reason: "لعلة واحدة: صيغة منتهى الجموع (مفاعيل بعد ألفه ثلاثة أوسطها ساكن)." },
+            { word: "بورنموث", correct: "ممنوع من الصرف", reason: "للعلتَين: العلمية والتركيب المزجي (أو العجمة الزائدة)." },
+            { word: "حسان", correct: "يجوز فيه الوجهان", reason: "إن جُعل من (الحس والشيط) منع للزيادة، وإن جُعل من (الحسن) صرف لأن النون أصلية [74، 283]." },
+            { word: "عظماء", correct: "ممنوع من الصرف", reason: "لعلة واحدة: مختوم بألف التأنيث الممدودة." },
+            { word: "مسبع", correct: "ممنوع من الصرف", reason: "للعلتَين: الوصفية والعدل في الأعداد على وزن مَفْعَل." },
+            { word: "ملهى", correct: "مصروف", reason: "لأن ألفه المقصورة ليست للتأنيث بل منقلبة عن أصل (لهو) فصُرِف الاسم [75، 270]." },
+            { word: "حمامة", correct: "مصروف", reason: "لأن الاسم ليس علماً مؤنثاً بل هو اسم جنس تقع عليه التاء." },
+            { word: "خالويه", correct: "مصروف", reason: "مصروف (في الحكم) مبني على الكسر لتركيبه تركيباً مختوماً بـ (ويه)، فلا يدخل في معرب الممنوع." },
+            { word: "هند", correct: "يجوز فيه الوجهان", reason: "علم مؤنث ثلاثي ساكن الوسط غير أعجمي، والصرف أخف والمنع أحق [3، 32، 73]." },
+            { word: "دعد", correct: "يجوز فيه الوجهان", reason: "علم مؤنث ثلاثي عربي ساكن الوسط يجوز الوجهان والمنع أولى [32، 73]." },
+            { word: "هارون", correct: "ممنوع من الصرف", reason: "للعلتَين: العلمية والعجمة وهو علم زائد على ثلاثة أحرف." },
+            { word: "سليمان", correct: "ممنوع من الصرف", reason: "للعلتَين: العلمية وزيادة الألف والنون." },
+            { word: "أحمد", correct: "ممنوع من الصرف", reason: "للعلتَين: العلمية ووزن الفعل الغالب فيه [72، 155]." },
+            { word: "إسرائيل", correct: "ممنوع من الصرف", reason: "للعلتَين: العلمية والعجمة الزائدة على ثلاثة أحرف." },
+            { word: "عفان", correct: "ممنوع من الصرف", reason: "للعلتَين: العلمية وزيادة الألف والنون." },
+            { word: "عثمان", correct: "ممنوع من الصرف", reason: "للعلتَين: العلمية وزيادة الألف والنون في آخره." },
+            { word: "أشد", correct: "ممنوع من الصرف", reason: "للعلتَين: الوصفية ووزن الفعل (على وزن أفعل)." },
+            { word: "نعسان", correct: "ممنوع من الصرف", reason: "للعلتَين: الوصفية وزيادة الألف والنون (مؤنثه نعسى)." },
+            { word: "أفضل", correct: "ممنوع من الصرف", reason: "للعلتَين: الوصفية ووزن الفعل (أفعل)." },
+            { word: "أخوف", correct: "ممنوع من الصرف", reason: "للعلتَين: الوصفية ووزن الفعل (أفعل)." },
+            { word: "أليل", correct: "ممنوع من الصرف", reason: "للعلتَين: الوصفية ووزن الفعل (على وزن أفعل)." },
+            { word: "أحاديث", correct: "ممنوع من الصرف", reason: "لعلة واحدة: صيغة منتهى الجموع (مفاعيل)." },
+            { word: "دواب", correct: "ممنوع من الصرف", reason: "لعلة واحدة: صيغة منتهى الجموع (مفاعل مع تضعيف الباء)." },
+            { word: "مشاق", correct: "ممنوع من الصرف", reason: "لعلة واحدة: صيغة منتهى الجموع (مفاعل مع تضعيف القاف)." },
+            { word: "مخاوف", correct: "ممنوع من الصرف", reason: "لعلة واحدة: صيغة منتهى الجموع (مفاعل)." },
+            { word: "أحمق", correct: "ممنوع من الصرف", reason: "للعلتَين: الوصفية ووزن الفعل (أفعل)." },
+            { word: "أحاد", correct: "ممنوع من الصرف", reason: "للعلتَين: الوصفية والعدل في الأعداد على وزن فُعال." },
+            { word: "مقابر", correct: "ممنوع من الصرف", reason: "لعلة واحدة: صيغة منتهى الجموع (مفاعل)." },
+            { word: "مثلث", correct: "ممنوع من الصرف", reason: "للعلتَين: الوصفية والعدل في الأعداد على وزن مَفْعَل." },
+            { word: "نبلاء", correct: "ممنوع من الصرف", reason: "لعلة واحدة: مختوم بألف التأنيث الممدودة." },
+            { word: "بختنصر", correct: "ممنوع من الصرف", reason: "للعلتَين: العلمية والتركيب المزجي." },
+            { word: "زفر", correct: "ممنوع من الصرف", reason: "للعلتَين: العلمية والعدل (معدول عن زافر على وزن فُعَل)." },
+            { word: "تغلب", correct: "ممنوع من الصرف", reason: "للعلتَين: العلمية ووزن الفعل (منقول عن الفعل المضارع)." },
+            { word: "ليلى", correct: "ممنوع من الصرف", reason: "للعلتَين: العلمية والتأنيث بختمه بألف التأنيث المقصورة." },
+            { word: "سيناء", correct: "ممنوع من الصرف", reason: "لعلة واحدة: اسم علم مؤنث بألف التأنيث الممدودة." },
+            { word: "أشياء", correct: "ممنوع من الصرف", reason: "لعلة واحدة: مختوم بألف التأنيث الممدودة الزائدة." },
+            { word: "ثمود", correct: "ممنوع من الصرف", reason: "للعلتَين: العلمية والتأنيث (إذا أُريد بها القبيلة دون الحيّ)." },
+            { word: "مساجد", correct: "ممنوع من الصرف", reason: "لعلة واحدة: صيغة منتهى الجموع (مفاعل بعد ألفه حرفان) [38، 52]." },
+            { word: "مصابيح", correct: "ممنوع من الصرف", reason: "لعلة واحدة: صيغة منتهى الجموع (مفاعيل بعد ألفه ثلاثة ساكنة الوسط) [27، 52]." },
+            { word: "جور", correct: "ممنوع من الصرف", reason: "للعلتَين: العلمية والعجمة لأنه علم أعجمي زائد على الثلاثة (اسم بلدة) [32، 35]." },
+            { word: "ميسون", correct: "ممنوع من الصرف", reason: "للعلتَين: العلمية والتأنيث وهو اسم زائد على ثلاثة أحرف [32، 35]." },
+            { word: "لوط", correct: "مصروف", reason: "لأنه علم أعجمي ثلاثي ساكن الوسط، وخفته تقتضي الصرف [32، 35]." },
+            { word: "نوح", correct: "مصروف", reason: "لأنه علم أعجمي ثلاثي ساكن الوسط، فصُرِف لخفته اللفظية [32، 35]." },
+            { word: "عزرائيل", correct: "ممنوع من الصرف", reason: "للعلتَين: العلمية والعجمة وهو علم زائد على ثلاثة أحرف." },
+            { word: "موسى", correct: "ممنوع من الصرف", reason: "للعلتَين: العلمية والعجمة وهو علم زائد على ثلاثة أحرف." },
+            { word: "عيسى", correct: "ممنوع من الصرف", reason: "للعلتَين: العلمية والعجمة وهو علم زائد على ثلاثة أحرف." },
+            { word: "أسماء", correct: "مصروف", reason: "لأن همزته أصلية منقلبة وليست للتأنيث (جمع اسم وأصله أسماو)." },
+            { word: "ثمان", correct: "ممنوع من الصرف", reason: "لعلة واحدة: صيغة منتهى الجموع، ويعامل إعرابياً معاملة المنقوص." },
+            { word: "أساتذة", correct: "مصروف", reason: "لأن صيغة الجمع لحقتها تاء التأنيث في آخره (فخرجت عن صيغة منتهى الجموع)." },
+            { word: "جوار", correct: "ممنوع من الصرف", reason: "لعلة واحدة: صيغة منتهى الجموع، وهو منقوص تحذف ياؤه رفعاً وجراً وينون للتعويض [25، 233]." }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let answered = false;
+
+        // عناصر DOM
+        const wordDisplay = document.getElementById('word-display');
+        const optionsContainer = document.getElementById('options-container');
+        const optionsButtons = document.querySelectorAll('.option');
+        const nextBtn = document.getElementById('next-btn');
+        const feedbackBox = document.getElementById('feedback');
+        const feedbackTitle = document.getElementById('feedback-title');
+        const feedbackReason = document.getElementById('feedback-reason');
+        const questionCounter = document.getElementById('question-counter');
+        const scoreCounter = document.getElementById('score-counter');
+        const quizScreen = document.getElementById('quiz-screen');
+        const resultScreen = document.getElementById('result-screen');
+
+        function loadQuestion() {
+            answered = false;
+            const currentQ = quizData[currentQuestionIndex];
+            
+            wordDisplay.textContent = currentQ.word;
+            questionCounter.textContent = `السؤال ${currentQuestionIndex + 1} من ${quizData.length}`;
+            
+            // إعادة ضبط الأزرار
+            optionsButtons.forEach(btn => {
+                btn.classList.remove('correct', 'wrong');
+                btn.disabled = false;
+            });
+            
+            feedbackBox.classList.remove('show');
+            nextBtn.style.display = 'none';
+        }
+
+        function selectAnswer(selectedText) {
+            if (answered) return;
+            answered = true;
+
+            const currentQ = quizData[currentQuestionIndex];
+            const isCorrect = (selectedText === currentQ.correct);
+
+            if (isCorrect) score++;
+            scoreCounter.textContent = `النقاط: ${score}`;
+
+            // تلوين الأزرار
+            optionsButtons.forEach(btn => {
+                btn.disabled = true;
+                if (btn.textContent === currentQ.correct) {
+                    btn.classList.add('correct');
+                } else if (btn.textContent === selectedText && !isCorrect) {
+                    btn.classList.add('wrong');
+                }
+            });
+
+            // إظهار التعليل
+            feedbackBox.classList.add('show');
+            if (isCorrect) {
+                feedbackBox.style.backgroundColor = 'var(--success-bg)';
+                feedbackBox.style.border = '1px solid var(--success)';
+                feedbackBox.style.color = '#065f46';
+                feedbackTitle.innerHTML = '✅ إجابة صحيحة!';
+            } else {
+                feedbackBox.style.backgroundColor = 'var(--danger-bg)';
+                feedbackBox.style.border = '1px solid var(--danger)';
+                feedbackBox.style.color = '#991b1b';
+                feedbackTitle.innerHTML = `❌ إجابة خاطئة! الصواب: (${currentQ.correct})`;
+            }
+            feedbackReason.innerHTML = `<strong>السبب:</strong> ${currentQ.reason}`;
+
+            // إظهار زر التالي
+            nextBtn.style.display = 'block';
+            if (currentQuestionIndex === quizData.length - 1) {
+                nextBtn.textContent = 'إنهاء الاختبار وعرض النتيجة';
+            }
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < quizData.length) {
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            quizScreen.style.display = 'none';
+            resultScreen.style.display = 'block';
+            document.getElementById('final-score').textContent = `${score}/${quizData.length}`;
+            
+            const message = document.getElementById('final-message');
+            const percentage = (score / quizData.length) * 100;
+            
+            if (percentage === 100) message.textContent = "ممتاز ومذهل! أنت مرجع في النحو والصرف.";
+            else if (percentage >= 85) message.textContent = "رائع جداً! مجهود عظيم ومعرفة نحوية قوية.";
+            else if (percentage >= 65) message.textContent = "جيد جداً! مستوى مبشر، تحتاج للمراجعة في بعض النقاط.";
+            else if (percentage >= 50) message.textContent = "مقبول، ولكن هذا الباب النحوي يحتاج منك إلى تركيز وتدريب أكثر.";
+            else message.textContent = "حاول مرة أخرى. الممنوع من الصرف يعتمد على التدريب المستمر وحفظ العلل النحوية.";
+        }
+
+        // بدء الاختبار
+        loadQuestion();
+    </script>
+</body>
+</html>
