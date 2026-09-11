@@ -1,0 +1,5350 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>اختبار النحو العربي | زاد الطالب الأزهري</title>
+
+    <style>
+        /* =========================================================
+           ZAD NAHW QUIZ
+           اختبار النحو العربي - زاد الطالب الأزهري
+           ========================================================= */
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --primary: #0f766e;
+            --primary-dark: #115e59;
+            --primary-light: #ccfbf1;
+
+            --gold: #b08d57;
+            --gold-light: #f5ead7;
+
+            --bg: #f4f7f6;
+            --card: #ffffff;
+            --text: #1f2937;
+            --muted: #6b7280;
+
+            --border: #e5e7eb;
+
+            --success: #15803d;
+            --success-bg: #dcfce7;
+
+            --danger: #b91c1c;
+            --danger-bg: #fee2e2;
+
+            --shadow:
+                0 10px 30px rgba(15, 118, 110, 0.08);
+
+            --radius: 18px;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family:
+                "Segoe UI",
+                Tahoma,
+                Arial,
+                sans-serif;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f7faf9 0%,
+                    #eef5f3 100%
+                );
+
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.8;
+        }
+
+        button,
+        input {
+            font-family: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        /* =========================================================
+           APP CONTAINER
+           ========================================================= */
+
+        .app {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* =========================================================
+           HEADER
+           ========================================================= */
+
+        .header {
+            height: 78px;
+
+            background:
+                rgba(255, 255, 255, 0.96);
+
+            border-bottom:
+                1px solid var(--border);
+
+            display: flex;
+            align-items: center;
+
+            padding:
+                0 30px;
+
+            position: sticky;
+            top: 0;
+            z-index: 100;
+
+            box-shadow:
+                0 4px 20px rgba(0, 0, 0, 0.04);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .brand-logo {
+            width: 46px;
+            height: 46px;
+
+            border-radius: 14px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--primary),
+                    var(--primary-dark)
+                );
+
+            color: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 22px;
+            font-weight: bold;
+
+            box-shadow:
+                0 6px 15px rgba(15, 118, 110, 0.2);
+        }
+
+        .brand-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.4;
+        }
+
+        .brand-title {
+            font-size: 21px;
+            font-weight: 800;
+            color: var(--primary-dark);
+        }
+
+        .brand-subtitle {
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        /* =========================================================
+           MAIN
+           ========================================================= */
+
+        .main {
+            width: 100%;
+            max-width: 1050px;
+
+            margin:
+                0 auto;
+
+            padding:
+                35px 20px 60px;
+
+            flex: 1;
+        }
+
+        /* =========================================================
+           SCREENS
+           ========================================================= */
+
+        .screen {
+            display: none;
+            animation: fadeIn 0.35s ease;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* =========================================================
+           START SCREEN
+           ========================================================= */
+
+        .start-wrapper {
+            min-height:
+                calc(100vh - 150px);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .start-card {
+            width: 100%;
+            max-width: 850px;
+
+            background: var(--card);
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                28px;
+
+            box-shadow:
+                0 20px 60px rgba(15, 118, 110, 0.10);
+
+            overflow: hidden;
+        }
+
+        .start-top {
+            padding:
+                55px 40px 45px;
+
+            text-align: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f0fdfa,
+                    #ffffff
+                );
+
+            border-bottom:
+                1px solid var(--border);
+        }
+
+        .start-icon {
+            width: 82px;
+            height: 82px;
+
+            margin:
+                0 auto 20px;
+
+            border-radius: 24px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--primary),
+                    var(--primary-dark)
+                );
+
+            color: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 38px;
+
+            box-shadow:
+                0 12px 25px rgba(15, 118, 110, 0.20);
+        }
+
+        .start-title {
+            font-size:
+                clamp(28px, 5vw, 42px);
+
+            color:
+                var(--primary-dark);
+
+            font-weight:
+                900;
+
+            margin-bottom:
+                8px;
+        }
+
+        .start-description {
+            color:
+                var(--muted);
+
+            font-size:
+                16px;
+
+            max-width:
+                650px;
+
+            margin:
+                0 auto;
+        }
+
+        .info-grid {
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap:
+                15px;
+
+            padding:
+                28px 35px;
+        }
+
+        .info-card {
+            background:
+                #f8faf9;
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                16px;
+
+            padding:
+                18px;
+
+            text-align:
+                center;
+        }
+
+        .info-number {
+            font-size:
+                27px;
+
+            font-weight:
+                900;
+
+            color:
+                var(--primary);
+        }
+
+        .info-label {
+            font-size:
+                13px;
+
+            color:
+                var(--muted);
+        }
+
+        .start-form {
+            padding:
+                0 35px 35px;
+        }
+
+        .form-label {
+            display:
+                block;
+
+            font-weight:
+                700;
+
+            margin-bottom:
+                8px;
+        }
+
+        .student-input {
+            width:
+                100%;
+
+            height:
+                55px;
+
+            border:
+                2px solid var(--border);
+
+            border-radius:
+                14px;
+
+            padding:
+                0 18px;
+
+            font-size:
+                16px;
+
+            outline:
+                none;
+
+            transition:
+                0.2s;
+        }
+
+        .student-input:focus {
+            border-color:
+                var(--primary);
+
+            box-shadow:
+                0 0 0 4px
+                rgba(15, 118, 110, 0.08);
+        }
+
+        .start-button {
+            width:
+                100%;
+
+            height:
+                58px;
+
+            margin-top:
+                18px;
+
+            border:
+                none;
+
+            border-radius:
+                15px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--primary),
+                    var(--primary-dark)
+                );
+
+            color:
+                white;
+
+            font-size:
+                17px;
+
+            font-weight:
+                800;
+
+            transition:
+                0.2s;
+
+            box-shadow:
+                0 8px 20px
+                rgba(15, 118, 110, 0.20);
+        }
+
+        .start-button:hover {
+            transform:
+                translateY(-2px);
+
+            box-shadow:
+                0 12px 25px
+                rgba(15, 118, 110, 0.25);
+        }
+
+        /* =========================================================
+           QUIZ HEADER
+           ========================================================= */
+
+        .quiz-top {
+            background:
+                var(--card);
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                var(--radius);
+
+            padding:
+                20px 22px;
+
+            margin-bottom:
+                22px;
+
+            box-shadow:
+                var(--shadow);
+        }
+
+        .quiz-meta {
+            display:
+                flex;
+
+            justify-content:
+                space-between;
+
+            align-items:
+                center;
+
+            gap:
+                20px;
+
+            margin-bottom:
+                13px;
+        }
+
+        .question-counter {
+            font-weight:
+                800;
+
+            color:
+                var(--primary-dark);
+        }
+
+        .student-name-display {
+            color:
+                var(--muted);
+
+            font-size:
+                14px;
+        }
+
+        .progress-track {
+            width:
+                100%;
+
+            height:
+                9px;
+
+            background:
+                #e5e7eb;
+
+            border-radius:
+                20px;
+
+            overflow:
+                hidden;
+        }
+
+        .progress-bar {
+            height:
+                100%;
+
+            width:
+                0%;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    var(--primary),
+                    #14b8a6
+                );
+
+            border-radius:
+                20px;
+
+            transition:
+                width 0.35s ease;
+        }
+
+        /* =========================================================
+           QUESTION PAGE
+           ========================================================= */
+
+        .question-page {
+            background:
+                var(--card);
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                var(--radius);
+
+            box-shadow:
+                var(--shadow);
+
+            overflow:
+                hidden;
+        }
+
+        .question-heading {
+            padding:
+                25px 28px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f0fdfa,
+                    #ffffff
+                );
+
+            border-bottom:
+                1px solid var(--border);
+        }
+
+        .question-title {
+            font-size:
+                23px;
+
+            font-weight:
+                900;
+
+            color:
+                var(--primary-dark);
+
+            margin-bottom:
+                5px;
+        }
+
+        .question-instruction {
+            color:
+                var(--muted);
+
+            font-size:
+                14px;
+        }
+
+        .question-passage {
+            margin-top:
+                16px;
+
+            padding:
+                16px 18px;
+
+            background:
+                #faf8f2;
+
+            border:
+                1px solid #eee5d3;
+
+            border-radius:
+                12px;
+
+            color:
+                #574b3a;
+
+            font-size:
+                16px;
+
+            line-height:
+                2;
+        }
+
+        .question-items {
+            padding:
+                25px 28px;
+        }
+
+        .sub-question {
+            padding:
+                20px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                16px;
+
+            margin-bottom:
+                18px;
+
+            background:
+                #ffffff;
+
+            transition:
+                0.2s;
+        }
+
+        .sub-question:last-child {
+            margin-bottom:
+                0;
+        }
+
+        .sub-question.answered {
+            border-color:
+                #b7dcd7;
+        }
+
+        .sub-question-text {
+            font-size:
+                16px;
+
+            font-weight:
+                700;
+
+            line-height:
+                1.9;
+
+            margin-bottom:
+                15px;
+        }
+
+        .question-number-small {
+            display:
+                inline-flex;
+
+            width:
+                30px;
+
+            height:
+                30px;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            border-radius:
+                9px;
+
+            background:
+                var(--primary-light);
+
+            color:
+                var(--primary-dark);
+
+            font-size:
+                13px;
+
+            font-weight:
+                900;
+
+            margin-left:
+                7px;
+
+            vertical-align:
+                middle;
+        }
+
+        /* =========================================================
+           OPTIONS
+           ========================================================= */
+
+        .options {
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap:
+                11px;
+        }
+
+        .option {
+            position:
+                relative;
+        }
+
+        .option input {
+            position:
+                absolute;
+
+            opacity:
+                0;
+
+            pointer-events:
+                none;
+        }
+
+        .option-label {
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                11px;
+
+            min-height:
+                53px;
+
+            padding:
+                10px 14px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                12px;
+
+            background:
+                #fafafa;
+
+            cursor:
+                pointer;
+
+            transition:
+                0.18s;
+
+            line-height:
+                1.7;
+        }
+
+        .option-label:hover {
+            border-color:
+                #a8d8d2;
+
+            background:
+                #f5fbfa;
+        }
+
+        .option input:checked + .option-label {
+            border-color:
+                var(--primary);
+
+            background:
+                #ecfdf9;
+
+            box-shadow:
+                0 0 0 2px
+                rgba(15, 118, 110, 0.08);
+        }
+
+        .option-letter {
+            min-width:
+                31px;
+
+            width:
+                31px;
+
+            height:
+                31px;
+
+            border-radius:
+                50%;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            background:
+                #e5e7eb;
+
+            color:
+                #4b5563;
+
+            font-size:
+                13px;
+
+            font-weight:
+                800;
+
+            flex-shrink:
+                0;
+        }
+
+        .option input:checked + .option-label .option-letter {
+            background:
+                var(--primary);
+
+            color:
+                white;
+        }
+
+        /* =========================================================
+           NAVIGATION
+           ========================================================= */
+
+        .navigation {
+            display:
+                flex;
+
+            justify-content:
+                space-between;
+
+            align-items:
+                center;
+
+            gap:
+                15px;
+
+            margin-top:
+                20px;
+        }
+
+        .nav-button {
+            min-width:
+                140px;
+
+            height:
+                52px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                13px;
+
+            background:
+                white;
+
+            color:
+                var(--text);
+
+            font-size:
+                15px;
+
+            font-weight:
+                700;
+
+            transition:
+                0.2s;
+        }
+
+        .nav-button:hover:not(:disabled) {
+            border-color:
+                var(--primary);
+
+            color:
+                var(--primary);
+        }
+
+        .nav-button.primary {
+            background:
+                var(--primary);
+
+            border-color:
+                var(--primary);
+
+            color:
+                white;
+        }
+
+        .nav-button.primary:hover {
+            background:
+                var(--primary-dark);
+
+            color:
+                white;
+        }
+
+        .nav-button:disabled {
+            opacity:
+                0.45;
+
+            cursor:
+                not-allowed;
+        }
+
+        .page-hint {
+            color:
+                var(--muted);
+
+            font-size:
+                13px;
+
+            text-align:
+                center;
+        }
+
+        /* =========================================================
+           RESULT
+           ========================================================= */
+
+        .result-wrapper {
+            display:
+                flex;
+
+            justify-content:
+                center;
+        }
+
+        .result-card {
+            width:
+                100%;
+
+            max-width:
+                800px;
+
+            background:
+                white;
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                28px;
+
+            box-shadow:
+                0 20px 60px
+                rgba(15, 118, 110, 0.10);
+
+            overflow:
+                hidden;
+
+            text-align:
+                center;
+        }
+
+        .result-top {
+            padding:
+                45px 30px 35px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f0fdfa,
+                    #ffffff
+                );
+        }
+
+        .result-title {
+            font-size:
+                31px;
+
+            font-weight:
+                900;
+
+            color:
+                var(--primary-dark);
+
+            margin-bottom:
+                5px;
+        }
+
+        .result-student {
+            color:
+                var(--muted);
+
+            margin-bottom:
+                28px;
+        }
+
+        .score-circle {
+            width:
+                180px;
+
+            height:
+                180px;
+
+            border-radius:
+                50%;
+
+            margin:
+                0 auto 22px;
+
+            background:
+                conic-gradient(
+                    var(--primary) var(--score-angle, 0deg),
+                    #e5e7eb var(--score-angle, 0deg)
+                );
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            position:
+                relative;
+        }
+
+        .score-circle::after {
+            content:
+                "";
+
+            position:
+                absolute;
+
+            width:
+                145px;
+
+            height:
+                145px;
+
+            border-radius:
+                50%;
+
+            background:
+                white;
+        }
+
+        .score-content {
+            position:
+                relative;
+
+            z-index:
+                2;
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+            line-height:
+                1.2;
+        }
+
+        .score-number {
+            font-size:
+                42px;
+
+            font-weight:
+                900;
+
+            color:
+                var(--primary-dark);
+        }
+
+        .score-total {
+            font-size:
+                13px;
+
+            color:
+                var(--muted);
+        }
+
+        .level-badge {
+            display:
+                inline-flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            padding:
+                8px 20px;
+
+            border-radius:
+                50px;
+
+            background:
+                var(--gold-light);
+
+            color:
+                #765727;
+
+            font-weight:
+                800;
+
+            margin-bottom:
+                20px;
+        }
+
+        .motivation {
+            margin:
+                0 25px;
+
+            padding:
+                20px;
+
+            background:
+                #f8faf9;
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                15px;
+
+            color:
+                #374151;
+
+            font-size:
+                16px;
+
+            line-height:
+                2;
+        }
+
+        .result-details {
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap:
+                12px;
+
+            padding:
+                25px 30px;
+        }
+
+        .result-stat {
+            padding:
+                17px 10px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                14px;
+
+            background:
+                #fafafa;
+        }
+
+        .result-stat-number {
+            font-size:
+                24px;
+
+            font-weight:
+                900;
+
+            color:
+                var(--primary);
+        }
+
+        .result-stat-label {
+            font-size:
+                12px;
+
+            color:
+                var(--muted);
+        }
+
+        .result-actions {
+            display:
+                flex;
+
+            justify-content:
+                center;
+
+            gap:
+                12px;
+
+            padding:
+                0 30px 35px;
+
+            flex-wrap:
+                wrap;
+        }
+
+        .result-button {
+            min-width:
+                160px;
+
+            height:
+                50px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                13px;
+
+            background:
+                white;
+
+            font-weight:
+                800;
+
+            transition:
+                0.2s;
+        }
+
+        .result-button.primary {
+            background:
+                var(--primary);
+
+            color:
+                white;
+
+            border-color:
+                var(--primary);
+        }
+
+        .result-button:hover {
+            transform:
+                translateY(-2px);
+        }
+
+        /* =========================================================
+           FOOTER
+           ========================================================= */
+
+        .footer {
+            text-align:
+                center;
+
+            padding:
+                20px;
+
+            color:
+                var(--muted);
+
+            font-size:
+                12px;
+        }
+
+        /* =========================================================
+           WARNING
+           ========================================================= */
+
+        .warning-message {
+            display:
+                none;
+
+            margin-bottom:
+                15px;
+
+            padding:
+                13px 16px;
+
+            border-radius:
+                12px;
+
+            background:
+                #fff7ed;
+
+            border:
+                1px solid #fed7aa;
+
+            color:
+                #9a3412;
+
+            font-size:
+                14px;
+
+            font-weight:
+                700;
+        }
+
+        .warning-message.show {
+            display:
+                block;
+
+            animation:
+                fadeIn 0.2s ease;
+        }
+
+        /* =========================================================
+           RESPONSIVE
+           ========================================================= */
+
+        @media (max-width: 700px) {
+
+            .header {
+                height:
+                    68px;
+
+                padding:
+                    0 15px;
+            }
+
+            .brand-title {
+                font-size:
+                    17px;
+            }
+
+            .brand-subtitle {
+                display:
+                    none;
+            }
+
+            .brand-logo {
+                width:
+                    40px;
+
+                height:
+                    40px;
+
+                font-size:
+                    18px;
+            }
+
+            .main {
+                padding:
+                    20px 12px 40px;
+            }
+
+            .start-top {
+                padding:
+                    35px 20px 30px;
+            }
+
+            .start-title {
+                font-size:
+                    28px;
+            }
+
+            .info-grid {
+                grid-template-columns:
+                    1fr;
+
+                padding:
+                    20px;
+            }
+
+            .start-form {
+                padding:
+                    0 20px 25px;
+            }
+
+            .question-heading,
+            .question-items {
+                padding:
+                    20px;
+            }
+
+            .options {
+                grid-template-columns:
+                    1fr;
+            }
+
+            .navigation {
+                flex-direction:
+                    column-reverse;
+            }
+
+            .nav-button {
+                width:
+                    100%;
+            }
+
+            .page-hint {
+                order:
+                    3;
+            }
+
+            .result-details {
+                grid-template-columns:
+                    1fr;
+
+                padding:
+                    20px;
+            }
+
+            .result-actions {
+                padding:
+                    0 20px 25px;
+
+                flex-direction:
+                    column;
+            }
+
+            .result-button {
+                width:
+                    100%;
+            }
+        }
+
+        /* =========================================================
+           PRINT
+           ========================================================= */
+
+        @media print {
+
+            body {
+                background:
+                    white;
+            }
+
+            .header,
+            .footer,
+            .result-actions {
+                display:
+                    none !important;
+            }
+
+            .main {
+                max-width:
+                    100%;
+
+                padding:
+                    0;
+            }
+
+            .result-card {
+                box-shadow:
+                    none;
+
+                border:
+                    none;
+            }
+
+            .result-top {
+                background:
+                    white;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+
+<div class="app">
+
+    <!-- =====================================================
+         HEADER
+         ===================================================== -->
+
+    <header class="header">
+
+        <div class="brand">
+
+            <div class="brand-logo">
+                ز
+            </div>
+
+            <div class="brand-text">
+
+                <div class="brand-title">
+                    زاد الطالب الأزهري
+                </div>
+
+                <div class="brand-subtitle">
+                    الاختبار الإلكتروني في النحو العربي
+                </div>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         MAIN
+         ===================================================== -->
+
+    <main class="main">
+
+
+        <!-- =================================================
+             START SCREEN
+             ================================================= -->
+
+        <section
+            id="startScreen"
+            class="screen active"
+        >
+
+            <div class="start-wrapper">
+
+                <div class="start-card">
+
+                    <div class="start-top">
+
+                        <div class="start-icon">
+                            ✎
+                        </div>
+
+                        <h1 class="start-title">
+                            اختبار النحو العربي
+                        </h1>
+
+                        <p class="start-description">
+                            اختبار إلكتروني تفاعلي لقياس مستوى الطالب
+                            في القواعد النحوية والإعراب، مع تصحيح تلقائي
+                            وحساب النتيجة النهائية.
+                        </p>
+
+                    </div>
+
+
+                    <div class="info-grid">
+
+                        <div class="info-card">
+                            <div class="info-number">30</div>
+                            <div class="info-label">
+                                سؤالًا رئيسيًا
+                            </div>
+                        </div>
+
+                        <div class="info-card">
+                            <div class="info-number">100</div>
+                            <div class="info-label">
+                                درجة كاملة
+                            </div>
+                        </div>
+
+                        <div class="info-card">
+                            <div class="info-number">✓</div>
+                            <div class="info-label">
+                                تصحيح تلقائي
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="start-form">
+
+                        <label
+                            class="form-label"
+                            for="studentName"
+                        >
+                            اسم الطالب
+                        </label>
+
+                        <input
+                            id="studentName"
+                            class="student-input"
+                            type="text"
+                            placeholder="اكتب اسم الطالب هنا"
+                            autocomplete="off"
+                        >
+
+                        <button
+                            id="startButton"
+                            class="start-button"
+                            type="button"
+                        >
+                            بدء الاختبار
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             QUIZ SCREEN
+             ================================================= -->
+
+        <section
+            id="quizScreen"
+            class="screen"
+        >
+
+            <div class="quiz-top">
+
+                <div class="quiz-meta">
+
+                    <div
+                        id="questionCounter"
+                        class="question-counter"
+                    >
+                        السؤال 1 من 30
+                    </div>
+
+                    <div
+                        id="studentNameDisplay"
+                        class="student-name-display"
+                    >
+                    </div>
+
+                </div>
+
+
+                <div class="progress-track">
+
+                    <div
+                        id="progressBar"
+                        class="progress-bar"
+                    >
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="warningMessage"
+                class="warning-message"
+            >
+                يرجى الإجابة عن جميع فقرات السؤال قبل الانتقال.
+            </div>
+
+
+            <div id="questionContainer">
+            </div>
+
+
+            <div class="navigation">
+
+                <button
+                    id="previousButton"
+                    class="nav-button"
+                    type="button"
+                >
+                    السؤال السابق
+                </button>
+
+
+                <div
+                    id="pageHint"
+                    class="page-hint"
+                >
+                    اختر إجابة لكل فقرة
+                </div>
+
+
+                <button
+                    id="nextButton"
+                    class="nav-button primary"
+                    type="button"
+                >
+                    السؤال التالي
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             RESULT SCREEN
+             ================================================= -->
+
+        <section
+            id="resultScreen"
+            class="screen"
+        >
+
+            <div class="result-wrapper">
+
+                <div class="result-card">
+
+                    <div class="result-top">
+
+                        <h1 class="result-title">
+                            نتيجة الاختبار
+                        </h1>
+
+                        <div
+                            id="resultStudent"
+                            class="result-student"
+                        >
+                        </div>
+
+
+                        <div
+                            id="scoreCircle"
+                            class="score-circle"
+                        >
+
+                            <div class="score-content">
+
+                                <div
+                                    id="scoreNumber"
+                                    class="score-number"
+                                >
+                                    0
+                                </div>
+
+                                <div class="score-total">
+                                    من 100
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div
+                            id="levelBadge"
+                            class="level-badge"
+                        >
+                            —
+                        </div>
+
+
+                        <div
+                            id="motivationMessage"
+                            class="motivation"
+                        >
+                        </div>
+
+                    </div>
+
+
+                    <div class="result-details">
+
+                        <div class="result-stat">
+
+                            <div
+                                id="correctCount"
+                                class="result-stat-number"
+                            >
+                                0
+                            </div>
+
+                            <div class="result-stat-label">
+                                فقرات صحيحة
+                            </div>
+
+                        </div>
+
+
+                        <div class="result-stat">
+
+                            <div
+                                id="wrongCount"
+                                class="result-stat-number"
+                            >
+                                0
+                            </div>
+
+                            <div class="result-stat-label">
+                                فقرات تحتاج مراجعة
+                            </div>
+
+                        </div>
+
+
+                        <div class="result-stat">
+
+                            <div
+                                id="percentage"
+                                class="result-stat-number"
+                            >
+                                0%
+                            </div>
+
+                            <div class="result-stat-label">
+                                النسبة المئوية
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="result-actions">
+
+                        <button
+                            id="printButton"
+                            class="result-button"
+                            type="button"
+                        >
+                            طباعة النتيجة
+                        </button>
+
+                        <button
+                            id="restartButton"
+                            class="result-button primary"
+                            type="button"
+                        >
+                            إعادة الاختبار
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer class="footer">
+        زاد الطالب الأزهري — الاختبار الإلكتروني في النحو العربي
+    </footer>
+
+</div>
+
+
+<script>
+/* =========================================================
+   ZAD NAHW QUIZ
+   JavaScript Engine
+   ========================================================= */
+
+
+/* =========================================================
+   QUESTION DATA
+   ========================================================= */
+
+const questions = [
+
+    /* =====================================================
+       السؤال 1
+       ===================================================== */
+
+    {
+        id: 1,
+        title: "السؤال الأول",
+        points: 3,
+        instruction: "اختر الإجابة الصحيحة فيما يأتي:",
+
+        items: [
+
+            {
+                text: "ما إعراب كلمة «العلم» في الجملة: «العلمُ نورٌ»؟",
+
+                options: [
+                    "مبتدأ مرفوع",
+                    "خبر مرفوع",
+                    "فاعل مرفوع",
+                    "مفعول به منصوب"
+                ],
+
+                answer: 0,
+                points: 0.5
+            },
+
+            {
+                text: "ما إعراب كلمة «نور» في الجملة: «العلمُ نورٌ»؟",
+
+                options: [
+                    "مبتدأ مرفوع",
+                    "خبر مرفوع",
+                    "فاعل مرفوع",
+                    "نعت مرفوع"
+                ],
+
+                answer: 1,
+                points: 0.5
+            },
+
+            {
+                text: "ما إعراب كلمة «الطالب» في الجملة: «نجحَ الطالبُ»؟",
+
+                options: [
+                    "مفعول به",
+                    "مبتدأ",
+                    "فاعل",
+                    "خبر"
+                ],
+
+                answer: 2,
+                points: 0.5
+            },
+
+            {
+                text: "ما إعراب كلمة «الدرس» في الجملة: «قرأَ الطالبُ الدرسَ»؟",
+
+                options: [
+                    "فاعل مرفوع",
+                    "مبتدأ مرفوع",
+                    "خبر مرفوع",
+                    "مفعول به منصوب"
+                ],
+
+                answer: 3,
+                points: 1.5
+            }
+
+        ]
+    },
+
+
+    /* =====================================================
+       السؤال 2
+       ===================================================== */
+
+    {
+        id: 2,
+        title: "السؤال الثاني",
+        points: 3,
+        instruction: "اختر الإجابة الصحيحة:",
+
+        items: [
+
+            {
+                text: "أيُّ الكلمات الآتية اسمٌ من الأسماء الخمسة؟",
+
+                options: [
+                    "أب",
+                    "كتاب",
+                    "رجل",
+                    "قلم"
+                ],
+
+                answer: 0,
+                points: 1
+            },
+
+            {
+                text: "أيُّ الجمل الآتية اشتملت على اسم من الأسماء الخمسة مرفوعًا؟",
+
+                options: [
+                    "جاء أبوك.",
+                    "رأيت أباك.",
+                    "مررت بأبيك.",
+                    "إن أباك كريم."
+                ],
+
+                answer: 0,
+                points: 1
+            },
+
+            {
+                text: "أيُّ الجمل الآتية اشتملت على اسم من الأسماء الخمسة مجرورًا؟",
+
+                options: [
+                    "جاء أبوك.",
+                    "رأيت أباك.",
+                    "مررت بأبيك.",
+                    "إن أباك كريم."
+                ],
+
+                answer: 2,
+                points: 1
+            }
+
+        ]
+    },
+
+
+    /* =====================================================
+       السؤال 3
+       ===================================================== */
+
+    {
+        id: 3,
+        title: "السؤال الثالث",
+        points: 3,
+        instruction: "حدد الإجابة الصحيحة:",
+
+        items: [
+
+            {
+                text: "ما علامة رفع المثنى؟",
+
+                options: [
+                    "الألف",
+                    "الواو",
+                    "الياء",
+                    "الضمة"
+                ],
+
+                answer: 0,
+                points: 1
+            },
+
+            {
+                text: "ما علامة نصب المثنى؟",
+
+                options: [
+                    "الألف",
+                    "الواو",
+                    "الياء",
+                    "الفتحة"
+                ],
+
+                answer: 2,
+                points: 1
+            },
+
+            {
+                text: "ما علامة جر المثنى؟",
+
+                options: [
+                    "الألف",
+                    "الواو",
+                    "الياء",
+                    "الكسرة"
+                ],
+
+                answer: 2,
+                points: 1
+            }
+
+        ]
+    },
+
+
+    /* =====================================================
+       السؤال 4
+       ===================================================== */
+
+    {
+        id: 4,
+        title: "السؤال الرابع",
+        points: 4,
+        instruction: "اختر الصيغة الصحيحة بعد التحويل:",
+
+        items: [
+
+            {
+                text: "حوِّل: «أقبلَ المجدُّ مستبشرًا» إلى المثنى المذكر:",
+
+                options: [
+                    "أقبلَ المجدانِ مستبشرين",
+                    "أقبلا المجدانِ مستبشرين",
+                    "أقبلَ المجدينِ مستبشرين",
+                    "أقبلا المجدينِ مستبشرين"
+                ],
+
+                answer: 0,
+                points: 0.8
+            },
+
+            {
+                text: "حوِّل الجملة السابقة إلى جمع المذكر:",
+
+                options: [
+                    "أقبلَ المجدونَ مستبشرين",
+                    "أقبلوا المجدينَ مستبشرين",
+                    "أقبلَ المجدينَ مستبشرون",
+                    "أقبلوا المجدونَ مستبشرين"
+                ],
+
+                answer: 0,
+                points: 0.8
+            },
+
+            {
+                text: "حوِّل: «أقبلَ المجدُّ مستبشرًا» إلى المفرد المؤنث:",
+
+                options: [
+                    "أقبلتِ المجدةُ مستبشرةً",
+                    "أقبلَ المجدةُ مستبشرةً",
+                    "أقبلتِ المجدةَ مستبشرةً",
+                    "أقبلتِ المجدُ مستبشرةً"
+                ],
+
+                answer: 0,
+                points: 0.8
+            },
+
+            {
+                text: "حوِّل الجملة إلى المثنى المؤنث:",
+
+                options: [
+                    "أقبلتا المجدتانِ مستبشرتين",
+                    "أقبلَ المجدتانِ مستبشراتٍ",
+                    "أقبلتا المجدتينِ مستبشرتين",
+                    "أقبلتِ المجدتانِ مستبشرتان"
+                ],
+
+                answer: 0,
+                points: 0.8
+            },
+
+            {
+                text: "حوِّل الجملة إلى جمع المؤنث:",
+
+                options: [
+                    "أقبلتِ المجداتُ مستبشراتٍ",
+                    "أقبلنَ المجداتُ مستبشراتٍ",
+                    "أقبلتِ المجداتَ مستبشراتٍ",
+                    "أقبلَ المجداتُ مستبشراتٍ"
+                ],
+
+                answer: 0,
+                points: 0.8
+            }
+
+        ]
+    },
+
+
+    /* =====================================================
+       السؤال 5
+       ===================================================== */
+
+    {
+        id: 5,
+        title: "السؤال الخامس",
+        points: 3,
+        instruction: "حدد الموقع الإعرابي للمصدر المؤول:",
+
+        items: [
+
+            {
+                text: "في الجملة: «يسرني أن يطيعَ الولدُ أباهُ»، ما إعراب المصدر المؤول «أن يطيع الولد أباه»؟",
+
+                options: [
+                    "فاعل",
+                    "مفعول به",
+                    "مبتدأ",
+                    "خبر"
+                ],
+
+                answer: 0,
+                points: 0.75
+            },
+
+            {
+                text: "في الجملة: «يسرني أن يطيعَ الولدُ أباهُ»، ما إعراب «الولد»؟",
+
+                options: [
+                    "فاعل لـ«يطيع»",
+                    "مفعول به لـ«يطيع»",
+                    "مبتدأ",
+                    "خبر"
+                ],
+
+                answer: 0,
+                points: 0.75
+            },
+
+            {
+                text: "في الجملة: «شرح صدري أن الزهر ناضر»، ما إعراب المصدر المؤول «أن الزهر ناضر»؟",
+
+                options: [
+                    "فاعل",
+                    "مفعول به",
+                    "نعت",
+                    "حال"
+                ],
+
+                answer: 0,
+                points: 0.75
+            },
+
+            {
+                text: "في الجملة: «شرح صدري أن الزهر ناضر»، ما إعراب «الزهر»؟",
+
+                options: [
+                    "اسم أن مرفوع",
+                    "اسم أن منصوب",
+                    "خبر أن مرفوع",
+                    "فاعل"
+                ],
+
+                answer: 1,
+                points: 0.75
+            }
+
+        ]
+    },
+
+
+    /* =====================================================
+       السؤال 6
+       ===================================================== */
+
+    {
+        id: 6,
+        title: "السؤال السادس",
+        points: 4,
+        instruction: "اختر الضبط الإعرابي الصحيح للكلمة المطلوبة:",
+
+        items: [
+
+            {
+                text: "«للقاهرة ______ في التاريخ»",
+
+                options: [
+                    "شهرةً",
+                    "شهرةٌ",
+                    "شهرةٍ",
+                    "شهرةَ"
+                ],
+
+                answer: 1,
+                points: 0.75
+            },
+
+            {
+                text: "«وهي الآن أعظم مدينة في إفريقية ______ ومكانةً»",
+
+                options: [
+                    "منزلةٌ",
+                    "منزلةً",
+                    "منزلةٍ",
+                    "منزلةَ"
+                ],
+
+                answer: 1,
+                points: 0.75
+            },
+
+            {
+                text: "«ذات ميادين وحدائق ______ الظلال»",
+
+                options: [
+                    "وارفةُ",
+                    "وارفةً",
+                    "وارفةِ",
+                    "وارفةٌ"
+                ],
+
+                answer: 2,
+                points: 0.75
+            },
+
+            {
+                text: "«وقد زاد عدد سكانها ______ كبيرةً»",
+
+                options: [
+                    "زيادةٌ",
+                    "زيادةً",
+                    "زيادةٍ",
+                    "زيادةَ"
+                ],
+
+                answer: 1,
+                points: 0.75
+            },
+
+            {
+                text: "«لميل بعض سكان الريف إلى ______ بها»",
+
+                options: [
+                    "الإقامةُ",
+                    "الإقامةَ",
+                    "الإقامةِ",
+                    "الإقامةٌ"
+                ],
+
+                answer: 2,
+                points: 0.5
+            },
+
+            {
+                text: "كلمة «حدائق» في «ميادين وحدائق» مجرورة وعلامة جرها:",
+
+                options: [
+                    "الكسرة",
+                    "الفتحة نيابةً عن الكسرة",
+                    "الياء",
+                    "الألف"
+                ],
+
+                answer: 1,
+                points: 0.5
+            }
+
+        ]
+    },
+
+
+    /* =====================================================
+       السؤال 7
+       ===================================================== */
+
+    {
+        id: 7,
+        title: "السؤال السابع",
+        points: 4,
+        instruction: "اختر التحويل الصحيح للجملة:",
+
+        items: [
+
+            {
+                text: "«إن تحسنْ إلى الناس تنلْ محبتهم» — للمفردة المؤنثة:",
+
+                options: [
+                    "إن تحسني إلى الناس تنالي محبتهم",
+                    "إن تحسنين إلى الناس تنالين محبتهم",
+                    "إن تحسني إلى الناس تنلين محبتهم",
+                    "إن تحسني إلى الناس تنالُ محبتهم"
+                ],
+
+                answer: 0,
+                points: 0.8
+            },
+
+            {
+                text: "للمثنى المذكر:",
+
+                options: [
+                    "إن تحسنا إلى الناس تنالا محبتهم",
+                    "إن تحسنان إلى الناس تنالان محبتهم",
+                    "إن تحسنا إلى الناس تنالان محبتهم",
+                    "إن تحسنان إلى الناس تنالا محبتهم"
+                ],
+
+                answer: 0,
+                points: 0.8
+            },
+
+            {
+                text: "لجمع المذكر:",
+
+                options: [
+                    "إن تحسنوا إلى الناس تنالوا محبتهم",
+                    "إن تحسنون إلى الناس تنالون محبتهم",
+                    "إن تحسنوا إلى الناس تنالون محبتهم",
+                    "إن تحسنون إلى الناس تنالوا محبتهم"
+                ],
+
+                answer: 0,
+                points: 0.8
+            },
+
+            {
+                text: "لجمع المؤنث:",
+
+                options: [
+                    "إن تحسنَّ إلى الناس تنلنَ محبتهم",
+                    "إن تحسننَ إلى الناس تنالْنَ محبتهم",
+                    "إن تحسنَّ إلى الناس تنالْنَ محبتهم",
+                    "إن تحسنْنَ إلى الناس تنلنَ محبتهم"
+                ],
+
+                answer: 0,
+                points: 0.8
+            },
+
+            {
+                text: "الفعلان «تحسن» و«تنل» في الجملة الأصلية:",
+
+                options: [
+                    "مرفوعان",
+                    "منصوبان",
+                    "مجزومان",
+                    "مبنيان"
+                ],
+
+                answer: 2,
+                points: 0.8
+            }
+
+        ]
+    },
+
+
+    /* =====================================================
+       السؤال 8
+       ===================================================== */
+
+    {
+        id: 8,
+        title: "السؤال الثامن",
+        points: 3,
+        instruction: "حدد نوع الاسم المبني ومحلّه الإعرابي:",
+
+        items: [
+
+            {
+                text: "«من يحترمِ الناسَ يحترموه» — ما إعراب «من»؟",
+
+                options: [
+                    "اسم شرط جازم في محل رفع مبتدأ",
+                    "اسم استفهام في محل رفع مبتدأ",
+                    "اسم موصول في محل جر",
+                    "اسم شرط في محل نصب مفعول به"
+                ],
+
+                answer: 0,
+                points: 0.5
+            },
+
+            {
+                text: "«من بناة الأهرام؟» — ما إعراب «من»؟",
+
+                options: [
+                    "اسم شرط في محل رفع مبتدأ",
+                    "اسم استفهام في محل رفع خبر مقدم",
+                    "اسم موصول في محل جر",
+                    "اسم استفهام في محل نصب مفعول به"
+                ],
+
+                answer: 1,
+                points: 0.5
+            },
+
+            {
+                text: "«أعن من استعان بك؟» — ما إعراب «من»؟",
+
+                options: [
+                    "اسم استفهام في محل نصب",
+                    "اسم شرط في محل رفع",
+                    "اسم موصول مبني في محل جر بحرف الجر",
+                    "اسم موصول في محل رفع"
+                ],
+
+                answer: 2,
+                points: 0.5
+            },
+
+            {
+                text: "«ما أجملَ السماء!» — ما نوع «ما»؟",
+
+                options: [
+                    "ما النافية",
+                    "ما الاستفهامية",
+                    "ما التعجبية",
+                    "ما الموصولة"
+                ],
+
+                answer: 2,
+                points: 0.5
+            },
+
+            {
+                text: "«ما عندك؟» — ما نوع «ما»؟",
+
+                options: [
+                    "موصولة",
+                    "استفهامية",
+                    "تعجبية",
+                    "شرطية"
+                ],
+
+                answer: 1,
+                points: 0.5
+            },
+
+            {
+                text: "«أحب ما ينفع الناس» — ما نوع «ما»؟",
+
+                options: [
+                    "استفهامية",
+                    "شرطية",
+                    "موصولة",
+                    "تعجبية"
+                ],
+
+                answer: 2,
+                points: 0.5
+            }
+
+        ]
+    },
+
+
+    /* =====================================================
+       السؤال 9
+       ===================================================== */
+
+    {
+        id: 9,
+        title: "السؤال التاسع",
+        points: 3,
+        instruction: "اختر التحويل الصحيح:",
+
+        items: [
+
+            {
+                text: "«يا سائقَ السيارة، تأَنَّ في السير تنجُ من مخاطر الطريق» — للمفردة المؤنثة:",
+
+                options: [
+                    "يا سائقةَ السيارة، تأني في السير تنجي من مخاطر الطريق",
+                    "يا سائقةُ السيارة، تأني في السير تنجين من مخاطر الطريق",
+                    "يا سائقةَ السيارة، تأَنَّ في السير تنجين من مخاطر الطريق",
+                    "يا سائقةِ السيارة، تأني في السير تنجو من مخاطر الطريق"
+                ],
+
+                answer: 0,
+                points: 0.6
+            },
+
+            {
+                text: "للمثنى المذكر:",
+
+                options: [
+                    "يا سائقي السيارة، تأَنَّيا في السير تنجوا من مخاطر الطريق",
+                    "يا سائقانِ السيارة، تأَنَّيا في السير تنجيان",
+                    "يا سائقي السيارة، تأَنَّيا في السير تنجيان",
+                    "يا سائقين السيارة، تأَنَّيا في السير تنجوا"
+                ],
+
+                answer: 0,
+                points: 0.6
+            },
+
+            {
+                text: "لجمع المذكر:",
+
+                options: [
+                    "يا سائقي السيارة، تأَنَّوا في السير تنجوا من مخاطر الطريق",
+                    "يا سائقون السيارة، تأَنَّوا في السير تنجون",
+                    "يا سائقي السيارة، تأَنَّوا في السير تنجون",
+                    "يا سائقين السيارة، تأَنَّوا في السير تنجوا"
+                ],
+
+                answer: 0,
+                points: 0.6
+            },
+
+            {
+                text: "للمثنى المؤنث:",
+
+                options: [
+                    "يا سائقتي السيارة، تأَنَّيا في السير تنجوا من مخاطر الطريق",
+                    "يا سائقتان السيارة، تأنيان في السير تنجيان",
+                    "يا سائقتي السيارة، تأنيان في السير تنجوا",
+                    "يا سائقتان السيارة، تأَنَّيا في السير تنجوان"
+                ],
+
+                answer: 0,
+                points: 0.6
+            },
+
+            {
+                text: "لجمع المؤنث:",
+
+                options: [
+                    "يا سائقاتِ السيارة، تأَنَّينَ في السير تنجُنَ من مخاطر الطريق",
+                    "يا سائقاتُ السيارة، تأَنَّينَ في السير تنجون",
+                    "يا سائقاتِ السيارة، تأَنَّوا في السير تنجُنَ",
+                    "يا سائقةِ السيارة، تأَنَّينَ في السير تنجين"
+                ],
+
+                answer: 0,
+                points: 0.6
+            }
+
+        ]
+    },
+
+
+    /* =====================================================
+       السؤال 10
+       ===================================================== */
+
+    {
+        id: 10,
+        title: "السؤال العاشر",
+        points: 3,
+        instruction: "حدد الاستعمال الصحيح لـ«أيّ»:",
+
+        items: [
+
+            {
+                text: "«أيُّ الطلابِ اجتهدَ؟» — «أيّ» هنا للعاقل.",
+
+                options: [
+                    "صواب",
+                    "خطأ"
+                ],
+
+                answer: 0,
+                points: 0.75
+            },
+
+            {
+                text: "«أيَّ الكتبِ قرأتَ؟» — «أيّ» هنا لغير العاقل.",
+
+                options: [
+                    "صواب",
+                    "خطأ"
+                ],
+
+                answer: 0,
+                points: 0.75
+            },
+
+            {
+                text: "«أيَّ يومٍ سافرتَ؟» — «أيّ» هنا للزمان.",
+
+                options: [
+                    "صواب",
+                    "خطأ"
+                ],
+
+                answer: 0,
+                points: 0.75
+            },
+
+            {
+                text: "«أيَّ مكانٍ جلستَ؟» — «أيّ» هنا للمكان.",
+
+                options: [
+                    "صواب",
+                    "خطأ"
+                ],
+
+                answer: 0,
+                points: 0.75
+            }
+
+        ]
+    },
+
+
+    /* =====================================================
+       السؤال 11
+       ===================================================== */
+
+    {
+        id: 11,
+        title: "السؤال الحادي عشر",
+        points: 4,
+        instruction: "اختر الضبط الصحيح للكلمات المحددة:",
+
+        items: [
+
+            {
+                text: "«كانت محاربةُ الجراد ______ شديدةً.»",
+
+                options: [
+                    "محاربةٌ",
+                    "محاربةً",
+                    "محاربةٍ",
+                    "محاربةُ"
+                ],
+
+                answer: 1,
+                points: 0.75
+            },
+
+            {
+                text: "«وقد أصاب الناسَ ______ حسنًا.»",
+
+                options: [
+                    "بلاءٌ",
+                    "بلاءً",
+                    "بلاءٍ",
+                    "بلاؤه"
+                ],
+
+                answer: 1,
+                points: 0.75
+            },
+
+            {
+                text: "«وتكبدوا ______ طائلةً.»",
+
+                options: [
+                    "نفقاتٌ",
+                    "نفقاتٍ",
+                    "نفقاتَ",
+                    "نفقاتُ"
+                ],
+
+                answer: 1,
+                points: 0.75
+            },
+
+            {
+                text: "«وعادت البلاد ______ ظافرةً.»",
+
+                options: [
+                    "سليمةٌ",
+                    "سليمةً",
+                    "سليمةٍ",
+                    "سليمةُ"
+                ],
+
+                answer: 1,
+                points: 0.75
+            },
+
+            {
+                text: "«كان الجيش ______ ظافرًا.» — علامة نصب خبر كان هي:",
+
+                options: [
+                    "الفتحة",
+                    "الكسرة",
+                    "الياء",
+                    "الألف"
+                ],
+
+                answer: 0,
+                points: 0.5
+            },
+
+            {
+                text: "«كانت المحاربة ______ شديدةً» — كلمة «شديدةً» تعرب:",
+
+                options: [
+                    "اسم كان",
+                    "خبر كان",
+                    "فاعلًا",
+                    "مفعولًا به"
+                ],
+
+                answer: 1,
+                points: 0.5
+            }
+
+        ]
+    },
+
+
+    /* =====================================================
+       السؤال 12
+       ===================================================== */
+
+    {
+        id: 12,
+        title: "السؤال الثاني عشر",
+        points: 4,
+        instruction: "اختر الضبط الصحيح للنعت السببي:",
+
+        items: [
+
+            {
+                text: "«الوردةُ ______ لونُها»",
+
+                options: [
+                    "الزاهيةُ",
+                    "الزاهي",
+                    "الزاهيةَ",
+                    "الزاهيَة"
+                ],
+
+                answer: 1,
+                points: 1
+            },
+
+            {
+                text: "«رأيتُ الرجالَ ______ أخلاقُهم»",
+
+                options: [
+                    "المهذبينَ",
+                    "المهذبَ",
+                    "المهذبينُ",
+                    "المهذبُ"
+                ],
+
+                answer: 1,
+                points: 1
+            },
+
+            {
+                text: "«مررتُ بالجائزةِ ______ تصميمُها»",
+
+                options: [
+                    "البديعةِ",
+                    "البديعِ",
+                    "البديعةَ",
+                    "البديعَ"
+                ],
+
+                answer: 1,
+                points: 1
+            },
+
+            {
+                text: "«كرمتُ الفتياتِ ______ أخلاقُهن»",
+
+                options: [
+                    "الراقي",
+                    "الراقيات",
+                    "الراقيَ",
+                    "الراقيِ"
+                ],
+
+                answer: 0,
+                points: 1
+            }
+
+        ]
+    },
+
+
+    /* =====================================================
+       السؤال 13
+       ===================================================== */
+
+    {
+        id: 13,
+        title: "السؤال الثالث عشر",
+        points: 3,
+        instruction: "اختر الصيغة الصحيحة بعد تحويل الجملة:",
+
+        items: [
+
+            {
+                text: "«من تعلّم صغيرًا ساد كبيرًا» — للمفردة المؤنثة:",
+
+                options: [
+                    "من تعلمت صغيرةً سادت كبيرةً",
+                    "من تعلمت صغيرًا سادت كبيرًا",
+                    "من تعلم صغيرةً ساد كبيرةً",
+                    "من تعلمت صغيرةٍ سادت كبيرةٍ"
+                ],
+
+                answer: 0,
+                points: 0.6
+            },
+
+            {
+                text: "للمثنى المذكر:",
+
+                options: [
+                    "من تعلما صغيرين سادا كبيرين",
+                    "من تعلما صغيران سادا كبيران",
+                    "من تعلما صغيرين ساد كبيرين",
+                    "من تعلمَا صغيرًا سادا كبيرًا"
+                ],
+
+                answer: 0,
+                points: 0.6
+            },
+
+            {
+                text: "للمثنى المؤنث:",
+
+                options: [
+                    "من تعلمتا صغيرتين سادتا كبيرتين",
+                    "من تعلمتا صغيران سادتا كبيران",
+                    "من تعلمتا صغيرتين سادا كبيرتين",
+                    "من تعلمتا صغيرتان سادتا كبيرتان"
+                ],
+
+                answer: 0,
+                points: 0.6
+            },
+
+            {
+                text: "لجمع المذكر:",
+
+                options: [
+                    "من تعلموا صغارًا سادوا كبارًا",
+                    "من تعلمون صغارًا يسودون كبارًا",
+                    "من تعلموا صغيرين سادوا كبيرين",
+                    "من تعلموا صغارٌ سادوا كبارٌ"
+                ],
+
+                answer: 0,
+                points: 0.6
+            },
+
+            {
+                text: "لجمع المؤنث:",
+
+                options: [
+                    "من تعلمن صغيراتٍ سدن كبيراتٍ",
+                    "من تعلمن صغارًا سدن كبارًا",
+                    "من تعلمن صغيراتٌ سدن كبيراتٌ",
+                    "من تعلمتن صغيراتٍ سادت كبيراتٍ"
+                ],
+
+                answer: 0,
+                points: 0.6
+            }
+
+        ]
+    },
+
+
+    /* =====================================================
+       السؤال 14
+       ===================================================== */
+
+    {
+        id: 14,
+        title: "السؤال الرابع عشر",
+        points: 3,
+        instruction: "حدد علامة الإسناد الصحيحة:",
+
+        items: [
+
+            {
+                text: "«أنتم تدعون إلى الخير» — علامة الإسناد في «تدعون» هي:",
+
+                options: [
+                    "واو الجماعة",
+                    "نون النسوة",
+                    "ياء المخاطبة",
+                    "ألف الاثنين"
+                ],
+
+                answer: 0,
+                points: 0.75
+            },
+
+            {
+                text: "«أنتن تدعون إلى الخير» — علامة الإسناد في «تدعون» هي:",
+
+                options: [
+                    "واو الجماعة",
+                    "نون النسوة",
+                    "ياء المخاطبة",
+                    "ألف الاثنين"
+                ],
+
+                answer: 1,
+                points: 0.75
+            },
+
+            {
+                text: "«أنتِ تبدين السرور» — علامة الإسناد في «تبدين» هي:",
+
+                options: [
+                    "واو الجماعة",
+                    "نون النسوة",
+                    "ياء المخاطبة",
+                    "ألف الاثنين"
+                ],
+
+                answer: 2,
+                points: 0.75
+            },
+
+            {
+                text: "«أنتن تبدين السرور» — علامة الإسناد في «تبدين» هي:",
+
+                options: [
+                    "واو الجماعة",
+                    "نون النسوة",
+                    "ياء المخاطبة",
+                    "ألف الاثنين"
+                ],
+
+                answer: 1,
+                points: 0.75
+            }
+
+        ]
+    },
+
+
+    /* =====================================================
+       السؤال 15
+       ===================================================== */
+
+    {
+        id: 15,
+        title: "السؤال الخامس عشر",
+        points: 3,
+        instruction: "اختر التحويل الصحيح للجملة:",
+
+        items: [
+
+            {
+                text: "«هذا هو الذي إذا وعد وفى» — للمفردة المؤنثة:",
+
+                options: [
+                    "هذه هي التي إذا وعدت وفَت",
+                    "هذه هو التي إذا وعدت وفى",
+                    "هذا هي التي إذا وعدت وفَت",
+                    "هذه هي الذي إذا وعدت وفى"
+                ],
+
+                answer: 0,
+                points: 0.75
+            },
+
+            {
+                text: "للمثنى المذكر:",
+
+                options: [
+                    "هذان هما اللذان إذا وعدا وفيا",
+                    "هذين هما اللذين إذا وعدا وفيا",
+                    "هذان هما اللذان إذا وعدا وفوا",
+                    "هذان هما اللذين إذا وعدا وفيا"
+                ],
+
+                answer: 0,
+                points: 0.75
+            },
+
+            {
+                text: "لجمع المذكر:",
+
+                options: [
+                    "هؤلاء هم الذين إذا وعدوا وفوا",
+                    "هؤلاء هن الذين إذا وعدوا وفين",
+                    "هؤلاء هم اللاتي إذا وعدوا وفوا",
+                    "هؤلاء هما الذين إذا وعدوا وفوا"
+                ],
+
+                answer: 0,
+                points: 0.75
+            },
+
+            {
+                text: "لجمع المؤنث:",
+
+                options: [
+                    "هؤلاء هن اللاتي إذا وعدن وفين",
+                    "هؤلاء هم اللاتي إذا وعدوا وفوا",
+                    "هؤلاء هن الذين إذا وعدن وفين",
+                    "هؤلاء هي اللاتي إذا وعدن وفَت"
+                ],
+
+                answer: 0,
+                points: 0.75
+            }
+
+        ]
+    },
+
+
+    /* =====================================================
+       السؤال 16
+       ===================================================== */
+
+    {
+        id: 16,
+        title: "السؤال السادس عشر",
+        points: 4,
+        instruction: "حوِّل الجملة من المبني للمعلوم إلى المبني للمجهول، واختر الإجابة الصحيحة:",
+
+        items: [
+
+            {
+                text: "«يقول الشاهدُ الحقَّ»",
+
+                options: [
+                    "يُقالُ الحقُّ",
+                    "يُقالَ الحقُّ",
+                    "يقولُ الحقُّ",
+                    "قيلَ الشاهدُ"
+                ],
+
+                answer: 0,
+                points: 0.66
+            },
+
+            {
+                text: "«يكسوكم الحلمُ وقارًا»",
+
+                options: [
+                    "تُكسَونَ وقارًا",
+                    "تُكسونَ وقارٌ",
+                    "يُكسى وقارًا",
+                    "كُسِيتُم الحلمَ"
+                ],
+
+                answer: 0,
+                points: 0.66
+            },
+
+            {
+                text: "«كافأتُ المجدينَ»",
+
+                options: [
+                    "كوفئَ المجدونَ",
+                    "كوفئَ المجدينَ",
+                    "كُوفِئُوا المجدونَ",
+                    "كافئَ المجدونَ"
+                ],
+
+                answer: 0,
+                points: 0.67
+            },
+
+            {
+                text: "«يحترمُ الناسُ ذا المالِ»",
+
+                options: [
+                    "يُحترمُ ذو المالِ",
+                    "يُحترمُ ذا المالِ",
+                    "يحترمُ ذو المالِ",
+                    "احترمَ ذو المالِ"
+                ],
+
+                answer: 0,
+                points: 0.67
+            },
+
+            {
+                text: "«لم يمدحِ المعلمُ إلا إياك»",
+
+                options: [
+                    "لم تُمدَحْ إلا أنتَ",
+                    "لم يُمدَحْ إلا إياك",
+                    "لم تمدحْ إلا أنتَ",
+                    "لم تُمدَحْ إلا إياكَ"
+                ],
+
+                answer: 0,
+                points: 0.67
+            },
+
+            {
+                text: "«علَّمتني التجاربُ»",
+
+                options: [
+                    "عُلِّمتُ بالتجاربِ",
+                    "عَلَّمتُ بالتجاربِ",
+                    "عُلِّمتَ التجاربُ",
+                    "عُلِّمَتْني التجاربُ"
+                ],
+
+                answer: 0,
+                points: 0.67
+            }
+
+        ]
+    },
+
+
+    /* =====================================================
+       السؤال 17
+       ===================================================== */
+
+    {
+        id: 17,
+        title: "السؤال السابع عشر",
+        points: 3,
+        instruction: "حدد محل الجملة الإعرابي:",
+
+        items: [
+
+            {
+                text: "«الطالبُ يجتهدُ» — ما محل جملة «يجتهد»؟",
+
+                options: [
+                    "في محل رفع خبر",
+                    "في محل نصب مفعول به",
+                    "في محل جر نعت",
+                    "لا محل لها"
+                ],
+
+                answer: 0,
+                points: 0.75
+            },
+
+            {
+                text: "«ظننتُ الطالبَ يجتهدُ» — ما محل جملة «يجتهد»؟",
+
+                options: [
+                    "في محل رفع خبر",
+                    "في محل نصب مفعول به ثانٍ",
+                    "في محل جر نعت",
+                    "لا محل لها"
+                ],
+
+                answer: 1,
+                points: 0.75
+            },
+
+            {
+                text: "«مررتُ بطالبٍ يجتهدُ» — ما محل جملة «يجتهد»؟",
+
+                options: [
+                    "في محل رفع خبر",
+                    "في محل نصب حال",
+                    "في محل جر نعت",
+                    "في محل نصب مفعول به"
+                ],
+
+                answer: 2,
+                points: 0.75
+            },
+
+            {
+                text: "«إن تجتهدْ تنجحْ» — ما محل جملة «تنجح»؟",
+
+                options: [
+                    "في محل رفع خبر",
+                    "في محل نصب حال",
+                    "في محل جر نعت",
+                    "في محل جزم جواب الشرط"
+                ],
+
+                answer: 3,
+                points: 0.75
+            }
+
+        ]
+    },
+
+
+    /* =====================================================
+       السؤال 18
+       ===================================================== */
+
+    {
+        id: 18,
+        title: "السؤال الثامن عشر",
+        points: 3,
+        instruction: "اختر الصيغة الصحيحة بعد دخول إنَّ أو إحدى أخوات كان:",
+
+        items: [
+
+            {
+                text: "«أنتِ صادقةٌ» — بعد دخول «إنَّ»:",
+
+                options: [
+                    "إنكِ صادقةٌ",
+                    "إنكِ صادقةً",
+                    "إنكِ صادقٌ",
+                    "إنكِ صادقاتٌ"
+                ],
+
+                answer: 0,
+                points: 0.5
+            },
+
+            {
+                text: "«أنتِ صادقةٌ» — بعد دخول «لا تزال»:",
+
+                options: [
+                    "لا تزالين صادقةً",
+                    "لا تزالين صادقةٌ",
+                    "لا تزال صادقةً",
+                    "لا تزالين صادقٌ"
+                ],
+
+                answer: 0,
+                points: 0.5
+            },
+
+            {
+                text: "«نحن ساعون في الخير» — بعد دخول «إنَّ»:",
+
+                options: [
+                    "إننا ساعون في الخير",
+                    "إننا ساعين في الخير",
+                    "إننا ساعونَ في الخير",
+                    "إننا ساعية في الخير"
+                ],
+
+                answer: 0,
+                points: 0.5
+            },
+
+            {
+                text: "«نحن ساعون في الخير» — بعد دخول «لا نزال»:",
+
+                options: [
+                    "لا نزال ساعين في الخير",
+                    "لا نزال ساعون في الخير",
+                    "لا نزال ساعيات في الخير",
+                    "لا يزال ساعين في الخير"
+                ],
+
+                answer: 0,
+                points: 0.5
+            },
+
+            {
+                text: "«المجدون ذوو فضل» — بعد دخول «إنَّ»:",
+
+                options: [
+                    "إن المجدين ذوو فضل",
+                    "إن المجدون ذوي فضل",
+                    "إن المجدين ذوي فضل",
+                    "إن المجدون ذوو فضل"
+                ],
+
+                answer: 0,
+                points: 0.5
+            },
+
+            {
+                text: "«المجدون ذوو فضل» — بعد دخول «لا يزال»:",
+
+                options: [
+                    "لا يزال المجدون ذوي فضل",
+                    "لا يزال المجدين ذوو فضل",
+                    "لا يزال المجدون ذوو فضل",
+                    "لا يزال المجدين ذوي فضل"
+                ],
+
+                answer: 0,
+                points: 0.5
+            }
+
+        ]
+    },
+
+
+    /* =====================================================
+       السؤال 19
+       ===================================================== */
+
+    {
+        id: 19,
+        title: "السؤال التاسع عشر",
+        points: 3,
+        instruction: "اختر الإعراب الصحيح للكلمات المحددة:",
+
+        items: [
+
+            {
+                text: "«يزور مصرَ ______ كبيرٌ من السائحين كل سنة»",
+
+                options: [
+                    "عددٌ",
+                    "عددًا",
+                    "عددٍ",
+                    "عددَ"
+                ],
+
+                answer: 0,
+                points: 0.6
+            },
+
+            {
+                text: "«قصدَ الوقوفَ على ما بها من بدائع وآثار» — كلمة «قصدَ» هنا:",
+
+                options: [
+                    "مفعول لأجله",
+                    "حال",
+                    "مفعول مطلق",
+                    "ظرف"
+                ],
+
+                answer: 0,
+                points: 0.6
+            },
+
+            {
+                text: "«الوقوف على ______ بها من بدائع وآثار» — ما إعراب «ما»؟",
+
+                options: [
+                    "اسم موصول",
+                    "اسم استفهام",
+                    "اسم شرط",
+                    "حرف نفي"
+                ],
+
+                answer: 0,
+                points: 0.6
+            },
+
+            {
+                text: "«لتلك السياحات فوائد ______»",
+
+                options: [
+                    "عظيمةٌ",
+                    "عظيمةً",
+                    "عظيمةٍ",
+                    "عظيمٌ"
+                ],
+
+                answer: 0,
+                points: 0.6
+            },
+
+            {
+                text: "«تساوي النفقات التي يبذلونها» — كلمة «النفقات» تعرب:",
+
+                options: [
+                    "مفعولًا به",
+                    "فاعلًا",
+                    "مبتدأ",
+                    "خبرًا"
+                ],
+
+                answer: 0,
+                points: 0.6
+            }
+
+        ]
+    },
+
+
+    /* =====================================================
+       السؤال 20
+       ===================================================== */
+
+    {
+        id: 20,
+        title: "السؤال العشرون",
+        points: 4,
+        instruction: "حدد إعراب الضمير أو نوعه:",
+
+        items: [
+
+            {
+                text: "في «هؤلاء هم الذين أحبهم» — ما نوع «هم»؟",
+
+                options: [
+                    "ضمير منفصل",
+                    "ضمير متصل",
+                    "اسم إشارة",
+                    "اسم موصول"
+                ],
+
+                answer: 0,
+                points: 1
+            },
+
+            {
+                text: "في «هؤلاء هم الذين أحبهم» — الضمير «هم» من حيث اتصاله وانفصاله:",
+
+                options: [
+                    "ضمير منفصل",
+                    "ضمير متصل",
+                    "ضمير مستتر",
+                    "اسم ظاهر"
+                ],
+
+                answer: 0,
+                points: 1
+            },
+
+            {
+                text: "في «تفيدني القراءةُ» — الياء في «تفيدني» تعرب:",
+
+                options: [
+                    "فاعلًا",
+                    "مفعولًا به",
+                    "مضافًا إليه",
+                    "نائب فاعل"
+                ],
+
+                answer: 1,
+                points: 1
+            },
+
+            {
+                text: "في «عشرتهم طيبةٌ» — «هم» في «عشرتهم» تعرب:",
+
+                options: [
+                    "مفعولًا به",
+                    "فاعلًا",
+                    "مضافًا إليه",
+                    "نائب فاعل"
+                ],
+
+                answer: 2,
+                points: 1
+            }
+
+        ]
+    },
+
+
+    /* =====================================================
+       السؤال 21
+       ===================================================== */
+
+    {
+        id: 21,
+        title: "السؤال الحادي والعشرون",
+        points: 3,
+        instruction: "حدد محل الجملة الإعرابي:",
+
+        items: [
+
+            {
+                text: "في الجملة: «اللاتي يجتهدنَ يُكرَمْنَ» — ما محل جملة «يُكرَمْنَ»؟",
+
+                options: [
+                    "في محل رفع خبر",
+                    "في محل نصب حال",
+                    "في محل جر نعت",
+                    "لا محل لها"
+                ],
+
+                answer: 0,
+                points: 3
+            }
+
+        ]
+    },
+
+
+    /* =====================================================
+       السؤال 22
+       ===================================================== */
+
+    {
+        id: 22,
+        title: "السؤال الثاني والعشرون",
+        points: 3,
+        instruction: "حدد نوع الجملة ومحلها الإعرابي:",
+
+        items: [
+
+            {
+                text: "«الطالبُ يجتهدُ» — جملة «يجتهد» هي:",
+
+                options: [
+                    "جملة فعلية في محل رفع خبر",
+                    "جملة فعلية في محل نصب حال",
+                    "جملة فعلية في محل جر نعت",
+                    "جملة لا محل لها"
+                ],
+
+                answer: 0,
+                points: 1
+            },
+
+            {
+                text: "«جاء الطالبُ يضحكُ» — جملة «يضحك» هي:",
+
+                options: [
+                    "جملة فعلية في محل رفع خبر",
+                    "جملة فعلية في محل نصب حال",
+                    "جملة فعلية في محل جر نعت",
+                    "جملة لا محل لها"
+                ],
+
+                answer: 1,
+                points: 1
+            },
+
+            {
+                text: "«رأيتُ طالبًا يجتهدُ» — جملة «يجتهد» هي:",
+
+                options: [
+                    "جملة فعلية في محل رفع خبر",
+                    "جملة فعلية في محل نصب حال",
+                    "جملة فعلية في محل جر نعت",
+                    "جملة لا محل لها"
+                ],
+
+                answer: 2,
+                points: 1
+            }
+
+        ]
+    },
+
+
+    /* =====================================================
+       السؤال 23
+       ===================================================== */
+
+    {
+        id: 23,
+        title: "السؤال الثالث والعشرون",
+        points: 3,
+        instruction: "حدد محل الجملة أو نوعها:",
+
+        items: [
+
+            {
+                text: "«عاد المسافرُ وهو مضطربٌ» — جملة «وهو مضطرب» هي:",
+
+                options: [
+                    "جملة حالية في محل نصب",
+                    "جملة نعت في محل جر",
+                    "جملة خبر في محل رفع",
+                    "جملة مفعول به"
+                ],
+
+                answer: 0,
+                points: 1
+            },
+
+            {
+                text: "«رأيتُ زورقًا تغالبه الأمواجُ» — جملة «تغالبه الأمواج» هي:",
+
+                options: [
+                    "في محل رفع خبر",
+                    "في محل نصب حال",
+                    "في محل جر نعت",
+                    "لا محل لها"
+                ],
+
+                answer: 2,
+                points: 1
+            },
+
+            {
+                text: "«أيقنتُ أنه سيغرقُ» — المصدر المؤول من «أنه سيغرق» في محل:",
+
+                options: [
+                    "رفع فاعل",
+                    "نصب مفعول به",
+                    "جر مضاف إليه",
+                    "رفع خبر"
+                ],
+
+                answer: 1,
+                points: 1
+            }
+
+        ]
+    },
+
+
+    /* =====================================================
+       السؤال 24
+       ===================================================== */
+
+    {
+        id: 24,
+        title: "السؤال الرابع والعشرون",
+        points: 4,
+        instruction: "اختر الضبط الصحيح لـ«إنَّ» و«أنَّ»:",
+
+        items: [
+
+            {
+                text: "«______ مصرَ أمةٌ عظيمةٌ»",
+
+                options: [
+                    "إنَّ",
+                    "أنَّ",
+                    "إنْ",
+                    "أنْ"
+                ],
+
+                answer: 0,
+                points: 1
+            },
+
+            {
+                text: "قال: «______ مصرَ مهدُ العلوم»",
+
+                options: [
+                    "إنَّها",
+                    "أنَّها",
+                    "إنْها",
+                    "أنْها"
+                ],
+
+                answer: 0,
+                points: 1
+            },
+
+            {
+                text: "«من ______ بلغت مكانةً عظيمةً»",
+
+                options: [
+                    "إنها",
+                    "أنها",
+                    "إنَّها",
+                    "أنَّها"
+                ],
+
+                answer: 1,
+                points: 1
+            },
+
+            {
+                text: "«علمتُ ______ آباءك مخلصون»",
+
+                options: [
+                    "إنَّ",
+                    "أنَّ",
+                    "إنْ",
+                    "أنْ"
+                ],
+
+                answer: 1,
+                points: 1
+            }
+
+        ]
+    },
+
+
+    /* =====================================================
+       السؤال 25
+       ===================================================== */
+
+    {
+        id: 25,
+        title: "السؤال الخامس والعشرون",
+        points: 4,
+        instruction: "حدد الإعراب الصحيح لكلمة «غير»:",
+
+        items: [
+
+            {
+                text: "«لا تصحبْ غيرَ المهذبين» — إعراب «غير» هو:",
+
+                options: [
+                    "مفعول به منصوب",
+                    "فاعل مرفوع",
+                    "مبتدأ مرفوع",
+                    "مضاف إليه مجرور"
+                ],
+
+                answer: 0,
+                points: 1
+            },
+
+            {
+                text: "«لم يتقدمْ غيرُ المجد» — إعراب «غير» هو:",
+
+                options: [
+                    "مفعول به",
+                    "فاعل مرفوع",
+                    "حال منصوب",
+                    "مضاف إليه"
+                ],
+
+                answer: 1,
+                points: 1
+            },
+
+            {
+                text: "«لم تثمرِ الأشجارُ غيرَ شجرةِ التين» — «غير» تعرب:",
+
+                options: [
+                    "مستثنى منصوب",
+                    "فاعلًا مرفوعًا",
+                    "مبتدأ",
+                    "مضافًا إليه"
+                ],
+
+                answer: 0,
+                points: 1
+            },
+
+            {
+                text: "«قرأتُ الكتابَ غيرَ صفحتين» — «غير» تعرب:",
+
+                options: [
+                    "مستثنى منصوب",
+                    "فاعلًا",
+                    "خبرًا",
+                    "مضافًا إليه"
+                ],
+
+                answer: 0,
+                points: 1
+            }
+
+        ]
+    },
+
+
+    /* =====================================================
+       السؤال 26
+       ===================================================== */
+
+    {
+        id: 26,
+        title: "السؤال السادس والعشرون",
+        points: 3,
+        instruction: "حدد الإعراب الصحيح للجملة:",
+
+        items: [
+
+            {
+                text: "«الطالباتُ اللاتي يجتهدنَ يسعدُهُنَّ أن ينجحنَ» — ما إعراب المصدر المؤول «أن ينجحن»؟",
+
+                options: [
+                    "فاعل مرفوع",
+                    "مفعول به منصوب",
+                    "نعت مجرور",
+                    "حال منصوب"
+                ],
+
+                answer: 0,
+                points: 3
+            }
+
+        ]
+    },
+
+
+    /* =====================================================
+       السؤال 27
+       ===================================================== */
+
+    {
+        id: 27,
+        title: "السؤال السابع والعشرون",
+        points: 3,
+        instruction: "حدد نوع الخبر أو الحال أو النعت:",
+
+        items: [
+
+            {
+                text: "«الطالبُ مجتهدٌ» — نوع الخبر:",
+
+                options: [
+                    "خبر مفرد",
+                    "خبر جملة",
+                    "خبر شبه جملة",
+                    "حال"
+                ],
+
+                answer: 0,
+                points: 0.33
+            },
+
+            {
+                text: "«الطالبُ يجتهدُ» — نوع الخبر:",
+
+                options: [
+                    "خبر مفرد",
+                    "خبر جملة",
+                    "خبر شبه جملة",
+                    "حال"
+                ],
+
+                answer: 1,
+                points: 0.33
+            },
+
+            {
+                text: "«الكتابُ على الطاولةِ» — نوع الخبر:",
+
+                options: [
+                    "خبر مفرد",
+                    "خبر جملة",
+                    "خبر شبه جملة",
+                    "نعت"
+                ],
+
+                answer: 2,
+                points: 0.34
+            },
+
+            {
+                text: "«جاء الطالبُ مسرورًا» — نوع الحال:",
+
+                options: [
+                    "حال مفرد",
+                    "حال جملة",
+                    "حال شبه جملة",
+                    "نعت"
+                ],
+
+                answer: 0,
+                points: 0.33
+            },
+
+            {
+                text: "«جاء الطالبُ يضحكُ» — نوع الحال:",
+
+                options: [
+                    "حال مفرد",
+                    "حال جملة",
+                    "حال شبه جملة",
+                    "خبر"
+                ],
+
+                answer: 1,
+                points: 0.33
+            },
+
+            {
+                text: "«جاء الطالبُ في نشاطٍ» — نوع الحال:",
+
+                options: [
+                    "حال مفرد",
+                    "حال جملة",
+                    "حال شبه جملة",
+                    "نعت"
+                ],
+
+                answer: 2,
+                points: 0.34
+            },
+
+            {
+                text: "«رأيتُ طالبًا مجتهدًا» — نوع النعت:",
+
+                options: [
+                    "نعت مفرد",
+                    "نعت جملة",
+                    "نعت شبه جملة",
+                    "حال"
+                ],
+
+                answer: 0,
+                points: 0.33
+            },
+
+            {
+                text: "«رأيتُ طالبًا يجتهدُ» — نوع النعت:",
+
+                options: [
+                    "نعت مفرد",
+                    "نعت جملة",
+                    "نعت شبه جملة",
+                    "حال"
+                ],
+
+                answer: 1,
+                points: 0.33
+            },
+
+            {
+                text: "«رأيتُ طالبًا في الفصلِ» — نوع النعت:",
+
+                options: [
+                    "نعت مفرد",
+                    "نعت جملة",
+                    "نعت شبه جملة",
+                    "خبر"
+                ],
+
+                answer: 2,
+                points: 0.34
+            }
+
+        ]
+    },
+
+
+    /* =====================================================
+       السؤال 28
+       ===================================================== */
+
+    {
+        id: 28,
+        title: "السؤال الثامن والعشرون",
+        points: 3,
+        instruction: "حدد نوع التوكيد:",
+
+        items: [
+
+            {
+                text: "«تكلموا هم أنفسهم» — «أنفسهم» تعرب:",
+
+                options: [
+                    "توكيدًا معنويًا",
+                    "بدلًا",
+                    "نعتًا",
+                    "مفعولًا به"
+                ],
+
+                answer: 0,
+                points: 1.5
+            },
+
+            {
+                text: "«السبقُ لهنَّ هنَّ أنفسُهنَّ» — «أنفسهن» تعرب:",
+
+                options: [
+                    "توكيدًا معنويًا",
+                    "مفعولًا به",
+                    "فاعلًا",
+                    "حالًا"
+                ],
+
+                answer: 0,
+                points: 1.5
+            }
+
+        ]
+    },
+
+
+    /* =====================================================
+       السؤال 29
+       ===================================================== */
+
+    {
+        id: 29,
+        title: "السؤال التاسع والعشرون",
+        points: 3,
+        instruction: "حدد نوع الواو:",
+
+        items: [
+
+            {
+                text: "«سرتُ والنيلَ» — الواو هنا:",
+
+                options: [
+                    "واو العطف",
+                    "واو المعية",
+                    "واو القسم",
+                    "واو الحال"
+                ],
+
+                answer: 1,
+                points: 1
+            },
+
+            {
+                text: "«حضر محمدٌ وعليٌّ» — الواو هنا:",
+
+                options: [
+                    "واو المعية",
+                    "واو العطف",
+                    "واو القسم",
+                    "واو الحال"
+                ],
+
+                answer: 1,
+                points: 1
+            },
+
+            {
+                text: "«جاء محمدٌ وعليٌّ» — إذا كان المقصود اشتراكهما في المجيء، فالواو:",
+
+                options: [
+                    "واو العطف",
+                    "واو المعية",
+                    "واو القسم",
+                    "واو الحال"
+                ],
+
+                answer: 0,
+                points: 1
+            }
+
+        ]
+    },
+
+
+    /* =====================================================
+       السؤال 30
+       ===================================================== */
+
+    {
+        id: 30,
+        title: "السؤال الثلاثون",
+        points: 4,
+        instruction: "اختر الضبط الإعرابي الصحيح للكلمات المطلوبة:",
+
+        passage:
+            "كانت الإسكندرية مهدَ العلوم ومهبطَ العلماء، واشتهرت شهرةً عظيمةً، وبلغت منزلةً عاليةً، وكانت لها ميادين واسعة، وكانت مكانةُ علمائها أكبرُ.",
+
+        items: [
+
+            {
+                text: "«كانت الإسكندرية ______ العلوم»",
+
+                options: [
+                    "مهدُ",
+                    "مهدَ",
+                    "مهدِ",
+                    "مهدٌ"
+                ],
+
+                answer: 1,
+                points: 0.4
+            },
+
+            {
+                text: "«ومهبطَ ______»",
+
+                options: [
+                    "العلماءِ",
+                    "العلماءُ",
+                    "العلماءَ",
+                    "العلماءٍ"
+                ],
+
+                answer: 0,
+                points: 0.4
+            },
+
+            {
+                text: "«واشتهرت ______ عظيمةً»",
+
+                options: [
+                    "شهرةٌ",
+                    "شهرةً",
+                    "شهرةٍ",
+                    "شهرةَ"
+                ],
+
+                answer: 1,
+                points: 0.4
+            },
+
+            {
+                text: "«وبلغت ______ عاليةً»",
+
+                options: [
+                    "منزلةٌ",
+                    "منزلةً",
+                    "منزلةٍ",
+                    "منزلةَ"
+                ],
+
+                answer: 1,
+                points: 0.4
+            },
+
+            {
+                text: "«وكانت لها ميادين ______»",
+
+                options: [
+                    "واسعةٌ",
+                    "واسعةً",
+                    "واسعةٍ",
+                    "واسعةَ"
+                ],
+
+                answer: 0,
+                points: 0.4
+            },
+
+            {
+                text: "«وكانت مكانة علمائها ______»",
+
+                options: [
+                    "أكبرَ",
+                    "أكبرُ",
+                    "أكبرِ",
+                    "كبيرةً"
+                ],
+
+                answer: 1,
+                points: 0.4
+            },
+
+            {
+                text: "كلمة «مهدَ» في «كانت الإسكندرية مهدَ العلوم» تعرب:",
+
+                options: [
+                    "اسم كان",
+                    "خبر كان منصوب",
+                    "فاعل",
+                    "مفعول به"
+                ],
+
+                answer: 1,
+                points: 0.4
+            },
+
+            {
+                text: "كلمة «شهرةً» في «اشتهرت شهرةً عظيمةً» تعرب:",
+
+                options: [
+                    "مفعولًا مطلقًا",
+                    "حالًا",
+                    "مفعولًا به",
+                    "تمييزًا"
+                ],
+
+                answer: 0,
+                points: 0.4
+            },
+
+            {
+                text: "كلمة «عاليةً» في «بلغت منزلةً عاليةً» تعرب:",
+
+                options: [
+                    "حالًا",
+                    "نعتًا منصوبًا",
+                    "مفعولًا مطلقًا",
+                    "خبرًا"
+                ],
+
+                answer: 1,
+                points: 0.4
+            },
+
+            {
+                text: "كلمة «أكبرُ» في «كانت مكانة علمائها أكبرُ» تعرب:",
+
+                options: [
+                    "اسم كان مرفوع",
+                    "خبر كان مرفوع",
+                    "مفعولًا به",
+                    "نعتًا منصوبًا"
+                ],
+
+                answer: 1,
+                points: 0.4
+            }
+
+        ]
+    }
+
+];
+
+
+/* =========================================================
+   QUIZ STATE
+   ========================================================= */
+
+const quizState = {
+
+    studentName: "",
+
+    currentQuestion: 0,
+
+    answers: {},
+
+    finished: false
+
+};
+
+
+/* =========================================================
+   DOM ELEMENTS
+   ========================================================= */
+
+const startScreen =
+    document.getElementById("startScreen");
+
+const quizScreen =
+    document.getElementById("quizScreen");
+
+const resultScreen =
+    document.getElementById("resultScreen");
+
+const studentNameInput =
+    document.getElementById("studentName");
+
+const startButton =
+    document.getElementById("startButton");
+
+const questionContainer =
+    document.getElementById("questionContainer");
+
+const questionCounter =
+    document.getElementById("questionCounter");
+
+const progressBar =
+    document.getElementById("progressBar");
+
+const previousButton =
+    document.getElementById("previousButton");
+
+const nextButton =
+    document.getElementById("nextButton");
+
+const warningMessage =
+    document.getElementById("warningMessage");
+
+const pageHint =
+    document.getElementById("pageHint");
+
+const studentNameDisplay =
+    document.getElementById("studentNameDisplay");
+
+const resultStudent =
+    document.getElementById("resultStudent");
+
+const scoreNumber =
+    document.getElementById("scoreNumber");
+
+const scoreCircle =
+    document.getElementById("scoreCircle");
+
+const levelBadge =
+    document.getElementById("levelBadge");
+
+const motivationMessage =
+    document.getElementById("motivationMessage");
+
+const correctCount =
+    document.getElementById("correctCount");
+
+const wrongCount =
+    document.getElementById("wrongCount");
+
+const percentage =
+    document.getElementById("percentage");
+
+const printButton =
+    document.getElementById("printButton");
+
+const restartButton =
+    document.getElementById("restartButton");
+
+
+/* =========================================================
+   SHOW SCREEN
+   ========================================================= */
+
+function showScreen(screen) {
+
+    document
+        .querySelectorAll(".screen")
+        .forEach(item => {
+
+            item.classList.remove("active");
+
+        });
+
+    screen.classList.add("active");
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+
+/* =========================================================
+   START QUIZ
+   ========================================================= */
+
+function startQuiz() {
+
+    const name =
+        studentNameInput.value.trim();
+
+    if (!name) {
+
+        studentNameInput.focus();
+
+        studentNameInput.style.borderColor =
+            "#b91c1c";
+
+        setTimeout(() => {
+
+            studentNameInput.style.borderColor =
+                "";
+
+        }, 1200);
+
+        return;
+    }
+
+
+    quizState.studentName =
+        name;
+
+    quizState.currentQuestion =
+        0;
+
+    quizState.answers =
+        {};
+
+    quizState.finished =
+        false;
+
+
+    studentNameDisplay.textContent =
+        "الطالب: " + name;
+
+
+    showScreen(quizScreen);
+
+    renderCurrentQuestion();
+}
+
+
+/* =========================================================
+   RENDER CURRENT QUESTION
+   ========================================================= */
+
+function renderCurrentQuestion() {
+
+    const question =
+        questions[quizState.currentQuestion];
+
+
+    if (!question) {
+        return;
+    }
+
+
+    questionCounter.textContent =
+        `السؤال ${question.id} من ${questions.length}`;
+
+
+    const progress =
+        ((quizState.currentQuestion + 1) /
+            questions.length) * 100;
+
+
+    progressBar.style.width =
+        progress + "%";
+
+
+    questionContainer.innerHTML =
+        "";
+
+
+    const page =
+        document.createElement("div");
+
+    page.className =
+        "question-page";
+
+
+    /* -----------------------------------------------------
+       Heading
+       ----------------------------------------------------- */
+
+    const heading =
+        document.createElement("div");
+
+    heading.className =
+        "question-heading";
+
+
+    const title =
+        document.createElement("div");
+
+    title.className =
+        "question-title";
+
+    title.textContent =
+        question.title;
+
+
+    const instruction =
+        document.createElement("div");
+
+    instruction.className =
+        "question-instruction";
+
+    instruction.textContent =
+        question.instruction;
+
+
+    heading.appendChild(title);
+
+    heading.appendChild(instruction);
+
+
+    /* -----------------------------------------------------
+       Passage
+       ----------------------------------------------------- */
+
+    if (question.passage) {
+
+        const passage =
+            document.createElement("div");
+
+        passage.className =
+            "question-passage";
+
+        passage.textContent =
+            question.passage;
+
+        heading.appendChild(passage);
+    }
+
+
+    page.appendChild(heading);
+
+
+    /* -----------------------------------------------------
+       Items
+       ----------------------------------------------------- */
+
+    const itemsContainer =
+        document.createElement("div");
+
+    itemsContainer.className =
+        "question-items";
+
+
+    question.items.forEach(
+        (item, itemIndex) => {
+
+            const subQuestion =
+                document.createElement("div");
+
+            subQuestion.className =
+                "sub-question";
+
+
+            const questionText =
+                document.createElement("div");
+
+            questionText.className =
+                "sub-question-text";
+
+
+            const number =
+                document.createElement("span");
+
+            number.className =
+                "question-number-small";
+
+            number.textContent =
+                itemIndex + 1;
+
+
+            questionText.appendChild(number);
+
+
+            const text =
+                document.createTextNode(
+                    item.text
+                );
+
+            questionText.appendChild(text);
+
+
+            subQuestion.appendChild(
+                questionText
+            );
+
+
+            const options =
+                document.createElement("div");
+
+            options.className =
+                "options";
+
+
+            const letters =
+                ["أ", "ب", "ج", "د", "هـ", "و"];
+
+
+            item.options.forEach(
+                (optionText, optionIndex) => {
+
+                    const option =
+                        document.createElement("div");
+
+                    option.className =
+                        "option";
+
+
+                    const input =
+                        document.createElement("input");
+
+                    input.type =
+                        "radio";
+
+                    input.name =
+                        `q_${question.id}_${itemIndex}`;
+
+                    input.id =
+                        `q_${question.id}_${itemIndex}_${optionIndex}`;
+
+                    input.value =
+                        optionIndex;
+
+
+                    const savedAnswer =
+                        getAnswer(
+                            question.id,
+                            itemIndex
+                        );
+
+
+                    if (
+                        savedAnswer !== null &&
+                        Number(savedAnswer) === optionIndex
+                    ) {
+
+                        input.checked =
+                            true;
+
+                        subQuestion.classList.add(
+                            "answered"
+                        );
+                    }
+
+
+                    input.addEventListener(
+                        "change",
+                        () => {
+
+                            saveAnswer(
+                                question.id,
+                                itemIndex,
+                                optionIndex
+                            );
+
+                            subQuestion.classList.add(
+                                "answered"
+                            );
+
+                            hideWarning();
+
+                        }
+                    );
+
+
+                    const label =
+                        document.createElement("label");
+
+                    label.className =
+                        "option-label";
+
+                    label.htmlFor =
+                        input.id;
+
+
+                    const letter =
+                        document.createElement("span");
+
+                    letter.className =
+                        "option-letter";
+
+                    letter.textContent =
+                        letters[optionIndex] ||
+                        String(optionIndex + 1);
+
+
+                    const optionTextElement =
+                        document.createElement("span");
+
+                    optionTextElement.textContent =
+                        optionText;
+
+
+                    label.appendChild(
+                        letter
+                    );
+
+                    label.appendChild(
+                        optionTextElement
+                    );
+
+
+                    option.appendChild(
+                        input
+                    );
+
+                    option.appendChild(
+                        label
+                    );
+
+
+                    options.appendChild(
+                        option
+                    );
+
+                }
+            );
+
+
+            subQuestion.appendChild(
+                options
+            );
+
+
+            itemsContainer.appendChild(
+                subQuestion
+            );
+
+        }
+    );
+
+
+    page.appendChild(
+        itemsContainer
+    );
+
+
+    questionContainer.appendChild(
+        page
+    );
+
+
+    /* -----------------------------------------------------
+       Navigation
+       ----------------------------------------------------- */
+
+    previousButton.disabled =
+        quizState.currentQuestion === 0;
+
+
+    if (
+        quizState.currentQuestion ===
+        questions.length - 1
+    ) {
+
+        nextButton.textContent =
+            "إنهاء الاختبار";
+
+    } else {
+
+        nextButton.textContent =
+            "السؤال التالي";
+
+    }
+
+
+    if (isQuestionComplete(question)) {
+
+        pageHint.textContent =
+            "تمت الإجابة عن جميع الفقرات ✓";
+
+    } else {
+
+        pageHint.textContent =
+            "اختر إجابة لكل فقرة";
+
+    }
+
+}
+
+
+/* =========================================================
+   SAVE ANSWER
+   ========================================================= */
+
+function saveAnswer(
+    questionId,
+    itemIndex,
+    answer
+) {
+
+    if (!quizState.answers[questionId]) {
+
+        quizState.answers[questionId] =
+            {};
+
+    }
+
+    quizState.answers[questionId][itemIndex] =
+        answer;
+}
+
+
+/* =========================================================
+   GET ANSWER
+   ========================================================= */
+
+function getAnswer(
+    questionId,
+    itemIndex
+) {
+
+    if (
+        !quizState.answers[questionId]
+    ) {
+
+        return null;
+
+    }
+
+
+    if (
+        quizState.answers[questionId][itemIndex] ===
+        undefined
+    ) {
+
+        return null;
+
+    }
+
+
+    return quizState.answers[questionId][itemIndex];
+}
+
+
+/* =========================================================
+   CHECK QUESTION COMPLETION
+   ========================================================= */
+
+function isQuestionComplete(question) {
+
+    if (!question.items.length) {
+        return true;
+    }
+
+
+    return question.items.every(
+        (item, index) => {
+
+            return getAnswer(
+                question.id,
+                index
+            ) !== null;
+
+        }
+    );
+}
+
+
+/* =========================================================
+   WARNING
+   ========================================================= */
+
+function showWarning() {
+
+    warningMessage.classList.add(
+        "show"
+    );
+
+    warningMessage.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+    });
+
+}
+
+
+function hideWarning() {
+
+    warningMessage.classList.remove(
+        "show"
+    );
+
+}
+
+
+/* =========================================================
+   NEXT QUESTION
+   ========================================================= */
+
+function goNext() {
+
+    const question =
+        questions[
+            quizState.currentQuestion
+        ];
+
+
+    if (
+        !isQuestionComplete(question)
+    ) {
+
+        showWarning();
+
+        return;
+
+    }
+
+
+    hideWarning();
+
+
+    if (
+        quizState.currentQuestion <
+        questions.length - 1
+    ) {
+
+        quizState.currentQuestion++;
+
+        renderCurrentQuestion();
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+
+        return;
+    }
+
+
+    finishQuiz();
+}
+
+
+/* =========================================================
+   PREVIOUS QUESTION
+   ========================================================= */
+
+function goPrevious() {
+
+    if (
+        quizState.currentQuestion <= 0
+    ) {
+
+        return;
+
+    }
+
+
+    quizState.currentQuestion--;
+
+    hideWarning();
+
+    renderCurrentQuestion();
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+}
+
+
+/* =========================================================
+   CALCULATE RESULT
+   ========================================================= */
+
+function calculateResult() {
+
+    let score =
+        0;
+
+    let correct =
+        0;
+
+    let wrong =
+        0;
+
+    let totalItems =
+        0;
+
+
+    questions.forEach(
+        question => {
+
+            question.items.forEach(
+                (item, itemIndex) => {
+
+                    totalItems++;
+
+
+                    const userAnswer =
+                        getAnswer(
+                            question.id,
+                            itemIndex
+                        );
+
+
+                    if (
+                        Number(userAnswer) ===
+                        Number(item.answer)
+                    ) {
+
+                        score +=
+                            item.points;
+
+                        correct++;
+
+                    } else {
+
+                        wrong++;
+
+                    }
+
+                }
+            );
+
+        }
+    );
+
+
+    return {
+
+        score,
+        correct,
+        wrong,
+        totalItems
+
+    };
+
+}
+
+
+/* =========================================================
+   ROUND SCORE
+   ========================================================= */
+
+function roundScore(score) {
+
+    return Math.round(
+        score * 100
+    ) / 100;
+
+}
+
+
+/* =========================================================
+   GET LEVEL
+   ========================================================= */
+
+function getLevel(score) {
+
+    if (score >= 90) {
+
+        return {
+            title: "متميز جدًا",
+            message:
+                "أحسنت! مستواك متميز جدًا، ويظهر في إجاباتك تمكن واضح من القواعد النحوية. واصل المراجعة والتدريب لتحافظ على هذا المستوى وتصل إلى أعلى درجات الإتقان."
+        };
+
+    }
+
+    if (score >= 80) {
+
+        return {
+            title: "متقدم",
+            message:
+                "أداء رائع! لديك مستوى متقدم في النحو العربي، ومع مزيد من التدريب على المواضع الدقيقة ستصل بإذن الله إلى درجة التميز."
+        };
+
+    }
+
+    if (score >= 70) {
+
+        return {
+            title: "جيد جدًا",
+            message:
+                "أحسنت! لديك أساس جيد جدًا في النحو، وتحتاج إلى مزيد من التدريب على بعض الجزئيات للوصول إلى مستوى أعلى."
+        };
+
+    }
+
+    if (score >= 60) {
+
+        return {
+            title: "جيد",
+            message:
+                "نتيجة جيدة. لديك أساس مناسب، وننصحك بمراجعة القواعد التي أخطأت فيها ثم إعادة الاختبار لتثبيت المعلومات."
+        };
+
+    }
+
+    if (score >= 50) {
+
+        return {
+            title: "مقبول",
+            message:
+                "بداية طيبة، ولكنك تحتاج إلى مزيد من المراجعة والتدريب. لا تجعل الخطأ سببًا للإحباط؛ فالتدريب المستمر هو طريق الإتقان."
+        };
+
+    }
+
+    return {
+        title: "يحتاج إلى مزيد من التدريب",
+        message:
+            "لا بأس، فالاختبار وسيلة للتعلم وليس للحكم عليك. راجع القواعد الأساسية، وتدرّب على الإعراب، ثم أعد الاختبار وستلاحظ بإذن الله تحسنًا واضحًا."
+    };
+
+}
+
+
+/* =========================================================
+   FINISH QUIZ
+   ========================================================= */
+
+function finishQuiz() {
+
+    const result =
+        calculateResult();
+
+
+    const score =
+        roundScore(
+            result.score
+        );
+
+
+    const level =
+        getLevel(score);
+
+
+    quizState.finished =
+        true;
+
+
+    scoreNumber.textContent =
+        score % 1 === 0
+            ? score
+            : score.toFixed(2);
+
+
+    resultStudent.textContent =
+        `الطالب: ${quizState.studentName}`;
+
+
+    levelBadge.textContent =
+        level.title;
+
+
+    motivationMessage.textContent =
+        level.message;
+
+
+    correctCount.textContent =
+        result.correct;
+
+
+    wrongCount.textContent =
+        result.wrong;
+
+
+    const percent =
+        Math.round(
+            score
+        );
+
+
+    percentage.textContent =
+        percent + "%";
+
+
+    const angle =
+        Math.max(
+            0,
+            Math.min(
+                360,
+                score * 3.6
+            )
+        );
+
+
+    scoreCircle.style
+        .setProperty(
+            "--score-angle",
+            angle + "deg"
+        );
+
+
+    showScreen(
+        resultScreen
+    );
+
+}
+
+
+/* =========================================================
+   RESTART QUIZ
+   ========================================================= */
+
+function restartQuiz() {
+
+    quizState.studentName =
+        "";
+
+    quizState.currentQuestion =
+        0;
+
+    quizState.answers =
+        {};
+
+    quizState.finished =
+        false;
+
+
+    studentNameInput.value =
+        "";
+
+
+    showScreen(
+        startScreen
+    );
+
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+}
+
+
+/* =========================================================
+   PRINT RESULT
+   ========================================================= */
+
+function printResult() {
+
+    window.print();
+
+}
+
+
+/* =========================================================
+   EVENT LISTENERS
+   ========================================================= */
+
+startButton.addEventListener(
+    "click",
+    startQuiz
+);
+
+
+nextButton.addEventListener(
+    "click",
+    goNext
+);
+
+
+previousButton.addEventListener(
+    "click",
+    goPrevious
+);
+
+
+restartButton.addEventListener(
+    "click",
+    restartQuiz
+);
+
+
+printButton.addEventListener(
+    "click",
+    printResult
+);
+
+
+/* =========================================================
+   ENTER KEY ON STUDENT NAME
+   ========================================================= */
+
+studentNameInput.addEventListener(
+    "keydown",
+    event => {
+
+        if (
+            event.key === "Enter"
+        ) {
+
+            startQuiz();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   VALIDATION
+   ========================================================= */
+
+function validateQuizData() {
+
+    console.log(
+        "عدد الأسئلة الرئيسية:",
+        questions.length
+    );
+
+
+    const totalPoints =
+        questions.reduce(
+            (sum, question) => {
+
+                return sum +
+                    question.points;
+
+            },
+            0
+        );
+
+
+    console.log(
+        "مجموع درجات الأسئلة:",
+        totalPoints
+    );
+
+
+    let itemPoints =
+        0;
+
+
+    questions.forEach(
+        question => {
+
+            const questionItemPoints =
+                question.items.reduce(
+                    (sum, item) => {
+
+                        return sum +
+                            item.points;
+
+                    },
+                    0
+                );
+
+
+            itemPoints +=
+                questionItemPoints;
+
+
+            if (
+                Math.abs(
+                    questionItemPoints -
+                    question.points
+                ) > 0.03
+            ) {
+
+                console.warn(
+                    `مراجعة السؤال ${question.id}:`,
+                    questionItemPoints,
+                    question.points
+                );
+
+            }
+
+        }
+    );
+
+
+    console.log(
+        "مجموع درجات الفقرات:",
+        itemPoints
+    );
+
+
+    if (
+        questions.length !== 30
+    ) {
+
+        console.error(
+            "خطأ: عدد الأسئلة ليس 30."
+        );
+
+    }
+
+
+    if (
+        Math.abs(
+            totalPoints - 100
+        ) > 0.05
+    ) {
+
+        console.error(
+            "خطأ: مجموع الدرجات ليس 100."
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   INITIALIZE
+   ========================================================= */
+
+validateQuizData();
+
+</script>
+
+</body>
+</html>
