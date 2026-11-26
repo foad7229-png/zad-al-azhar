@@ -16,7 +16,7 @@
   --page-bg:#F3F0E7;
   --sp-bg:#FFFDF7; --sp-fg:#000000; --sp-weight:800;
   --sp-font-family:'Tajawal','Cairo','Noto Sans Arabic','Segoe UI',Tahoma,sans-serif;
-  --sp-font-size:24px; --sp-line-height:1.85;
+  --sp-font-size:20px; --sp-line-height:1.8;
   --sp-surface:rgba(18,63,53,.05); --sp-border:rgba(18,63,53,.18);
   --sp-muted:#475569; --sp-btn-bg:rgba(18,63,53,.07); --sp-btn-hover:rgba(18,63,53,.15);
   --sp-btn-ink:#123F35; --sp-act-bg:#123F35; --sp-act-border:#123F35; --sp-act-ink:#ffffff;
@@ -58,64 +58,64 @@ button{touch-action:manipulation;user-select:none}
 
 /* Top Header — Unified Single-Row Bar for Maximum Reading Space */
 #topBar{
-  flex:0 0 auto;position:relative;display:flex;align-items:center;justify-content:space-between;gap:6px;
-  padding:5px 8px 7px;background:var(--brand);color:#ffffff;
-  border-bottom:1px solid rgba(184,149,85,.45);min-height:42px;flex-wrap:nowrap;
+  flex:0 0 auto;position:relative;display:flex;align-items:center;justify-content:space-between;gap:5px;
+  padding:3px 6px 5px;background:var(--brand);color:#ffffff;
+  border-bottom:1px solid rgba(184,149,85,.45);min-height:32px;flex-wrap:nowrap;
 }
-.brand-wrap{display:flex;align-items:center;gap:6px;min-width:0;flex:1 1 auto}
+.brand-wrap{display:flex;align-items:center;gap:5px;min-width:0;flex:1 1 auto}
 #scriptSidebarBtn{flex:none}
 .brand-titles{display:flex;flex-direction:column;min-width:0;flex:1}
 #scriptContext{
-  font:800 13px/1.25 var(--font-heading);color:#ffffff;
+  font:800 11.5px/1.2 var(--font-heading);color:#ffffff;
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 }
-.brand-sub-row{display:flex;align-items:center;gap:5px;min-width:0;margin-top:1px}
+.brand-sub-row{display:flex;align-items:center;gap:4px;min-width:0;margin-top:1px}
 #scriptBadge{
-  flex:none;font:800 10.5px/1.3 var(--font-body);color:#123F35;background:#F1D8A0;
-  border-radius:999px;padding:1px 7px;white-space:nowrap;
+  flex:none;font:800 9.5px/1.25 var(--font-body);color:#123F35;background:#F1D8A0;
+  border-radius:999px;padding:0 6px;white-space:nowrap;
 }
 #lessonMeta{
-  display:none;font:700 11px/1.3 var(--font-body);color:#F1D8A0;opacity:.88;
+  display:none;font:700 10px/1.25 var(--font-body);color:#F1D8A0;opacity:.88;
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 }
 @media(min-width:980px){#lessonMeta{display:inline}}
 #topControlsWrap{
-  flex:0 0 auto;display:flex;align-items:center;flex-wrap:nowrap;gap:4px;justify-content:flex-end;
+  flex:0 0 auto;display:flex;align-items:center;flex-wrap:nowrap;gap:3px;justify-content:flex-end;
 }
-.top-quick-group{display:inline-flex;align-items:center;flex-wrap:nowrap;gap:4px}
-.top-sep{width:1px;height:20px;background:rgba(241,216,160,.32);margin:0 1px;flex:none}
-#headBtns{flex:0 0 auto;display:flex;align-items:center;gap:4px}
+.top-quick-group{display:inline-flex;align-items:center;flex-wrap:nowrap;gap:3px}
+.top-sep{width:1px;height:16px;background:rgba(241,216,160,.32);margin:0 1px;flex:none}
+#headBtns{flex:0 0 auto;display:flex;align-items:center;gap:3px}
 .top-icon{
   appearance:none;position:relative;display:inline-grid;place-items:center;
-  min-width:30px;height:30px;border:1px solid rgba(255,255,255,.24);border-radius:8px;
-  background:rgba(255,255,255,.10);color:#ffffff;padding:4px;cursor:pointer;
+  min-width:24px;height:24px;border:1px solid rgba(255,255,255,.24);border-radius:6px;
+  background:rgba(255,255,255,.10);color:#ffffff;padding:3px;cursor:pointer;
   transition:background .15s,border-color .15s,transform .1s;
 }
-.top-icon svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
+.top-icon svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
 .top-icon:active{transform:scale(.94)}
 .top-icon.act,.top-icon[aria-pressed="true"]{background:#246252;border-color:#F1D8A0;color:#ffffff}
 #wakeLockBtn.awake::after{
-  content:'';position:absolute;top:2px;left:2px;width:6px;height:6px;border-radius:50%;
-  background:#34d399;box-shadow:0 0 0 1.5px var(--brand);pointer-events:none;
+  content:'';position:absolute;top:2px;left:2px;width:5px;height:5px;border-radius:50%;
+  background:#34d399;box-shadow:0 0 0 1px var(--brand);pointer-events:none;
 }
 .top-icon.script-warning{color:#fde68a;border-color:#f59e0b}
-#pbar{position:absolute;right:0;bottom:0;height:3px;width:0%;background:var(--gold);transition:width .22s ease}
+#pbar{position:absolute;right:0;bottom:0;height:2px;width:0%;background:var(--gold);transition:width .22s ease}
 
 /* Header-integrated Quick Controls (Bold, Edit, Scope) */
 #topBar .script-pill-btn{
-  height:30px;padding:0 8px;border:1px solid rgba(255,255,255,.26);border-radius:8px;
-  background:rgba(255,255,255,.10);color:#ffffff;font-size:12px;gap:4px;
+  height:24px;padding:0 6px;border:1px solid rgba(255,255,255,.26);border-radius:6px;
+  background:rgba(255,255,255,.10);color:#ffffff;font-size:10.5px;gap:3px;
 }
-#topBar .script-pill-btn svg{width:14px;height:14px}
+#topBar .script-pill-btn svg{width:12px;height:12px}
 #topBar .script-pill-btn.act,#topBar .script-pill-btn[aria-pressed="true"]{
   background:#246252;border-color:#F1D8A0;color:#ffffff;
 }
 #topBar #scriptRead{background:#059669;border-color:#6ee7b7;color:#ffffff}
 #topBar #scriptScopeSeg{
-  height:30px;border:1px solid rgba(255,255,255,.26);border-radius:8px;
+  height:24px;border:1px solid rgba(255,255,255,.26);border-radius:6px;
   background:rgba(255,255,255,.10);
 }
-#topBar .sp-seg-btn{color:rgba(255,255,255,.82);padding:0 7px;font-size:11.5px}
+#topBar .sp-seg-btn{color:rgba(255,255,255,.82);padding:0 5px;font-size:10px}
 #topBar .sp-seg-btn.act{background:#F1D8A0;color:#123F35}
 body.focus-mode .top-quick-group,body.focus-mode .top-sep,body.focus-mode .cue-meta-bar{display:none}
 .script-pill-btn{
@@ -168,9 +168,16 @@ body.script-dark #scriptFontRange{accent-color:#67b8d6}
 
 /* Expansion Mode Banner */
 #scriptExpBanner{
-  flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;gap:10px;
-  padding:8px 14px;border-bottom:1.5px solid rgba(180,83,9,.32);
-  background:#fef3c7;color:#92400e;font:800 14.5px/1.35 var(--font-heading);
+  flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;gap:8px;
+  padding:4px 10px;border-bottom:1px solid rgba(180,83,9,.32);
+  background:#fef3c7;color:#92400e;font:800 12px/1.3 var(--font-heading);
+}
+body.script-dark #scriptExpBanner{
+  background:rgba(217,119,6,.20);border-bottom-color:rgba(217,119,6,.45);color:#fde68a;
+}
+#scriptExpBack{
+  appearance:none;border:1px solid currentColor;border-radius:7px;background:transparent;color:inherit;
+  padding:2px 9px;cursor:pointer;font:800 11px/1.2 var(--font-body);white-space:nowrap;
 }
 body.script-dark #scriptExpBanner{
   background:rgba(217,119,6,.20);border-bottom-color:rgba(217,119,6,.45);color:#fde68a;
@@ -194,10 +201,10 @@ body.script-dark #scriptExpBanner{
 }
 #scriptReader,#scriptEditor{
   box-sizing:border-box;width:100%;height:100%;overflow-y:auto;overflow-x:hidden;
-  margin:0 auto;border:0;padding:10px 16px 20px;color:var(--sp-fg);background:transparent;
+  margin:0 auto;border:0;padding:8px 14px 16px;color:var(--sp-fg);background:transparent;
   text-align:right;direction:rtl;
   font-family:var(--sp-font-family);font-weight:var(--sp-weight,800);
-  font-size:var(--sp-font-size,24px);line-height:var(--sp-line-height,1.85);
+  font-size:var(--sp-font-size,20px);line-height:var(--sp-line-height,1.8);
   white-space:pre-wrap;overflow-wrap:anywhere;
   -webkit-overflow-scrolling:touch;overscroll-behavior:contain;
   scrollbar-width:thin;scrollbar-color:var(--sp-border) transparent;
@@ -301,53 +308,53 @@ body.script-dark .ol-exp-tag{color:#fbbf24}
 
 /* Tablet Thumb-Zone Navigation Footer */
 #navFooter{
-  flex:0 0 auto;display:grid;grid-template-columns:1fr auto 1.25fr;align-items:center;gap:8px;
-  padding:6px 10px calc(6px + var(--safe-b));
+  flex:0 0 auto;display:grid;grid-template-columns:1fr auto 1.2fr;align-items:center;gap:6px;
+  padding:4px 8px calc(4px + var(--safe-b));
   border-top:1px solid var(--sp-border);background:var(--sp-surface);
 }
 .nav-btn{
-  appearance:none;display:inline-flex;align-items:center;justify-content:center;gap:6px;
-  min-height:38px;padding:0 12px;border:1.5px solid var(--sp-border);border-radius:10px;
+  appearance:none;display:inline-flex;align-items:center;justify-content:center;gap:4px;
+  min-height:28px;padding:0 10px;border:1px solid var(--sp-border);border-radius:8px;
   background:var(--sp-btn-bg);color:var(--sp-btn-ink);cursor:pointer;
-  font:800 14px/1 var(--font-heading);transition:background .12s,transform .1s;
+  font:800 12px/1 var(--font-heading);transition:background .12s,transform .1s;
 }
 .nav-btn:active:not(:disabled){transform:scale(.97)}
-.nav-btn.primary{background:var(--brand);border-color:var(--brand);color:#ffffff;box-shadow:0 3px 8px rgba(18,63,53,.20)}
+.nav-btn.primary{background:var(--brand);border-color:var(--brand);color:#ffffff;box-shadow:0 2px 6px rgba(18,63,53,.18)}
 .nav-btn.primary:active:not(:disabled){background:var(--brand-2)}
 .nav-btn:disabled{opacity:.35;cursor:default}
 
-/* Big Thumb Expansion Button in Center of Bottom Bar */
+/* Compact Thumb Expansion Button in Center of Bottom Bar */
 #thumbExpBtn{
-  appearance:none;position:relative;display:inline-flex;align-items:center;justify-content:center;gap:6px;
-  min-height:38px;padding:0 14px;border:1.5px solid var(--sp-border);border-radius:10px;
+  appearance:none;position:relative;display:inline-flex;align-items:center;justify-content:center;gap:4px;
+  min-height:28px;padding:0 10px;border:1.5px solid var(--sp-border);border-radius:8px;
   background:var(--sp-bg);color:var(--sp-btn-ink);cursor:pointer;
-  font:800 13.5px/1 var(--font-heading);white-space:nowrap;transition:all .15s;
+  font:800 11.5px/1 var(--font-heading);white-space:nowrap;transition:all .15s;
 }
-#thumbExpBtn svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
+#thumbExpBtn svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
 #thumbExpBtn:active{transform:scale(.96)}
 #thumbExpBtn.has-exp{border-color:#d97706;color:#92400e;background:#fffbeb}
 body.script-dark #thumbExpBtn.has-exp{color:#fde68a;background:rgba(217,119,6,.16);border-color:#d97706}
 #thumbExpBtn.has-exp::after{
-  content:'';position:absolute;top:4px;left:4px;width:7px;height:7px;border-radius:50%;
+  content:'';position:absolute;top:3px;left:3px;width:6px;height:6px;border-radius:50%;
   background:#d97706;pointer-events:none;
 }
 #thumbExpBtn.act{
-  background:#b45309;border-color:#fbbf24;color:#ffffff;box-shadow:0 3px 10px rgba(180,83,9,.30);
+  background:#b45309;border-color:#fbbf24;color:#ffffff;box-shadow:0 2px 8px rgba(180,83,9,.28);
 }
 #thumbExpBtn.act::after{display:none}
 .cue-meta-bar{
   flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;gap:8px;
-  padding:2px 12px;border-top:1px dashed var(--sp-border);background:var(--sp-bg);
-  font:700 11px/1.35 var(--font-body);color:var(--sp-muted);
+  padding:1px 10px;border-top:1px dashed var(--sp-border);background:var(--sp-bg);
+  font:700 10px/1.25 var(--font-body);color:var(--sp-muted);
 }
 
 /* Popovers (Bottom-Sheet / Floating Friendly for Tablet) */
 .sp-popover{
-  position:fixed;top:48px;left:10px;width:min(360px,calc(100vw - 20px));z-index:35;
-  display:flex;flex-direction:column;gap:12px;padding:14px;
+  position:fixed;top:38px;left:8px;width:min(340px,calc(100vw - 16px));z-index:35;
+  display:flex;flex-direction:column;gap:10px;padding:12px;
   background:var(--sp-pop-bg);color:var(--sp-pop-ink);
-  border:1.5px solid var(--sp-pop-border);border-radius:16px;
-  box-shadow:0 16px 40px rgba(0,0,0,.32);max-height:calc(100dvh - 82px);overflow-y:auto;
+  border:1.5px solid var(--sp-pop-border);border-radius:14px;
+  box-shadow:0 16px 40px rgba(0,0,0,.32);max-height:calc(100dvh - 52px);overflow-y:auto;
   -webkit-overflow-scrolling:touch;
 }
 .sp-sec-label{
@@ -405,23 +412,14 @@ body.script-dark #thumbExpBtn.has-exp{color:#fde68a;background:rgba(217,119,6,.1
 @media(max-width:760px){
   .top-sep{display:none}
   #topBar #scriptEdit span,#topBar #scriptRead span{display:none}
-  #topBar #scriptEdit,#topBar #scriptRead{min-width:30px;padding:0 6px}
+  #topBar #scriptEdit,#topBar #scriptRead{min-width:24px;padding:0 5px}
 }
 @media(max-width:580px){
-  #scriptReader,#scriptEditor{padding:8px 12px 18px}
-  #navFooter{gap:6px;padding:5px 8px calc(5px + var(--safe-b))}
-  .nav-btn,#thumbExpBtn{min-height:36px;font-size:13px;padding:0 10px}
-  .top-icon,#topBar .script-pill-btn,#topBar #scriptScopeSeg{height:28px}
-  .top-icon{min-width:28px}
-}
-}
-@media(max-width:580px){
-  #lessonMeta{display:none}
-  #scriptReader,#scriptEditor{padding:14px 14px 32px}
-  #navFooter{gap:7px;padding:8px 10px calc(8px + var(--safe-b))}
-  .nav-btn,#thumbExpBtn{min-height:48px;font-size:15px;padding:0 12px}
-  .top-icon,#topBar .script-pill-btn,#topBar #scriptScopeSeg{height:36px}
-  .top-icon{min-width:36px}
+  #scriptReader,#scriptEditor{padding:6px 10px 14px}
+  #navFooter{gap:5px;padding:3px 6px calc(3px + var(--safe-b))}
+  .nav-btn,#thumbExpBtn{min-height:26px;font-size:11px;padding:0 8px}
+  .top-icon,#topBar .script-pill-btn,#topBar #scriptScopeSeg{height:22px}
+  .top-icon{min-width:22px}
 }
 
 /* Print View */
@@ -539,8 +537,8 @@ body.script-dark #thumbExpBtn.has-exp{color:#fde68a;background:rgba(217,119,6,.1
     <div>
       <label class="sp-sec-label" for="scriptFontRange">حجم الخط</label>
       <div class="sp-font-slider-row">
-        <input type="range" id="scriptFontRange" min="16" max="64" step="1" value="24" aria-label="التحكم في حجم الخط">
-        <output id="scriptFontSizeVal" class="sp-size-box" for="scriptFontRange">٢٤</output>
+        <input type="range" id="scriptFontRange" min="14" max="64" step="1" value="20" aria-label="التحكم في حجم الخط">
+        <output id="scriptFontSizeVal" class="sp-size-box" for="scriptFontRange">٢٠</output>
       </div>
     </div>
     <div>
@@ -946,12 +944,12 @@ const FG_SWATCHES=[
   {c:'#FACC15',name:'أصفر عالي التباين'}
 ];
 const DEFAULTS={
-  font:24, lineHeight:1.85, bg:'#FFFDF7', fg:'#000000', bold:true, fontFamily:'Tajawal',
+  font:20, lineHeight:1.8, bg:'#FFFDF7', fg:'#000000', bold:true, fontFamily:'Tajawal',
   sidebarOpen:false, sidebarSide:'right', narrowCol:true,
   swipeNav:true, autoCloseDrawer:true, wakeLock:true, focusMode:false, autoSpeed:42
 };
 const rawEmbedded=document.getElementById('presenterScriptData').textContent;
-const storeKey='zad-tablet-script-v3:'+hashStr(rawEmbedded);
+const storeKey='zad-tablet-script-v4:'+hashStr(rawEmbedded);
 
 const el={};
 ['scriptSidebarBtn','scriptContext','scriptBadge','lessonMeta','wakeLockBtn','autoScrollBtn','focusBtn','scriptStyleBtn','scriptOptions','scriptFsBtn','pbar','scriptFontRange','scriptFontSizeVal','scriptBold','scriptEdit','scriptRead','scriptScopeSeg','scriptScopeDetailBtn','scriptScopeSlideBtn','autoScrollBar','autoPlayToggle','autoSpeed','autoSpeedVal','autoCloseBtn','scriptExpBanner','scriptExpBack','drawerBackdrop','lessonTitle','closeDrawerBtn','outlineSearch','filterAllBtn','filterExpBtn','outlineList','sbStats','readerCol','scriptReader','scriptEditor','cueCounter','statusPill','btnPrev','thumbExpBtn','thumbExpLbl','btnNext','scriptStyleMenu','scriptFontFamily','scriptBgSwatches','scriptFgSwatches','scriptBgColor','scriptFgColor','scriptPresetLight','scriptPresetDark','scriptPresetHc','optSwipe','optNarrow','optAutoClose','optLeftSide','scriptMenu','scriptSaveHtml','scriptExport','scriptImport','scriptPrint','scriptFile','toast','printSheet'].forEach(id=>el[id]=document.getElementById(id));
@@ -1012,7 +1010,7 @@ function normalizeData(data){
   if(!outline.length)outline=[{index:0,sec:'الدرس',type:'cover',items:[]}];
   const settings={...DEFAULTS};
   if(data.settings&&typeof data.settings==='object'){
-    if(Number.isFinite(data.settings.font))settings.font=Math.round(Math.max(16,Math.min(64,data.settings.font)));
+    if(Number.isFinite(data.settings.font))settings.font=Math.round(Math.max(14,Math.min(64,data.settings.font)));
     if(Number.isFinite(data.settings.lineHeight))settings.lineHeight=Math.max(1.5,Math.min(2.4,data.settings.lineHeight));
     if(validHex(data.settings.bg))settings.bg=data.settings.bg.trim().toUpperCase();
     if(validHex(data.settings.fg))settings.fg=data.settings.fg.trim().toUpperCase();
@@ -1450,7 +1448,7 @@ function applyAppearance(partial={},save=false){
   if(validHex(partial.fg))st.fg=partial.fg.trim().toUpperCase();
   if(typeof partial.bold==='boolean')st.bold=partial.bold;
   if(typeof partial.fontFamily==='string'&&SCRIPT_FONTS.some(f=>f.id===partial.fontFamily))st.fontFamily=partial.fontFamily;
-  if(Number.isFinite(partial.font))st.font=Math.round(Math.max(16,Math.min(64,partial.font)));
+  if(Number.isFinite(partial.font))st.font=Math.round(Math.max(14,Math.min(64,partial.font)));
   if(Number.isFinite(partial.lineHeight))st.lineHeight=partial.lineHeight;
   const fObj=SCRIPT_FONTS.find(f=>f.id===st.fontFamily)||SCRIPT_FONTS[0];
   const root=document.documentElement.style;
