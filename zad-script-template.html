@@ -2,423 +2,422 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>سكربت الدرس — [عنوان الدرس]</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#123F35">
+<title>سكربت الدرس (نسخة التابلت) — [عنوان الدرس]</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Noto+Kufi+Arabic:wght@600;700;800;900&family=Tajawal:wght@500;700;800;900&family=Cairo:wght@600;700;800;900&family=Changa:wght@500..800&family=IBM+Plex+Sans+Arabic:wght@500;600;700&family=Noto+Naskh+Arabic:wght@400..700&family=Noto+Sans+Arabic:wght@400..900&family=Reem+Kufi:wght@400..700&display=swap" rel="stylesheet">
 <style>
 :root{
   --brand:#123F35; --brand-2:#246252; --gold:#B89555; --gold-soft:#F6EEDC;
-  --page-bg:#F3F0E7; --panel-bg:#FFFDF7; --panel-fg:#000000;
+  --page-bg:#F3F0E7;
   --sp-bg:#FFFDF7; --sp-fg:#000000; --sp-weight:800;
-  --sp-font-family:'Tajawal','Segoe UI',Tahoma,sans-serif;
-  --sp-font-size:26px;
-  --sp-surface:rgba(18,63,53,.045); --sp-border:rgba(18,63,53,.18);
-  --sp-muted:#475569; --sp-btn-bg:rgba(18,63,53,.06); --sp-btn-hover:rgba(18,63,53,.13);
+  --sp-font-family:'Tajawal','Cairo','Noto Sans Arabic','Segoe UI',Tahoma,sans-serif;
+  --sp-font-size:30px; --sp-line-height:1.95;
+  --sp-surface:rgba(18,63,53,.05); --sp-border:rgba(18,63,53,.18);
+  --sp-muted:#475569; --sp-btn-bg:rgba(18,63,53,.07); --sp-btn-hover:rgba(18,63,53,.15);
   --sp-btn-ink:#123F35; --sp-act-bg:#123F35; --sp-act-border:#123F35; --sp-act-ink:#ffffff;
   --sp-pop-bg:#ffffff; --sp-pop-border:#cbd5e1; --sp-pop-ink:#0f172a;
-  --sp-track:rgba(18,63,53,.10); --sp-thumb:#64748b; --sp-editor-bg:rgba(18,63,53,.04);
+  --sp-editor-bg:rgba(18,63,53,.05);
   --font-heading:'Noto Kufi Arabic','Tajawal','Segoe UI',Tahoma,sans-serif;
   --font-body:'Tajawal','Segoe UI',Tahoma,sans-serif;
-  --sidebar-w:320px;
+  --sidebar-w:min(360px, 86vw);
+  --safe-t:env(safe-area-inset-top, 0px);
+  --safe-b:env(safe-area-inset-bottom, 0px);
+  --safe-l:env(safe-area-inset-left, 0px);
+  --safe-r:env(safe-area-inset-right, 0px);
 }
 body.script-dark{
   --page-bg:#06141e;
-  --sp-surface:rgba(255,255,255,.045); --sp-border:rgba(148,189,210,.24);
-  --sp-muted:#9dc2d6; --sp-btn-bg:rgba(255,255,255,.06); --sp-btn-hover:rgba(121,220,242,.18);
+  --sp-surface:rgba(255,255,255,.05); --sp-border:rgba(148,189,210,.24);
+  --sp-muted:#9dc2d6; --sp-btn-bg:rgba(255,255,255,.08); --sp-btn-hover:rgba(121,220,242,.20);
   --sp-btn-ink:#e0f4ff; --sp-act-bg:#194b61; --sp-act-border:#67b8d6; --sp-act-ink:#ffffff;
   --sp-pop-bg:#0b2435; --sp-pop-border:#547c93; --sp-pop-ink:#f4f1e8;
-  --sp-track:rgba(255,255,255,.10); --sp-thumb:#79afc8; --sp-editor-bg:rgba(0,0,0,.25);
+  --sp-editor-bg:rgba(0,0,0,.28);
 }
-*{box-sizing:border-box}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{
-  margin:0;height:100%;overflow:hidden;background:var(--page-bg);color:var(--sp-fg);
+  margin:0;width:100%;height:100vh;height:100dvh;overflow:hidden;
+  background:var(--page-bg);color:var(--sp-fg);
   font-family:var(--font-body);-webkit-font-smoothing:antialiased;
+  overscroll-behavior:none;
 }
+button,input,select,textarea{font-family:inherit}
+button{touch-action:manipulation;user-select:none}
 [hidden]{display:none!important}
-.sr-only{
-  position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
-  clip:rect(0,0,0,0);clip-path:inset(50%);white-space:nowrap;border:0;
-}
 
 /* App Shell */
 #shell{
-  position:fixed;inset:0;display:flex;flex-direction:column;
-  background:var(--sp-bg);color:var(--sp-fg);
+  position:fixed;inset:0;width:100%;height:100vh;height:100dvh;
+  display:flex;flex-direction:column;background:var(--sp-bg);color:var(--sp-fg);
+  padding-top:var(--safe-t);padding-left:var(--safe-l);padding-right:var(--safe-r);
 }
-/* Top Header */
+
+/* Top Header — Unified Single-Row Bar for Maximum Reading Space */
 #topBar{
-  flex:0 0 auto;position:relative;display:flex;align-items:center;justify-content:space-between;gap:12px;
-  padding:8px 14px 10px;background:var(--brand);color:#ffffff;
-  border-bottom:1px solid rgba(184,149,85,.45);
+  flex:0 0 auto;position:relative;display:flex;align-items:center;justify-content:space-between;gap:8px;
+  padding:7px 12px 9px;background:var(--brand);color:#ffffff;
+  border-bottom:1px solid rgba(184,149,85,.45);min-height:54px;flex-wrap:wrap;
 }
-.brand-wrap{display:flex;align-items:center;gap:10px;min-width:0}
-.brand-mark{
-  flex:none;width:36px;height:36px;border-radius:10px;display:grid;place-items:center;
-  background:rgba(255,255,255,.10);border:1px solid rgba(241,216,160,.55);color:#F1D8A0;
-}
-.brand-mark svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
-.brand-titles{display:flex;flex-direction:column;min-width:0}
-.brand-lesson{
-  font:800 16px/1.3 var(--font-heading);color:#ffffff;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-}
-.brand-meta{
-  font:700 12.5px/1.35 var(--font-body);color:#F1D8A0;opacity:.92;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-}
-#posCenter{
-  flex:1;min-width:0;display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:nowrap;
-}
+.brand-wrap{display:flex;align-items:center;gap:8px;min-width:170px;flex:1 1 200px}
+#scriptSidebarBtn{flex:none}
+.brand-titles{display:flex;flex-direction:column;min-width:0;flex:1}
 #scriptContext{
-  font:800 15px/1.35 var(--font-heading);color:#ffffff;
-  background:rgba(255,255,255,.12);border-radius:8px;padding:4px 12px;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:460px;
+  font:800 15px/1.28 var(--font-heading);color:#ffffff;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 }
+.brand-sub-row{display:flex;align-items:center;gap:6px;min-width:0;margin-top:2px}
 #scriptBadge{
-  flex:none;font:800 12.5px/1.4 var(--font-body);color:#123F35;background:#F1D8A0;
-  border-radius:999px;padding:2px 10px;white-space:nowrap;
+  flex:none;font:800 11.5px/1.35 var(--font-body);color:#123F35;background:#F1D8A0;
+  border-radius:999px;padding:1px 9px;white-space:nowrap;
 }
+#lessonMeta{
+  font:700 11.5px/1.35 var(--font-body);color:#F1D8A0;opacity:.88;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+#topControlsWrap{
+  flex:0 1 auto;display:flex;align-items:center;flex-wrap:wrap;gap:6px;justify-content:flex-end;
+}
+.top-quick-group{display:inline-flex;align-items:center;flex-wrap:wrap;gap:6px}
+.top-sep{width:1px;height:26px;background:rgba(241,216,160,.32);margin:0 2px;flex:none}
 #headBtns{flex:0 0 auto;display:flex;align-items:center;gap:5px}
 .top-icon{
-  appearance:none;position:relative;display:inline-grid;place-items:center;width:34px;height:34px;
-  border:1px solid rgba(255,255,255,.22);border-radius:9px;background:rgba(255,255,255,.09);
-  color:#ffffff;padding:5px;cursor:pointer;transition:background .15s,border-color .15s,transform .12s;
+  appearance:none;position:relative;display:inline-grid;place-items:center;
+  min-width:40px;height:40px;border:1px solid rgba(255,255,255,.24);border-radius:10px;
+  background:rgba(255,255,255,.10);color:#ffffff;padding:6px;cursor:pointer;
+  transition:background .15s,border-color .15s,transform .1s;
 }
-.top-icon svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
-.top-icon:hover{background:rgba(255,255,255,.20);border-color:#F1D8A0}
-.top-icon:focus-visible{outline:2px solid #F1D8A0;outline-offset:2px}
+.top-icon svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
+.top-icon:active{transform:scale(.94)}
 .top-icon.act,.top-icon[aria-pressed="true"]{background:#246252;border-color:#F1D8A0;color:#ffffff}
-#scriptExpandBtn.has-exp::after{
-  content:'';position:absolute;top:3px;left:3px;width:8px;height:8px;border-radius:50%;
-  background:#f59e0b;box-shadow:0 0 0 1.5px var(--brand);pointer-events:none;
-}
-#scriptExpandBtn.act,#scriptExpandBtn[aria-pressed="true"]{
-  background:#b45309;border-color:#fbbf24;color:#ffffff;
-}
-#scriptSyncBtn.synced::after{
-  content:'';position:absolute;top:3px;left:3px;width:7px;height:7px;border-radius:50%;
+#wakeLockBtn.awake::after{
+  content:'';position:absolute;top:4px;left:4px;width:8px;height:8px;border-radius:50%;
   background:#34d399;box-shadow:0 0 0 1.5px var(--brand);pointer-events:none;
 }
-#scriptSyncBtn.pulse{animation:syncPulse .5s ease}
-@keyframes syncPulse{0%{transform:scale(1)}50%{transform:scale(1.16);background:#059669}100%{transform:scale(1)}}
 .top-icon.script-warning{color:#fde68a;border-color:#f59e0b}
-#pbar{position:absolute;right:0;bottom:0;height:3px;width:0%;background:var(--gold);transition:width .25s ease}
+#pbar{position:absolute;right:0;bottom:0;height:3.5px;width:0%;background:var(--gold);transition:width .22s ease}
 
-/* Main Workspace: Sidebar + Reading Pane */
+/* Header-integrated Quick Controls (Bold, Edit, Scope) */
+#topBar .script-pill-btn{
+  height:40px;padding:0 11px;border:1px solid rgba(255,255,255,.26);border-radius:10px;
+  background:rgba(255,255,255,.10);color:#ffffff;font-size:13.5px;
+}
+#topBar .script-pill-btn.act,#topBar .script-pill-btn[aria-pressed="true"]{
+  background:#246252;border-color:#F1D8A0;color:#ffffff;
+}
+#topBar #scriptRead{background:#059669;border-color:#6ee7b7;color:#ffffff}
+#topBar #scriptScopeSeg{
+  height:40px;border:1px solid rgba(255,255,255,.26);border-radius:10px;
+  background:rgba(255,255,255,.10);
+}
+#topBar .sp-seg-btn{color:rgba(255,255,255,.82);padding:0 10px;font-size:13px}
+#topBar .sp-seg-btn.act{background:#F1D8A0;color:#123F35}
+body.focus-mode .top-quick-group,body.focus-mode .top-sep,body.focus-mode .cue-meta-bar{display:none}
+.script-pill-btn{
+  appearance:none;display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  height:40px;padding:0 13px;border:1.5px solid var(--sp-border);border-radius:10px;
+  background:var(--sp-btn-bg);color:var(--sp-btn-ink);cursor:pointer;
+  font:800 14px/1 var(--font-body);white-space:nowrap;transition:background .14s,border-color .14s,transform .1s;
+}
+.script-pill-btn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
+.script-pill-btn:active:not(:disabled){transform:scale(.96)}
+.script-pill-btn:disabled{opacity:.38;cursor:default}
+.script-pill-btn.act,.script-pill-btn[aria-pressed="true"]{background:var(--sp-act-bg);border-color:var(--sp-act-border);color:var(--sp-act-ink)}
+#scriptRead{background:#047857;border-color:#047857;color:#ffffff}
+#scriptScopeSeg{
+  display:inline-flex;align-items:center;border:1.5px solid var(--sp-border);border-radius:10px;overflow:hidden;
+  background:var(--sp-btn-bg);height:40px;
+}
+.sp-seg-btn{
+  appearance:none;border:0;background:transparent;color:var(--sp-muted);
+  height:100%;padding:0 12px;cursor:pointer;font:800 13.5px/1 var(--font-body);
+  white-space:nowrap;transition:background .15s,color .15s;
+}
+.sp-seg-btn.act{background:var(--sp-act-bg);color:var(--sp-act-ink)}
+
+/* Font Size Slider & Display Box inside Style Settings */
+.sp-font-slider-row{
+  display:flex;align-items:center;gap:10px;
+}
+#scriptFontRange{
+  flex:1;min-width:0;height:34px;margin:0;cursor:pointer;accent-color:var(--brand);
+}
+body.script-dark #scriptFontRange{accent-color:#67b8d6}
+.sp-size-box{
+  flex:none;min-width:56px;height:38px;padding:0 10px;
+  display:inline-grid;place-items:center;
+  border:1.5px solid var(--sp-border);border-radius:10px;
+  background:var(--sp-btn-bg);color:var(--sp-btn-ink);
+  font:800 16px/1 var(--font-heading);text-align:center;
+}
+
+/* Auto-Scroll Teleprompter Bar */
+#autoScrollBar{
+  flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;
+  padding:7px 14px;border-bottom:1px solid var(--sp-border);background:var(--sp-surface);
+}
+.as-group{display:flex;align-items:center;gap:8px;flex:1;min-width:200px}
+.as-label{font:800 13.5px/1 var(--font-heading);color:var(--sp-btn-ink);white-space:nowrap}
+#autoSpeed{flex:1;min-width:110px;max-width:260px;accent-color:var(--brand);height:28px;cursor:pointer}
+#autoSpeedVal{font:800 13.5px/1 var(--font-body);color:var(--sp-muted);min-width:52px;text-align:center}
+
+/* Expansion Mode Banner */
+#scriptExpBanner{
+  flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding:8px 14px;border-bottom:1.5px solid rgba(180,83,9,.32);
+  background:#fef3c7;color:#92400e;font:800 14.5px/1.35 var(--font-heading);
+}
+body.script-dark #scriptExpBanner{
+  background:rgba(217,119,6,.20);border-bottom-color:rgba(217,119,6,.45);color:#fde68a;
+}
+#scriptExpBack{
+  appearance:none;border:1.5px solid currentColor;border-radius:9px;background:transparent;color:inherit;
+  padding:6px 14px;cursor:pointer;font:800 13.5px/1.2 var(--font-body);white-space:nowrap;
+}
+
+/* Main Workspace */
 #workspace{
   flex:1;min-height:0;display:flex;flex-direction:row;position:relative;overflow:hidden;
 }
-body.sidebar-left #workspace{flex-direction:row-reverse}
-body.sidebar-left #scriptSideBtn svg{transform:scaleX(-1)}
-
-/* Collapsible Outline Sidebar */
-#scriptSidebar{
-  flex:0 0 var(--sidebar-w);width:var(--sidebar-w);min-height:0;display:flex;flex-direction:column;
-  background:var(--sp-surface);border-inline-end:1.5px solid var(--sp-border);
-  overflow:hidden;
-}
-body.sidebar-left #scriptSidebar{border-inline-end:0;border-inline-start:1.5px solid var(--sp-border)}
-body.sidebar-collapsed #scriptSidebar{display:none}
-.sb-head{
-  flex:0 0 auto;padding:10px;border-bottom:1px solid var(--sp-border);display:flex;flex-direction:column;gap:8px;
-}
-.sb-search{
-  width:100%;height:34px;padding:0 12px;border-radius:9px;border:1.5px solid var(--sp-border);
-  background:var(--sp-bg);color:var(--sp-fg);font:700 13.5px/1 var(--font-body);
-}
-.sb-search:focus{outline:2px solid var(--gold);outline-offset:1px}
-.sb-filters{display:flex;gap:5px}
-.sb-filter-btn{
-  appearance:none;flex:1;height:28px;border:1px solid var(--sp-border);border-radius:8px;
-  background:var(--sp-btn-bg);color:var(--sp-muted);cursor:pointer;
-  font:800 12.5px/1 var(--font-body);transition:background .15s,color .15s;
-}
-.sb-filter-btn.act{background:var(--sp-act-bg);border-color:var(--sp-act-border);color:var(--sp-act-ink)}
-#outlineList{
-  flex:1;min-height:0;overflow:auto;padding:8px;display:flex;flex-direction:column;gap:6px;
-}
-.ol-slide{
-  border:1px solid var(--sp-border);border-radius:10px;background:var(--sp-bg);overflow:hidden;
-}
-.ol-slide.cur-slide{border-color:var(--gold);box-shadow:0 2px 10px rgba(18,63,53,.09)}
-.ol-slide-btn{
-  appearance:none;width:100%;display:flex;align-items:center;gap:8px;padding:7px 9px;border:0;
-  background:transparent;color:var(--sp-btn-ink);text-align:right;cursor:pointer;
-  font:800 13.5px/1.35 var(--font-heading);
-}
-.ol-slide-btn:hover{background:var(--sp-btn-hover)}
-.ol-slide-btn.act{background:var(--sp-act-bg);color:var(--sp-act-ink)}
-.ol-num{
-  flex:none;min-width:24px;height:24px;padding:0 5px;border-radius:7px;display:grid;place-items:center;
-  background:var(--sp-btn-bg);color:var(--sp-btn-ink);font:900 12px/1 var(--font-heading);
-}
-.ol-slide-btn.act .ol-num{background:rgba(255,255,255,.22);color:#ffffff}
-.ol-sec{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.ol-exp-tag{
-  flex:none;font-size:12px;line-height:1;padding:2px 5px;border-radius:6px;
-  background:rgba(217,119,6,.16);color:#b45309;font-weight:900;
-}
-body.script-dark .ol-exp-tag{color:#fbbf24}
-.ol-items{
-  display:flex;flex-direction:column;gap:2px;padding:3px 7px 7px 7px;border-top:1px dashed var(--sp-border);
-}
-.ol-item-btn{
-  appearance:none;width:100%;display:flex;align-items:center;justify-content:space-between;gap:6px;
-  padding:5px 9px;border:1px solid transparent;border-radius:7px;background:transparent;
-  color:var(--sp-muted);text-align:right;cursor:pointer;font:700 13px/1.35 var(--font-body);
-}
-.ol-item-btn:hover{background:var(--sp-btn-hover);color:var(--sp-btn-ink)}
-.ol-item-btn.act{
-  background:var(--sp-act-bg);border-color:var(--sp-act-border);color:var(--sp-act-ink);font-weight:800;
-}
-.ol-item-btn.act .ol-exp-tag{background:rgba(255,255,255,.2);color:#fde68a}
-.ol-item-txt{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.sb-stats{
-  flex:0 0 auto;padding:7px 10px;border-top:1px solid var(--sp-border);
-  font:700 12px/1.4 var(--font-body);color:var(--sp-muted);display:flex;justify-content:space-between;gap:6px;
-}
-
-/* Reader Main Column */
 #readerCol{
   flex:1;min-width:0;min-height:0;display:flex;flex-direction:column;position:relative;
   background:var(--sp-bg);
 }
-/* Quick Action Bar */
-#scriptQuickBar{
-  flex:0 0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;
-  padding:7px 14px;border-bottom:1px solid var(--sp-border);background:var(--sp-surface);
+#readerCol.exp-mode{box-shadow:inset 0 0 0 2.5px rgba(217,119,6,.58)}
+#scriptTextArea{
+  position:relative;flex:1;min-width:0;min-height:0;display:flex;flex-direction:column;
 }
-.script-quick-group{display:inline-flex;align-items:center;flex-wrap:wrap;gap:6px}
-.script-pill-btn{
-  appearance:none;display:inline-flex;align-items:center;justify-content:center;gap:5px;
-  height:32px;padding:0 11px;border:1px solid var(--sp-border);border-radius:8px;
-  background:var(--sp-btn-bg);color:var(--sp-btn-ink);cursor:pointer;
-  font:700 13.5px/1 var(--font-body);white-space:nowrap;transition:background .15s,border-color .15s,color .15s;
-}
-.script-pill-btn svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
-.script-pill-btn:hover:not(:disabled){background:var(--sp-btn-hover);border-color:var(--sp-act-border)}
-.script-pill-btn:focus-visible,.sp-seg-btn:focus-visible,.sp-size-cap button:focus-visible,.sp-swatch:focus-visible,.sp-menu-item:focus-visible,#scriptReader:focus-visible,#scriptEditor:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
-.script-pill-btn:disabled{opacity:.38;cursor:default}
-.script-pill-btn.act,.script-pill-btn[aria-pressed="true"]{background:var(--sp-act-bg);border-color:var(--sp-act-border);color:var(--sp-act-ink)}
-#scriptRead{background:#047857;border-color:#047857;color:#ffffff}
-.sp-size-cap{
-  display:inline-flex;align-items:center;border:1px solid var(--sp-border);border-radius:8px;overflow:hidden;
-  background:var(--sp-btn-bg);height:32px;
-}
-.sp-size-cap button{
-  appearance:none;border:0;background:transparent;color:var(--sp-btn-ink);
-  height:100%;padding:0 10px;cursor:pointer;font:800 13.5px/1 var(--font-heading);
-}
-.sp-size-cap button:hover:not(:disabled){background:var(--sp-btn-hover)}
-.sp-size-cap button:disabled{opacity:.35;cursor:default}
-.sp-size-cap span{
-  padding:0 8px;min-width:30px;text-align:center;color:var(--sp-muted);
-  font:800 13.5px/1 var(--font-body);border-inline:1px solid var(--sp-border);
-}
-#scriptScopeSeg{
-  display:inline-flex;align-items:center;border:1px solid var(--sp-border);border-radius:8px;overflow:hidden;
-  background:var(--sp-btn-bg);height:32px;
-}
-.sp-seg-btn{
-  appearance:none;border:0;background:transparent;color:var(--sp-muted);
-  height:100%;padding:0 12px;cursor:pointer;font:700 13px/1 var(--font-body);
-  white-space:nowrap;transition:background .15s,color .15s;
-}
-.sp-seg-btn.act{background:var(--sp-act-bg);color:var(--sp-act-ink);font-weight:800}
-.sp-seg-btn:hover:not(.act){background:var(--sp-btn-hover);color:var(--sp-btn-ink)}
-#statusPill{
-  font:700 12.5px/1.3 var(--font-body);color:var(--sp-muted);padding:3px 9px;
-  border-radius:999px;background:var(--sp-btn-bg);border:1px solid var(--sp-border);
-  white-space:nowrap;
-}
-#statusPill.warn{color:#b45309;border-color:#d97706}
-
-/* Expansion Mode Banner */
-#readerCol.exp-mode{box-shadow:inset 0 0 0 2px rgba(217,119,6,.55)}
-#scriptExpBanner{
-  flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;gap:10px;
-  padding:7px 16px;border-bottom:1.5px solid rgba(180,83,9,.28);
-  background:#fef3c7;color:#92400e;font:800 14px/1.4 var(--font-heading);
-}
-body.script-dark #scriptExpBanner{
-  background:rgba(217,119,6,.18);border-bottom-color:rgba(217,119,6,.42);color:#fde68a;
-}
-#scriptExpBack{
-  appearance:none;border:1.5px solid currentColor;border-radius:8px;background:transparent;color:inherit;
-  padding:3px 12px;cursor:pointer;font:800 13px/1.4 var(--font-body);white-space:nowrap;
-}
-#scriptExpBack:hover{background:rgba(217,119,6,.18)}
-
-/* Reading & Editor Body */
-#scriptBody{flex:1;min-height:0;display:flex;flex-direction:row;align-items:stretch}
-#scriptTextArea{position:relative;flex:1;min-width:0;min-height:0;padding:12px 16px}
 #scriptReader,#scriptEditor{
-  box-sizing:border-box;width:100%;height:100%;overflow:auto;margin:0 auto;border:0;border-radius:12px;
-  padding:14px 20px;color:var(--sp-fg);background:transparent;text-align:right;direction:rtl;
+  box-sizing:border-box;width:100%;height:100%;overflow-y:auto;overflow-x:hidden;
+  margin:0 auto;border:0;padding:18px 22px 36px;color:var(--sp-fg);background:transparent;
+  text-align:right;direction:rtl;
   font-family:var(--sp-font-family);font-weight:var(--sp-weight,800);
-  font-size:var(--sp-font-size,26px);line-height:1.88;
-  white-space:pre-wrap;overflow-wrap:anywhere;scrollbar-width:none;overscroll-behavior:contain;
+  font-size:var(--sp-font-size,30px);line-height:var(--sp-line-height,1.95);
+  white-space:pre-wrap;overflow-wrap:anywhere;
+  -webkit-overflow-scrolling:touch;overscroll-behavior:contain;
+  scrollbar-width:thin;scrollbar-color:var(--sp-border) transparent;
 }
-body.narrow-col #scriptReader,body.narrow-col #scriptEditor{max-width:860px}
-#scriptReader::-webkit-scrollbar,#scriptEditor::-webkit-scrollbar{display:none}
+body.narrow-col #scriptReader,body.narrow-col #scriptEditor{max-width:920px}
 #scriptEditor{
   display:block;resize:none;background:var(--sp-editor-bg);
-  outline:1.5px solid var(--sp-act-border);caret-color:var(--sp-fg);
+  outline:2px solid var(--sp-act-border);outline-offset:-2px;caret-color:var(--sp-fg);
 }
 #scriptEditor::placeholder{color:var(--sp-muted);opacity:.8}
-#scriptReader.script-empty{color:var(--sp-muted);font-weight:600}
+#scriptReader.script-empty{color:var(--sp-muted);font-weight:700;padding-top:32px}
 
 /* Structured Expansion Formatting */
 #scriptReader.exp-view{white-space:normal}
 #scriptReader.exp-view .sp-exp-head{
-  margin:18px 0 8px;padding:4px 0 5px;border-bottom:1.5px dashed rgba(180,83,9,.35);
-  color:#92400e;font-family:var(--font-heading);font-weight:900;font-size:.95em;line-height:1.5;
+  margin:20px 0 8px;padding:5px 0 6px;border-bottom:2px dashed rgba(180,83,9,.36);
+  color:#92400e;font-family:var(--font-heading);font-weight:900;font-size:.94em;line-height:1.5;
 }
 #scriptReader.exp-view .sp-exp-head:first-child{margin-top:2px}
 body.script-dark #scriptReader.exp-view .sp-exp-head{color:#fbbf24;border-bottom-color:rgba(217,119,6,.45)}
-#scriptReader.exp-view .sp-exp-p{margin:0 0 10px;line-height:1.88}
-#scriptReader.exp-view .sp-exp-item{position:relative;margin:0 0 9px;padding-right:18px;line-height:1.88}
+#scriptReader.exp-view .sp-exp-p{margin:0 0 11px;line-height:var(--sp-line-height,1.95)}
+#scriptReader.exp-view .sp-exp-item{position:relative;margin:0 0 10px;padding-right:20px;line-height:var(--sp-line-height,1.95)}
 #scriptReader.exp-view .sp-exp-item::before{content:'•';position:absolute;right:2px;top:0;color:#d97706;font-weight:900}
 #scriptReader.exp-view .sp-exp-label{color:#78350f;font-weight:900}
 body.script-dark #scriptReader.exp-view .sp-exp-label{color:#fde68a}
 #scriptReader.exp-view .sp-exp-cite{
-  display:inline;font-style:italic;font-size:.82em;font-weight:600;color:var(--sp-muted);margin-inline-start:5px;
+  display:inline;font-style:italic;font-size:.80em;font-weight:600;color:var(--sp-muted);margin-inline-start:6px;
 }
 
-/* Custom Scrollbar Rail */
-#scriptScrollRail{flex:0 0 28px;display:flex;flex-direction:column;align-items:center;gap:5px;padding:12px 4px;user-select:none}
-.script-scroll-button{
-  appearance:none;display:grid;place-items:center;flex:0 0 24px;width:22px;height:24px;padding:0;
-  border:0;border-radius:6px;background:transparent;color:var(--sp-muted);cursor:pointer;
+/* Slide-Over Outline Drawer (Tablet-Friendly) */
+#drawerBackdrop{
+  position:fixed;inset:0;z-index:25;background:rgba(4,20,16,.52);backdrop-filter:blur(2px);
 }
-.script-scroll-button svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
-.script-scroll-button:hover{color:var(--sp-btn-ink);background:var(--sp-btn-hover)}
-.script-scroll-button:disabled{opacity:.3;cursor:default}
-#scriptScrollTrack{position:relative;flex:1;width:9px;min-height:16px;background:var(--sp-track);border-radius:6px;cursor:pointer;touch-action:none}
-#scriptScrollThumb{position:absolute;left:0;right:0;top:0;min-height:18px;border-radius:6px;background:var(--sp-thumb);cursor:grab;touch-action:none}
-#scriptScrollTrack:active #scriptScrollThumb{cursor:grabbing;background:var(--sp-act-bg)}
+#scriptSidebar{
+  position:fixed;top:var(--safe-t);bottom:0;right:0;width:var(--sidebar-w);z-index:28;
+  display:flex;flex-direction:column;background:var(--sp-pop-bg);color:var(--sp-pop-ink);
+  border-inline-end:2px solid var(--gold);box-shadow:-10px 0 34px rgba(0,0,0,.32);
+  padding-bottom:var(--safe-b);overflow:hidden;
+}
+body.sidebar-left #scriptSidebar{
+  right:auto;left:0;border-inline-end:0;border-inline-start:2px solid var(--gold);
+  box-shadow:10px 0 34px rgba(0,0,0,.32);
+}
+body.sidebar-collapsed #scriptSidebar,body.sidebar-collapsed #drawerBackdrop{display:none}
+.sb-top-row{
+  display:flex;align-items:center;justify-content:space-between;gap:8px;
+  padding:12px 12px 6px;border-bottom:1px solid var(--sp-border);
+}
+.sb-top-row strong{font:800 15px/1.3 var(--font-heading);color:var(--sp-btn-ink)}
+.sb-head{
+  flex:0 0 auto;padding:10px 12px;border-bottom:1px solid var(--sp-border);display:flex;flex-direction:column;gap:8px;
+}
+.sb-search{
+  width:100%;height:42px;padding:0 13px;border-radius:10px;border:1.5px solid var(--sp-border);
+  background:var(--sp-bg);color:var(--sp-fg);font:700 15px/1 var(--font-body);
+}
+.sb-search:focus{outline:2px solid var(--gold);outline-offset:1px}
+.sb-filters{display:flex;gap:6px}
+.sb-filter-btn{
+  appearance:none;flex:1;height:36px;border:1.5px solid var(--sp-border);border-radius:9px;
+  background:var(--sp-btn-bg);color:var(--sp-muted);cursor:pointer;
+  font:800 13.5px/1 var(--font-body);
+}
+.sb-filter-btn.act{background:var(--sp-act-bg);border-color:var(--sp-act-border);color:var(--sp-act-ink)}
+#outlineList{
+  flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;
+  padding:10px;display:flex;flex-direction:column;gap:8px;
+}
+.ol-slide{border:1.5px solid var(--sp-border);border-radius:12px;background:var(--sp-bg);overflow:hidden}
+.ol-slide.cur-slide{border-color:var(--gold);box-shadow:0 2px 10px rgba(18,63,53,.12)}
+.ol-slide-btn{
+  appearance:none;width:100%;min-height:46px;display:flex;align-items:center;gap:9px;padding:9px 11px;border:0;
+  background:transparent;color:var(--sp-btn-ink);text-align:right;cursor:pointer;
+  font:800 14.5px/1.35 var(--font-heading);
+}
+.ol-slide-btn.act{background:var(--sp-act-bg);color:var(--sp-act-ink)}
+.ol-num{
+  flex:none;min-width:28px;height:28px;padding:0 6px;border-radius:8px;display:grid;place-items:center;
+  background:var(--sp-btn-bg);color:var(--sp-btn-ink);font:900 13px/1 var(--font-heading);
+}
+.ol-slide-btn.act .ol-num{background:rgba(255,255,255,.22);color:#ffffff}
+.ol-sec{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ol-exp-tag{
+  flex:none;font-size:13px;line-height:1;padding:3px 6px;border-radius:7px;
+  background:rgba(217,119,6,.18);color:#b45309;font-weight:900;
+}
+body.script-dark .ol-exp-tag{color:#fbbf24}
+.ol-items{display:flex;flex-direction:column;gap:3px;padding:5px 8px 8px;border-top:1px dashed var(--sp-border)}
+.ol-item-btn{
+  appearance:none;width:100%;min-height:42px;display:flex;align-items:center;justify-content:space-between;gap:8px;
+  padding:8px 11px;border:1px solid transparent;border-radius:9px;background:transparent;
+  color:var(--sp-muted);text-align:right;cursor:pointer;font:700 14px/1.35 var(--font-body);
+}
+.ol-item-btn.act{background:var(--sp-act-bg);border-color:var(--sp-act-border);color:var(--sp-act-ink);font-weight:800}
+.ol-item-btn.act .ol-exp-tag{background:rgba(255,255,255,.2);color:#fde68a}
+.ol-item-txt{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sb-stats{
+  flex:0 0 auto;padding:9px 12px;border-top:1px solid var(--sp-border);
+  font:700 13px/1.4 var(--font-body);color:var(--sp-muted);text-align:center;
+}
 
-/* Bottom Navigation Footer */
+/* Tablet Thumb-Zone Navigation Footer */
 #navFooter{
-  flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px;
-  padding:8px 16px;border-top:1px solid var(--sp-border);background:var(--sp-surface);
+  flex:0 0 auto;display:grid;grid-template-columns:1fr auto 1.25fr;align-items:center;gap:10px;
+  padding:10px 14px calc(10px + var(--safe-b));
+  border-top:1.5px solid var(--sp-border);background:var(--sp-surface);
 }
 .nav-btn{
-  appearance:none;display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 16px;
-  border:1.5px solid var(--sp-border);border-radius:10px;background:var(--sp-btn-bg);
-  color:var(--sp-btn-ink);cursor:pointer;font:800 14.5px/1 var(--font-heading);
-  transition:background .15s,border-color .15s,transform .12s;
+  appearance:none;display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  min-height:52px;padding:0 16px;border:1.5px solid var(--sp-border);border-radius:14px;
+  background:var(--sp-btn-bg);color:var(--sp-btn-ink);cursor:pointer;
+  font:800 17px/1 var(--font-heading);transition:background .12s,transform .1s;
 }
-.nav-btn:hover:not(:disabled){background:var(--sp-btn-hover);border-color:var(--sp-act-border);transform:translateY(-1px)}
-.nav-btn.primary{background:var(--brand);border-color:var(--brand);color:#ffffff}
-.nav-btn.primary:hover:not(:disabled){background:var(--brand-2);border-color:var(--gold)}
-.nav-btn:disabled{opacity:.38;cursor:default;transform:none}
-#cueCounter{
-  font:800 14px/1.3 var(--font-heading);color:var(--sp-muted);text-align:center;
+.nav-btn:active:not(:disabled){transform:scale(.97)}
+.nav-btn.primary{background:var(--brand);border-color:var(--brand);color:#ffffff;box-shadow:0 4px 12px rgba(18,63,53,.22)}
+.nav-btn.primary:active:not(:disabled){background:var(--brand-2)}
+.nav-btn:disabled{opacity:.35;cursor:default}
+
+/* Big Thumb Expansion Button in Center of Bottom Bar */
+#thumbExpBtn{
+  appearance:none;position:relative;display:inline-flex;align-items:center;justify-content:center;gap:7px;
+  min-height:52px;padding:0 18px;border:2px solid var(--sp-border);border-radius:14px;
+  background:var(--sp-bg);color:var(--sp-btn-ink);cursor:pointer;
+  font:800 15.5px/1 var(--font-heading);white-space:nowrap;transition:all .15s;
+}
+#thumbExpBtn svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
+#thumbExpBtn:active{transform:scale(.96)}
+#thumbExpBtn.has-exp{border-color:#d97706;color:#92400e;background:#fffbeb}
+body.script-dark #thumbExpBtn.has-exp{color:#fde68a;background:rgba(217,119,6,.16);border-color:#d97706}
+#thumbExpBtn.has-exp::after{
+  content:'';position:absolute;top:6px;left:6px;width:9px;height:9px;border-radius:50%;
+  background:#d97706;pointer-events:none;
+}
+#thumbExpBtn.act{
+  background:#b45309;border-color:#fbbf24;color:#ffffff;box-shadow:0 4px 14px rgba(180,83,9,.32);
+}
+#thumbExpBtn.act::after{display:none}
+.cue-meta-bar{
+  flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;gap:8px;
+  padding:4px 16px;border-top:1px dashed var(--sp-border);background:var(--sp-bg);
+  font:700 12.5px/1.4 var(--font-body);color:var(--sp-muted);
 }
 
-/* Popovers */
+/* Popovers (Bottom-Sheet / Floating Friendly for Tablet) */
 .sp-popover{
-  position:fixed;top:58px;left:16px;width:min(340px,calc(100vw - 24px));z-index:30;
-  display:flex;flex-direction:column;gap:11px;padding:14px;
+  position:fixed;top:62px;left:12px;width:min(380px,calc(100vw - 24px));z-index:35;
+  display:flex;flex-direction:column;gap:12px;padding:16px;
   background:var(--sp-pop-bg);color:var(--sp-pop-ink);
-  border:1.5px solid var(--sp-pop-border);border-radius:14px;
-  box-shadow:0 14px 36px rgba(0,0,0,.28);max-height:calc(100vh - 80px);overflow:auto;
+  border:1.5px solid var(--sp-pop-border);border-radius:16px;
+  box-shadow:0 16px 40px rgba(0,0,0,.32);max-height:calc(100dvh - 82px);overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
 }
 .sp-sec-label{
   display:flex;align-items:center;justify-content:space-between;gap:8px;
-  font:800 13.5px/1.3 var(--font-heading);color:var(--sp-pop-ink);margin-bottom:6px;
+  font:800 14px/1.3 var(--font-heading);color:var(--sp-pop-ink);margin-bottom:7px;
 }
 .sp-select{
-  width:100%;appearance:none;-webkit-appearance:none;
+  width:100%;height:42px;appearance:none;-webkit-appearance:none;
   background-color:var(--sp-btn-bg);color:var(--sp-pop-ink);
-  border:1.5px solid var(--sp-border);border-radius:9px;padding:8px 12px 8px 34px;
-  font:700 14px/1.4 var(--font-body);cursor:pointer;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  border:1.5px solid var(--sp-border);border-radius:10px;padding:0 12px 0 36px;
+  font:700 15px/1 var(--font-body);cursor:pointer;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
   background-repeat:no-repeat;background-position:left 10px center;
 }
 .sp-select option{background:var(--sp-pop-bg);color:var(--sp-pop-ink)}
-.sp-swatches-row{display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+.sp-swatches-row{display:flex;align-items:center;flex-wrap:wrap;gap:9px}
 .sp-swatch{
-  appearance:none;width:28px;height:28px;border-radius:50%;padding:0;cursor:pointer;
-  border:2px solid var(--sp-border);box-shadow:0 1px 3px rgba(0,0,0,.18);transition:transform .14s;
+  appearance:none;width:34px;height:34px;border-radius:50%;padding:0;cursor:pointer;
+  border:2px solid var(--sp-border);box-shadow:0 1px 4px rgba(0,0,0,.2);
 }
-.sp-swatch:hover{transform:scale(1.12)}
-.sp-swatch.act{border-color:var(--gold);box-shadow:0 0 0 2.5px var(--gold);transform:scale(1.08)}
+.sp-swatch.act{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold);transform:scale(1.06)}
 .sp-color-pick{
   position:relative;display:inline-flex;align-items:center;justify-content:center;
-  width:28px;height:28px;border-radius:50%;border:1.5px dashed var(--sp-muted);
+  width:34px;height:34px;border-radius:50%;border:1.5px dashed var(--sp-muted);
   cursor:pointer;overflow:hidden;background:conic-gradient(#ef4444,#f59e0b,#10b981,#3b82f6,#8b5cf6,#ef4444);
 }
-.sp-color-pick input[type="color"]{position:absolute;inset:-6px;width:44px;height:44px;opacity:0;cursor:pointer;border:0;padding:0}
-.sp-style-footer{display:flex;gap:7px;padding-top:8px;border-top:1px solid var(--sp-border)}
-.sp-style-footer button{flex:1}
-.sp-menu-item{
-  appearance:none;display:flex;align-items:center;gap:10px;width:100%;
-  padding:9px 11px;border:1px solid var(--sp-border);border-radius:9px;
-  background:var(--sp-btn-bg);color:var(--sp-pop-ink);cursor:pointer;text-align:right;
-  font:700 14px/1.4 var(--font-body);transition:background .15s,border-color .15s;
-}
-.sp-menu-item:hover{background:var(--sp-btn-hover);border-color:var(--sp-act-border)}
-.sp-menu-item svg{width:19px;height:19px;flex:none;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
-
-/* Keys Modal & Toast */
-#keysModal{
-  position:fixed;inset:0;z-index:50;display:none;align-items:center;justify-content:center;
-  background:rgba(6,25,20,.58);backdrop-filter:blur(4px);padding:16px;
-}
-#keysModal.open{display:flex}
-.kbox{
-  background:var(--sp-pop-bg);color:var(--sp-pop-ink);border:2px solid var(--gold);border-radius:20px;
-  padding:18px 24px;width:min(760px,95vw);max-height:88vh;overflow:auto;
-  box-shadow:0 20px 50px rgba(0,0,0,.35);
-}
-.kbox h2{margin:0 0 12px;font:800 22px/1.3 var(--font-heading);color:var(--brand)}
-body.script-dark .kbox h2{color:#F1D8A0}
-.kgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px 22px}
-.kr{
+.sp-color-pick input[type="color"]{position:absolute;inset:-6px;width:48px;height:48px;opacity:0;cursor:pointer;border:0;padding:0}
+.sp-lh-row{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.sp-toggle-row{
   display:flex;align-items:center;justify-content:space-between;gap:10px;
-  padding:5px 0;border-bottom:1px dashed var(--sp-border);font-size:15px;font-weight:700;
+  padding:8px 10px;border:1px solid var(--sp-border);border-radius:10px;background:var(--sp-btn-bg);
+  font:700 14px/1.35 var(--font-body);cursor:pointer;
 }
-kbd{
-  display:inline-block;min-width:28px;text-align:center;font:800 14px/1.4 var(--font-body);
-  padding:1px 7px;margin:0 2px;border-radius:7px;background:var(--sp-btn-bg);
-  border:1.5px solid var(--sp-border);border-bottom-width:3px;color:var(--sp-pop-ink);
+.sp-toggle-row input{width:20px;height:20px;accent-color:var(--brand);cursor:pointer}
+.sp-style-footer{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding-top:8px;border-top:1px solid var(--sp-border)}
+.sp-style-footer .script-pill-btn{height:38px;padding:0 6px;font-size:13px}
+.sp-menu-item{
+  appearance:none;display:flex;align-items:center;gap:12px;width:100%;min-height:46px;
+  padding:10px 12px;border:1.5px solid var(--sp-border);border-radius:11px;
+  background:var(--sp-btn-bg);color:var(--sp-pop-ink);cursor:pointer;text-align:right;
+  font:800 14.5px/1.35 var(--font-body);
 }
+.sp-menu-item svg{width:21px;height:21px;flex:none;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+
+/* Toast */
 #toast{
-  position:fixed;left:50%;bottom:64px;transform:translateX(-50%) translateY(14px);z-index:60;
-  opacity:0;pointer-events:none;background:var(--brand);color:#ffffff;border:1px solid var(--gold);
-  font:800 15px/1.4 var(--font-body);padding:6px 18px;border-radius:999px;
-  box-shadow:0 8px 22px rgba(0,0,0,.28);transition:opacity .2s,transform .2s;
+  position:fixed;left:50%;bottom:84px;transform:translateX(-50%) translateY(14px);z-index:60;
+  opacity:0;pointer-events:none;background:var(--brand);color:#ffffff;border:1.5px solid var(--gold);
+  font:800 15px/1.4 var(--font-body);padding:8px 20px;border-radius:999px;
+  box-shadow:0 8px 24px rgba(0,0,0,.32);transition:opacity .2s,transform .2s;white-space:nowrap;
 }
 #toast.on{opacity:1;transform:translateX(-50%)}
 
-/* Responsive */
-@media(max-width:900px){
-  #posCenter{display:none}
-  .kgrid{grid-template-columns:1fr}
-  #scriptSidebar{
-    position:absolute;top:0;bottom:0;right:0;z-index:20;
-    box-shadow:-6px 0 24px rgba(0,0,0,.22);background:var(--sp-pop-bg);
-  }
-  body.sidebar-left #scriptSidebar{right:auto;left:0;box-shadow:6px 0 24px rgba(0,0,0,.22)}
+/* Small screens (portrait phones / small tablets) */
+@media(max-width:760px){
+  .top-sep{display:none}
+  #topControlsWrap{width:100%;justify-content:space-between}
 }
-@media(max-width:560px){
-  #topBar{padding:6px 10px 8px}
-  .brand-meta{display:none}
-  #scriptTextArea{padding:8px 6px}
-  #scriptReader,#scriptEditor{padding:10px 12px}
-  #navFooter{padding:6px 10px}
-  .nav-btn{padding:0 12px;font-size:13.5px}
+@media(max-width:580px){
+  #lessonMeta{display:none}
+  #scriptReader,#scriptEditor{padding:14px 14px 32px}
+  #navFooter{gap:7px;padding:8px 10px calc(8px + var(--safe-b))}
+  .nav-btn,#thumbExpBtn{min-height:48px;font-size:15px;padding:0 12px}
+  .top-icon,#topBar .script-pill-btn,#topBar #scriptScopeSeg{height:36px}
+  .top-icon{min-width:36px}
 }
 
 /* Print View */
 #printSheet{display:none}
 @media print{
   html,body{height:auto;overflow:visible;background:#ffffff;color:#000000}
-  #shell,#keysModal,#toast{display:none!important}
+  #shell,#toast{display:none!important}
   #printSheet{display:block;padding:12mm;direction:rtl;font-family:'Tajawal',sans-serif;color:#000}
   #printSheet h1{font-family:'Noto Kufi Arabic',sans-serif;font-size:20pt;margin:0 0 4pt;color:#123F35}
   #printSheet .pr-meta{font-size:11pt;color:#444;margin-bottom:14pt;border-bottom:1.5pt solid #B89555;padding-bottom:6pt}
@@ -431,37 +430,64 @@ kbd{
 }
 </style>
 </head>
-<body class="narrow-col">
+<body class="narrow-col sidebar-collapsed">
 <div id="shell">
   <header id="topBar">
     <div class="brand-wrap">
-      <span class="brand-mark" aria-hidden="true">
-        <svg viewBox="0 0 24 24"><path d="M2 5.5A2.5 2.5 0 0 1 4.5 3H11v17H4.5A2.5 2.5 0 0 0 2 22Z"/><path d="M22 5.5A2.5 2.5 0 0 0 19.5 3H13v17h6.5a2.5 2.5 0 0 1 2.5 2Z"/></svg>
-      </span>
+      <button type="button" class="top-icon" id="scriptSidebarBtn" title="فهرس الشرائح — I" aria-label="فهرس الشرائح" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><circle cx="4" cy="6" r="1.5"/><circle cx="4" cy="12" r="1.5"/><circle cx="4" cy="18" r="1.5"/></svg></button>
       <div class="brand-titles">
-        <span class="brand-lesson" id="lessonTitle">[عنوان الدرس]</span>
-        <span class="brand-meta" id="lessonMeta">زاد الطالب الأزهري · [المادة] · [الصف الدراسي]</span>
+        <span id="scriptContext"></span>
+        <div class="brand-sub-row">
+          <span id="scriptBadge" hidden></span>
+          <span id="lessonMeta"></span>
+        </div>
       </div>
     </div>
-    <div id="posCenter">
-      <span id="scriptContext"></span>
-      <span id="scriptBadge" hidden></span>
-    </div>
-    <div id="headBtns">
-      <button type="button" class="top-icon" id="scriptExpandBtn" title="التوسع في الشرح (مرجع علمي) — X" aria-label="التوسع في الشرح" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 5.5A2.5 2.5 0 0 1 4.5 3H11v17H4.5A2.5 2.5 0 0 0 2 22Z"/><path d="M22 5.5A2.5 2.5 0 0 0 19.5 3H13v17h6.5a2.5 2.5 0 0 1 2.5 2Z"/></svg></button>
-      <button type="button" class="top-icon act synced" id="scriptSyncBtn" title="المزامنة التلقائية مع شرائح الدرس (مفعّلة)" aria-label="المزامنة التلقائية مع شرائح الدرس" aria-pressed="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 16h5v5"/></svg></button>
-      <button type="button" class="top-icon act" id="scriptSidebarBtn" title="إظهار / إخفاء فهرس الشرائح — I" aria-label="فهرس الشرائح" aria-pressed="true"><svg viewBox="0 0 24 24" aria-hidden="true"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><circle cx="4" cy="6" r="1.5"/><circle cx="4" cy="12" r="1.5"/><circle cx="4" cy="18" r="1.5"/></svg></button>
-      <button type="button" class="top-icon" id="scriptSideBtn" title="نقل الفهرس إلى اليسار" aria-label="نقل الفهرس إلى اليسار" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M9 4v16"/><path d="M17 12h-5m2-2.5L11.5 12l2.5 2.5"/></svg></button>
-      <button type="button" class="top-icon" id="scriptStyleBtn" title="الألوان والخطوط" aria-label="الألوان والخطوط" aria-expanded="false" aria-controls="scriptStyleMenu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18c1.5 0 2-.9 2-1.7 0-.8-.5-1.3-.5-2 0-1 .8-1.6 1.8-1.6H17a4 4 0 0 0 4-4C21 6.8 17 3 12 3Z"/><circle cx="7.5" cy="11" r="1.2"/><circle cx="10.5" cy="7.5" r="1.2"/><circle cx="15" cy="8" r="1.2"/></svg></button>
-      <button type="button" class="top-icon" id="scriptOptions" title="ملفات السكربت (حفظ، تصدير، استيراد، طباعة)" aria-label="ملفات السكربت" aria-expanded="false" aria-controls="scriptMenu"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="5" r="1.6" fill="currentColor"/><circle cx="12" cy="12" r="1.6" fill="currentColor"/><circle cx="12" cy="19" r="1.6" fill="currentColor"/></svg></button>
-      <button type="button" class="top-icon" id="scriptKeysBtn" title="اختصارات لوحة المفاتيح — K" aria-label="اختصارات لوحة المفاتيح"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="6" width="20" height="12" rx="3"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M7 14h10"/></svg></button>
-      <button type="button" class="top-icon" id="scriptFsBtn" title="ملء الشاشة — F" aria-label="ملء الشاشة"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3M16 21h3a2 2 0 0 0 2-2v-3"/></svg></button>
+    <div id="topControlsWrap">
+      <div class="top-quick-group" role="toolbar" aria-label="أدوات القراءة السريعة">
+        <div id="scriptScopeSeg" role="group" aria-label="نطاق العرض" hidden>
+          <button type="button" class="sp-seg-btn act" id="scriptScopeDetailBtn">العنصر ١</button>
+          <button type="button" class="sp-seg-btn" id="scriptScopeSlideBtn">الشريحة</button>
+        </div>
+        <button type="button" class="script-pill-btn act" id="scriptBold" aria-pressed="true">عريض</button>
+        <button type="button" class="script-pill-btn" id="scriptEdit"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m16 3 5 5-12 12-6 1 1-6Z"/><path d="m14 5 5 5"/></svg><span>تعديل</span></button>
+        <button type="button" class="script-pill-btn" id="scriptRead" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4L20 5"/></svg><span>حفظ</span></button>
+      </div>
+      <span class="top-sep" aria-hidden="true"></span>
+      <div id="headBtns">
+        <button type="button" class="top-icon act awake" id="wakeLockBtn" title="إبقاء شاشة التابلت مضاءة أثناء التصوير" aria-label="إبقاء الشاشة مضاءة" aria-pressed="true"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41m11.32-11.32 1.41-1.41"/></svg></button>
+        <button type="button" class="top-icon" id="autoScrollBtn" title="التمرير التلقائي (التلقين)" aria-label="التمرير التلقائي" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="6 4 20 12 6 20 6 4"/></svg></button>
+        <button type="button" class="top-icon" id="focusBtn" title="وضع القراءة الصافية (إخفاء الأزرار الإضافية)" aria-label="وضع القراءة الصافية" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg></button>
+        <button type="button" class="top-icon" id="scriptStyleBtn" title="إعدادات التابلت والخطوط والألوان" aria-label="إعدادات التابلت والخطوط والألوان" aria-expanded="false" aria-controls="scriptStyleMenu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18c1.5 0 2-.9 2-1.7 0-.8-.5-1.3-.5-2 0-1 .8-1.6 1.8-1.6H17a4 4 0 0 0 4-4C21 6.8 17 3 12 3Z"/><circle cx="7.5" cy="11" r="1.2"/><circle cx="10.5" cy="7.5" r="1.2"/><circle cx="15" cy="8" r="1.2"/></svg></button>
+        <button type="button" class="top-icon" id="scriptOptions" title="ملفات السكربت (حفظ، تصدير، استيراد، طباعة)" aria-label="ملفات السكربت" aria-expanded="false" aria-controls="scriptMenu"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="5" r="1.6" fill="currentColor"/><circle cx="12" cy="12" r="1.6" fill="currentColor"/><circle cx="12" cy="19" r="1.6" fill="currentColor"/></svg></button>
+        <button type="button" class="top-icon" id="scriptFsBtn" title="ملء الشاشة" aria-label="ملء الشاشة"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3M16 21h3a2 2 0 0 0 2-2v-3"/></svg></button>
+      </div>
     </div>
     <div id="pbar"></div>
   </header>
 
+  <div id="autoScrollBar" hidden>
+    <div class="as-group">
+      <button type="button" class="script-pill-btn act" id="autoPlayToggle">إيقاف مؤقت</button>
+      <span class="as-label">السرعة:</span>
+      <input type="range" id="autoSpeed" min="15" max="140" step="5" value="42" aria-label="سرعة التمرير التلقائي">
+      <span id="autoSpeedVal">متوسط</span>
+    </div>
+    <button type="button" class="script-pill-btn" id="autoCloseBtn">إغلاق</button>
+  </div>
+
+  <div id="scriptExpBanner" role="status" hidden>
+    <span>📚 التوسع في الشرح (مرجع علمي موثّق)</span>
+    <button type="button" id="scriptExpBack">العودة للقراءة</button>
+  </div>
+
   <div id="workspace">
+    <div id="drawerBackdrop"></div>
     <aside id="scriptSidebar" aria-label="فهرس شرائح وعناصر الدرس">
+      <div class="sb-top-row">
+        <strong id="lessonTitle">[عنوان الدرس]</strong>
+        <button type="button" class="script-pill-btn" id="closeDrawerBtn" style="height:34px;padding:0 12px">إغلاق ✕</button>
+      </div>
       <div class="sb-head">
         <input type="search" id="outlineSearch" class="sb-search" placeholder="ابحث في الشرائح أو السكربت أو التوسع…" aria-label="بحث في الشرائح والنصوص">
         <div class="sb-filters" role="group" aria-label="تصفية الفهرس">
@@ -474,73 +500,71 @@ kbd{
     </aside>
 
     <main id="readerCol">
-      <div id="scriptQuickBar" role="toolbar" aria-label="أدوات القراءة والتحرير">
-        <div class="script-quick-group">
-          <button type="button" class="script-pill-btn" id="scriptEdit" title="تعديل النص الحالي — E"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m16 3 5 5-12 12-6 1 1-6Z"/><path d="m14 5 5 5"/></svg><span>تعديل</span></button>
-          <button type="button" class="script-pill-btn" id="scriptRead" title="حفظ والعودة للقراءة — Esc" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4L20 5"/></svg><span>حفظ</span></button>
-          <div class="sp-size-cap" role="group" aria-label="حجم الخط">
-            <button type="button" id="scriptSmaller" title="تصغير الخط — [">أ-</button>
-            <span id="scriptFontSizeVal" aria-hidden="true">٢٦</span>
-            <button type="button" id="scriptLarger" title="تكبير الخط — ]">أ+</button>
-          </div>
-          <button type="button" class="script-pill-btn act" id="scriptBold" title="خط عريض / عادي" aria-pressed="true">عريض</button>
-          <button type="button" class="script-pill-btn act" id="scriptWidthBtn" title="تبديل عرض عمود القراءة (مريح / كامل)" aria-pressed="true">عمود مريح</button>
-        </div>
-        <div class="script-quick-group">
-          <div id="scriptScopeSeg" role="group" aria-label="نطاق العرض" hidden>
-            <button type="button" class="sp-seg-btn act" id="scriptScopeDetailBtn">العنصر ١</button>
-            <button type="button" class="sp-seg-btn" id="scriptScopeSlideBtn">تمهيد الشريحة</button>
-          </div>
-          <span id="statusPill" role="status" aria-live="polite">محفوظ تلقائيًا</span>
-        </div>
+      <div id="scriptTextArea">
+        <div id="scriptReader" tabindex="0" aria-label="نص السكربت الحالي"></div>
+        <textarea id="scriptEditor" aria-label="تحرير النص الحالي" placeholder="اكتب أو الصق سكربت الشرح هنا…" spellcheck="false" hidden></textarea>
       </div>
-
-      <div id="scriptExpBanner" role="status" hidden>
-        <span>📚 التوسع في الشرح (مرجع علمي موثّق)</span>
-        <button type="button" id="scriptExpBack">العودة للقراءة (X)</button>
+      <div class="cue-meta-bar">
+        <span id="cueCounter"></span>
+        <span id="statusPill" role="status" aria-live="polite">محفوظ تلقائيًا</span>
       </div>
-
-      <div id="scriptBody">
-        <div id="scriptTextArea">
-          <div id="scriptReader" tabindex="0" aria-label="نص السكربت الحالي"></div>
-          <textarea id="scriptEditor" aria-label="تحرير النص الحالي" placeholder="اكتب أو الصق سكربت الشرح هنا…" spellcheck="false" hidden></textarea>
-        </div>
-        <div id="scriptScrollRail" aria-label="تمرير النص">
-          <button type="button" class="script-scroll-button" id="scriptScrollUp" title="تمرير لأعلى — ↑"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4 10 4-4 4 4"/></svg></button>
-          <div id="scriptScrollTrack" role="scrollbar" aria-orientation="vertical" aria-label="موضع التمرير" aria-controls="scriptReader" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0"><div id="scriptScrollThumb"></div></div>
-          <button type="button" class="script-scroll-button" id="scriptScrollDown" title="تمرير لأسفل — ↓"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></button>
-        </div>
-      </div>
-
       <footer id="navFooter">
-        <button type="button" class="nav-btn" id="btnPrev" title="الموضع السابق — →">→ السابق</button>
-        <div id="cueCounter"></div>
-        <button type="button" class="nav-btn primary" id="btnNext" title="الموضع التالي — Space أو ←">التالي ←</button>
+        <button type="button" class="nav-btn" id="btnPrev">→ السابق</button>
+        <button type="button" id="thumbExpBtn" aria-pressed="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 5.5A2.5 2.5 0 0 1 4.5 3H11v17H4.5A2.5 2.5 0 0 0 2 22Z"/><path d="M22 5.5A2.5 2.5 0 0 0 19.5 3H13v17h6.5a2.5 2.5 0 0 1 2.5 2Z"/></svg>
+          <span id="thumbExpLbl">التوسع</span>
+        </button>
+        <button type="button" class="nav-btn primary" id="btnNext">التالي ←</button>
       </footer>
     </main>
   </div>
 
-  <!-- Popover: Appearance -->
-  <div id="scriptStyleMenu" class="sp-popover" role="group" aria-label="إعدادات مظهر السكربت" hidden>
+  <!-- Popover: Tablet Settings & Appearance -->
+  <div id="scriptStyleMenu" class="sp-popover" role="group" aria-label="إعدادات التابلت والخطوط والألوان" hidden>
     <div>
-      <label class="sp-sec-label" for="scriptFontFamily">خط السكربت</label>
-      <select id="scriptFontFamily" class="sp-select" aria-label="اختيار خط السكربت"></select>
+      <label class="sp-sec-label" for="scriptFontFamily">خط القراءة</label>
+      <select id="scriptFontFamily" class="sp-select" aria-label="اختيار خط القراءة"></select>
+    </div>
+    <div>
+      <label class="sp-sec-label" for="scriptFontRange">حجم الخط</label>
+      <div class="sp-font-slider-row">
+        <input type="range" id="scriptFontRange" min="18" max="68" step="1" value="30" aria-label="التحكم في حجم الخط">
+        <output id="scriptFontSizeVal" class="sp-size-box" for="scriptFontRange">٣٠</output>
+      </div>
+    </div>
+    <div>
+      <div class="sp-sec-label"><span>تباعد الأسطر</span></div>
+      <div class="sp-lh-row">
+        <button type="button" class="script-pill-btn" data-lh="1.7">عادي</button>
+        <button type="button" class="script-pill-btn act" data-lh="1.95">مريح</button>
+        <button type="button" class="script-pill-btn" data-lh="2.2">واسع</button>
+      </div>
     </div>
     <div>
       <div class="sp-sec-label"><span>لون الخلفية</span></div>
       <div class="sp-swatches-row" id="scriptBgSwatches">
-        <label class="sp-color-pick" title="اختر لون خلفية مخصص"><input type="color" id="scriptBgColor" aria-label="لون خلفية مخصص"></label>
+        <label class="sp-color-pick" title="لون خلفية مخصص"><input type="color" id="scriptBgColor" aria-label="لون خلفية مخصص"></label>
       </div>
     </div>
     <div>
       <div class="sp-sec-label"><span>لون الخط</span></div>
       <div class="sp-swatches-row" id="scriptFgSwatches">
-        <label class="sp-color-pick" title="اختر لون خط مخصص"><input type="color" id="scriptFgColor" aria-label="لون خط مخصص"></label>
+        <label class="sp-color-pick" title="لون خط مخصص"><input type="color" id="scriptFgColor" aria-label="لون خط مخصص"></label>
       </div>
     </div>
     <div class="sp-style-footer">
-      <button type="button" class="script-pill-btn" id="scriptPresetLight">أسود عريض (ورقي)</button>
+      <button type="button" class="script-pill-btn" id="scriptPresetLight">ورقي عريض</button>
       <button type="button" class="script-pill-btn" id="scriptPresetDark">داكن مريح</button>
+      <button type="button" class="script-pill-btn" id="scriptPresetHc">تباين عالٍ</button>
+    </div>
+    <div>
+      <div class="sp-sec-label"><span>إعدادات التابلت</span></div>
+      <div style="display:flex;flex-direction:column;gap:7px">
+        <label class="sp-toggle-row"><span>السحب يمينًا ويسارًا للتنقل</span><input type="checkbox" id="optSwipe" checked></label>
+        <label class="sp-toggle-row"><span>عمود قراءة مريح (توسيط النص)</span><input type="checkbox" id="optNarrow" checked></label>
+        <label class="sp-toggle-row"><span>إغلاق الفهرس تلقائيًا بعد الاختيار</span><input type="checkbox" id="optAutoClose" checked></label>
+        <label class="sp-toggle-row"><span>فتح الفهرس من جهة اليسار</span><input type="checkbox" id="optLeftSide"></label>
+      </div>
     </div>
   </div>
 
@@ -552,27 +576,6 @@ kbd{
     <button type="button" class="sp-menu-item" id="scriptPrint"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg><span>طباعة السكربت والتوسع</span></button>
   </div>
   <input type="file" id="scriptFile" accept="application/json,.json" hidden>
-</div>
-
-<div id="keysModal" role="dialog" aria-modal="true" aria-label="اختصارات لوحة المفاتيح">
-  <div class="kbox">
-    <h2>اختصارات قالب السكربت والتوسع</h2>
-    <div class="kgrid">
-      <div class="kr"><span>الموضع التالي</span><span><kbd>Space</kbd><kbd>←</kbd><kbd>PageDown</kbd></span></div>
-      <div class="kr"><span>الموضع السابق</span><span><kbd>→</kbd><kbd>Backspace</kbd><kbd>PageUp</kbd></span></div>
-      <div class="kr"><span>تمرير النص لأعلى / لأسفل</span><span><kbd>↑</kbd><kbd>↓</kbd></span></div>
-      <div class="kr"><span>التبديل بين القراءة والتوسع</span><span><kbd>X</kbd><kbd>ء</kbd></span></div>
-      <div class="kr"><span>إظهار / إخفاء فهرس الشرائح</span><span><kbd>I</kbd><kbd>ه</kbd></span></div>
-      <div class="kr"><span>تعديل النص الحالي</span><span><kbd>E</kbd><kbd>ث</kbd></span></div>
-      <div class="kr"><span>حفظ وإغلاق التعديل</span><span><kbd>Esc</kbd><kbd>Ctrl+Enter</kbd></span></div>
-      <div class="kr"><span>تكبير / تصغير الخط</span><span><kbd>]</kbd><kbd>[</kbd></span></div>
-      <div class="kr"><span>التبديل بين الورقي والداكن</span><span><kbd>D</kbd><kbd>ي</kbd></span></div>
-      <div class="kr"><span>أول / آخر موضع</span><span><kbd>Home</kbd><kbd>End</kbd></span></div>
-      <div class="kr"><span>ملء الشاشة</span><span><kbd>F</kbd><kbd>ب</kbd></span></div>
-      <div class="kr"><span>قائمة الاختصارات</span><span><kbd>K</kbd><kbd>ن</kbd><kbd>?</kbd></span></div>
-    </div>
-    <p style="margin:12px 0 0;text-align:center;color:var(--sp-muted);font-size:14px">انقر في أي مكان أو اضغط Esc للإغلاق</p>
-  </div>
 </div>
 
 <div id="toast"></div>
@@ -921,25 +924,26 @@ const BG_SWATCHES=[
   {c:'#F5ECD7',name:'كريمي دافئ'},
   {c:'#E2ECE9',name:'زمردي فاتح جدًا'},
   {c:'#0A1F2E',name:'كحلي داكن'},
-  {c:'#111827',name:'أسود فحمي'}
+  {c:'#000000',name:'أسود خالص (AMOLED)'}
 ];
 const FG_SWATCHES=[
   {c:'#000000',name:'أسود خالص'},
   {c:'#1E293B',name:'فحمي داكن'},
   {c:'#123F35',name:'زمردي أزهري'},
-  {c:'#7C2D12',name:'بني داكن'},
   {c:'#F4F1E8',name:'كريمي فاتح'},
-  {c:'#FFFFFF',name:'أبيض ناصع'}
+  {c:'#FFFFFF',name:'أبيض ناصع'},
+  {c:'#FACC15',name:'أصفر عالي التباين'}
 ];
 const DEFAULTS={
-  font:26, bg:'#FFFDF7', fg:'#000000', bold:true, fontFamily:'Tajawal',
-  sidebarOpen:true, sidebarSide:'right', narrowCol:true, liveSync:true
+  font:30, lineHeight:1.95, bg:'#FFFDF7', fg:'#000000', bold:true, fontFamily:'Tajawal',
+  sidebarOpen:false, sidebarSide:'right', narrowCol:true,
+  swipeNav:true, autoCloseDrawer:true, wakeLock:true, focusMode:false, autoSpeed:42
 };
 const rawEmbedded=document.getElementById('presenterScriptData').textContent;
-const storeKey='zad-standalone-script-v1:'+hashStr(rawEmbedded);
+const storeKey='zad-tablet-script-v2:'+hashStr(rawEmbedded);
 
 const el={};
-['lessonTitle','lessonMeta','scriptContext','scriptBadge','scriptExpandBtn','scriptSyncBtn','scriptSidebarBtn','scriptSideBtn','scriptStyleBtn','scriptOptions','scriptKeysBtn','scriptFsBtn','pbar','outlineSearch','filterAllBtn','filterExpBtn','outlineList','sbStats','readerCol','scriptEdit','scriptRead','scriptSmaller','scriptFontSizeVal','scriptLarger','scriptBold','scriptWidthBtn','scriptScopeSeg','scriptScopeDetailBtn','scriptScopeSlideBtn','statusPill','scriptExpBanner','scriptExpBack','scriptTextArea','scriptReader','scriptEditor','scriptScrollUp','scriptScrollDown','scriptScrollTrack','scriptScrollThumb','btnPrev','btnNext','cueCounter','scriptStyleMenu','scriptFontFamily','scriptBgSwatches','scriptFgSwatches','scriptBgColor','scriptFgColor','scriptPresetLight','scriptPresetDark','scriptMenu','scriptSaveHtml','scriptExport','scriptImport','scriptPrint','scriptFile','keysModal','toast','printSheet'].forEach(id=>el[id]=document.getElementById(id));
+['scriptSidebarBtn','scriptContext','scriptBadge','lessonMeta','wakeLockBtn','autoScrollBtn','focusBtn','scriptStyleBtn','scriptOptions','scriptFsBtn','pbar','scriptFontRange','scriptFontSizeVal','scriptBold','scriptEdit','scriptRead','scriptScopeSeg','scriptScopeDetailBtn','scriptScopeSlideBtn','autoScrollBar','autoPlayToggle','autoSpeed','autoSpeedVal','autoCloseBtn','scriptExpBanner','scriptExpBack','drawerBackdrop','lessonTitle','closeDrawerBtn','outlineSearch','filterAllBtn','filterExpBtn','outlineList','sbStats','readerCol','scriptReader','scriptEditor','cueCounter','statusPill','btnPrev','thumbExpBtn','thumbExpLbl','btnNext','scriptStyleMenu','scriptFontFamily','scriptBgSwatches','scriptFgSwatches','scriptBgColor','scriptFgColor','scriptPresetLight','scriptPresetDark','scriptPresetHc','optSwipe','optNarrow','optAutoClose','optLeftSide','scriptMenu','scriptSaveHtml','scriptExport','scriptImport','scriptPrint','scriptFile','toast','printSheet'].forEach(id=>el[id]=document.getElementById(id));
 
 function validHex(v){return typeof v==='string'&&/^#[0-9a-fA-F]{6}$/.test(v.trim());}
 function isLight(hex){
@@ -997,7 +1001,8 @@ function normalizeData(data){
   if(!outline.length)outline=[{index:0,sec:'الدرس',type:'cover',items:[]}];
   const settings={...DEFAULTS};
   if(data.settings&&typeof data.settings==='object'){
-    if(Number.isFinite(data.settings.font))settings.font=Math.round(Math.max(16,Math.min(56,data.settings.font)));
+    if(Number.isFinite(data.settings.font))settings.font=Math.round(Math.max(18,Math.min(68,data.settings.font)));
+    if(Number.isFinite(data.settings.lineHeight))settings.lineHeight=Math.max(1.5,Math.min(2.4,data.settings.lineHeight));
     if(validHex(data.settings.bg))settings.bg=data.settings.bg.trim().toUpperCase();
     if(validHex(data.settings.fg))settings.fg=data.settings.fg.trim().toUpperCase();
     if(typeof data.settings.bold==='boolean')settings.bold=data.settings.bold;
@@ -1005,7 +1010,11 @@ function normalizeData(data){
     if(typeof data.settings.sidebarOpen==='boolean')settings.sidebarOpen=data.settings.sidebarOpen;
     if(data.settings.sidebarSide==='left'||data.settings.sidebarSide==='right')settings.sidebarSide=data.settings.sidebarSide;
     if(typeof data.settings.narrowCol==='boolean')settings.narrowCol=data.settings.narrowCol;
-    if(typeof data.settings.liveSync==='boolean')settings.liveSync=data.settings.liveSync;
+    if(typeof data.settings.swipeNav==='boolean')settings.swipeNav=data.settings.swipeNav;
+    if(typeof data.settings.autoCloseDrawer==='boolean')settings.autoCloseDrawer=data.settings.autoCloseDrawer;
+    if(typeof data.settings.wakeLock==='boolean')settings.wakeLock=data.settings.wakeLock;
+    if(typeof data.settings.focusMode==='boolean')settings.focusMode=data.settings.focusMode;
+    if(Number.isFinite(data.settings.autoSpeed))settings.autoSpeed=Math.max(15,Math.min(140,data.settings.autoSpeed));
   }
   return {version:1,standalone:true,lesson,outline,scripts,settings};
 }
@@ -1017,7 +1026,7 @@ try{
   if(saved)state=normalizeData(JSON.parse(saved));
 }catch(e){persisted=false;}
 
-/* Build ordered cue sequence matching zad-lesson-template progression */
+/* Build ordered cue list */
 let cues=[];
 function buildCues(){
   cues=[];
@@ -1068,7 +1077,7 @@ function toast(msg){
 }
 function setStatus(msg,warn=false){
   el.statusPill.textContent=msg;
-  el.statusPill.classList.toggle('warn',warn);
+  el.statusPill.style.color=warn?'#b45309':'';
   el.scriptOptions.classList.toggle('script-warning',warn);
 }
 function saveState(immediate=false){
@@ -1078,7 +1087,7 @@ function saveState(immediate=false){
       localStorage.setItem(storeKey,JSON.stringify(state));
       persisted=true;setStatus('محفوظ تلقائيًا');
     }catch(e){
-      persisted=false;setStatus('محفوظ في الجلسة — صدّره للاحتفاظ به',true);
+      persisted=false;setStatus('محفوظ مؤقتًا — صدّر نسخة',true);
     }
     saveTimer=null;
   };
@@ -1086,7 +1095,81 @@ function saveState(immediate=false){
   else{setStatus('جارٍ الحفظ…');saveTimer=setTimeout(write,280);}
 }
 
-/* Formatted Scientific Reference Renderer (DOM-safe) */
+/* ================= Screen Wake Lock (منع انطفاء شاشة التابلت) ================= */
+let wakeSentinel=null;
+async function syncWakeLock(notify=false){
+  const want=!!state.settings.wakeLock;
+  el.wakeLockBtn.classList.toggle('act',want);
+  el.wakeLockBtn.setAttribute('aria-pressed',String(want));
+  if(!want){
+    if(wakeSentinel){try{await wakeSentinel.release();}catch(e){}wakeSentinel=null;}
+    el.wakeLockBtn.classList.remove('awake');
+    if(notify)toast('تم إيقاف قفل إضاءة الشاشة');
+    return;
+  }
+  if(!('wakeLock' in navigator)){
+    el.wakeLockBtn.classList.remove('awake');
+    if(notify)toast('متصفح التابلت لا يدعم قفل الإضاءة تلقائيًا؛ عدّل مهلة الشاشة من إعدادات التابلت');
+    return;
+  }
+  try{
+    if(!wakeSentinel){
+      wakeSentinel=await navigator.wakeLock.request('screen');
+      wakeSentinel.addEventListener('release',()=>{wakeSentinel=null;el.wakeLockBtn.classList.remove('awake');});
+    }
+    el.wakeLockBtn.classList.add('awake');
+    if(notify)toast('شاشة التابلت ستبقى مضاءة أثناء القراءة');
+  }catch(e){
+    el.wakeLockBtn.classList.remove('awake');
+  }
+}
+document.addEventListener('visibilitychange',()=>{
+  if(document.hidden){saveState(true);pauseAutoScroll();}
+  else if(state.settings.wakeLock){syncWakeLock(false);}
+});
+
+/* ================= Auto-Scroll Teleprompter ================= */
+let autoScrollOpen=false, autoPlaying=false, autoRaf=null, autoLastTs=0;
+function updateSpeedLabel(){
+  const v=Number(state.settings.autoSpeed)||42;
+  el.autoSpeed.value=String(v);
+  el.autoSpeedVal.textContent=v<32?'بطيء':v<70?'متوسط':v<105?'سريع':'سريع جدًا';
+}
+function autoStep(ts){
+  if(!autoPlaying){autoRaf=null;return;}
+  if(autoLastTs){
+    const dt=(ts-autoLastTs)/1000;
+    const view=el.scriptReader;
+    const max=Math.max(0,view.scrollHeight-view.clientHeight);
+    if(view.scrollTop>=max-1){pauseAutoScroll();return;}
+    view.scrollTop+=state.settings.autoSpeed*dt;
+  }
+  autoLastTs=ts;
+  autoRaf=requestAnimationFrame(autoStep);
+}
+function startAutoScroll(){
+  if(editing)return;
+  autoPlaying=true;autoLastTs=0;
+  el.autoPlayToggle.textContent='إيقاف مؤقت';
+  el.autoPlayToggle.classList.add('act');
+  if(!autoRaf)autoRaf=requestAnimationFrame(autoStep);
+}
+function pauseAutoScroll(){
+  autoPlaying=false;autoLastTs=0;
+  if(autoRaf){cancelAnimationFrame(autoRaf);autoRaf=null;}
+  el.autoPlayToggle.textContent='تشغيل التمرير';
+  el.autoPlayToggle.classList.remove('act');
+}
+function setAutoScrollOpen(open){
+  autoScrollOpen=!!open;
+  el.autoScrollBar.hidden=!autoScrollOpen;
+  el.autoScrollBtn.classList.toggle('act',autoScrollOpen);
+  el.autoScrollBtn.setAttribute('aria-pressed',String(autoScrollOpen));
+  if(autoScrollOpen)startAutoScroll();
+  else pauseAutoScroll();
+}
+
+/* ================= Formatted Scientific Reference Renderer ================= */
 function appendExpInline(parent,text){
   const re=/\*\(([^)]+)\)\*/g;
   let last=0,m;
@@ -1135,12 +1218,12 @@ function renderExpansionDom(container,text){
   }
 }
 
-/* Render Header & Sidebar */
+/* ================= Render Header, Drawer & Current Cue ================= */
 function renderHeaderMeta(){
   const L=state.lesson;
   document.title='سكربت الدرس — '+L.title;
   el.lessonTitle.textContent=L.title;
-  el.lessonMeta.textContent=[L.channel,L.book,L.subject,L.grade].filter(Boolean).join(' · ');
+  el.lessonMeta.textContent=[L.channel,L.subject,L.grade].filter(Boolean).join(' · ');
 }
 function renderOutline(){
   const q=(el.outlineSearch.value||'').trim().toLowerCase();
@@ -1170,39 +1253,30 @@ function renderOutline(){
     const sBtn=document.createElement('button');
     sBtn.type='button';
     sBtn.className='ol-slide-btn'+(cur&&cur.slideIndex===slide.index&&activeBaseKey()===baseKey?' act':'');
-    const num=document.createElement('span');
-    num.className='ol-num';
-    num.textContent=AR(slide.index+1);
-    const sec=document.createElement('span');
-    sec.className='ol-sec';
-    sec.textContent=slide.sec;
+    const num=document.createElement('span');num.className='ol-num';num.textContent=AR(slide.index+1);
+    const sec=document.createElement('span');sec.className='ol-sec';sec.textContent=slide.sec;
     sBtn.append(num,sec);
     if(hasExpansion(baseKey)){
-      const tag=document.createElement('span');
-      tag.className='ol-exp-tag';tag.textContent='📚';tag.title='يوجد توسع للشريحة';
+      const tag=document.createElement('span');tag.className='ol-exp-tag';tag.textContent='📚';
       sBtn.appendChild(tag);
     }
-    sBtn.onclick=()=>jumpToKey(baseKey,slide.index);
+    sBtn.onclick=()=>{jumpToKey(baseKey,slide.index);if(state.settings.autoCloseDrawer)setSidebarOpen(false);};
     card.appendChild(sBtn);
 
     const itemsToShow=filterExpOnly||q?matchingItems:slide.items;
     if(itemsToShow.length){
-      const wrap=document.createElement('div');
-      wrap.className='ol-items';
+      const wrap=document.createElement('div');wrap.className='ol-items';
       itemsToShow.forEach(it=>{
         const ib=document.createElement('button');
         ib.type='button';
         ib.className='ol-item-btn'+(activeBaseKey()===it.key?' act':'');
-        const txt=document.createElement('span');
-        txt.className='ol-item-txt';
-        txt.textContent=it.label;
+        const txt=document.createElement('span');txt.className='ol-item-txt';txt.textContent=it.label;
         ib.appendChild(txt);
         if(hasExpansion(it.key)){
-          const tag=document.createElement('span');
-          tag.className='ol-exp-tag';tag.textContent='📚';tag.title='يوجد توسع لهذا الموضع';
+          const tag=document.createElement('span');tag.className='ol-exp-tag';tag.textContent='📚';
           ib.appendChild(tag);
         }
-        ib.onclick=()=>jumpToKey(it.key,slide.index);
+        ib.onclick=()=>{jumpToKey(it.key,slide.index);if(state.settings.autoCloseDrawer)setSidebarOpen(false);};
         wrap.appendChild(ib);
       });
       card.appendChild(wrap);
@@ -1210,51 +1284,20 @@ function renderOutline(){
     el.outlineList.appendChild(card);
   });
   el.sbStats.textContent='الشرائح: '+AR(state.outline.length)+' · القراءة: '+AR(readCount)+' · التوسع: '+AR(expCount);
-  const activeNode=el.outlineList.querySelector('.act');
-  if(activeNode&&activeNode.scrollIntoView)activeNode.scrollIntoView({block:'nearest'});
 }
 
 function rememberScroll(){
   if(scrollKey)scrollPositions.set(scrollKey,(editing?el.scriptEditor:el.scriptReader).scrollTop);
 }
-function scrollView(){return editing?el.scriptEditor:el.scriptReader;}
-function refreshScrollbar(){
-  const view=scrollView(),visible=Math.max(0,view.clientHeight||0);
-  const total=Math.max(visible,view.scrollHeight||0),max=Math.max(0,total-visible);
-  const top=Math.max(0,Math.min(max,view.scrollTop||0));
-  const trackH=Math.max(0,el.scriptScrollTrack.clientHeight||0);
-  const thumbH=max>0?Math.min(trackH,Math.max(24,trackH*visible/total)):trackH;
-  el.scriptScrollThumb.style.height=thumbH+'px';
-  el.scriptScrollThumb.style.top=(max>0?top/max*(trackH-thumbH):0)+'px';
-  el.scriptScrollTrack.setAttribute('aria-controls',editing?'scriptEditor':'scriptReader');
-  el.scriptScrollTrack.setAttribute('aria-valuenow',String(max>0?Math.round(top/max*100):0));
-  el.scriptScrollTrack.setAttribute('aria-disabled',String(max===0));
-  el.scriptScrollUp.disabled=top<=0;
-  el.scriptScrollDown.disabled=max===0||top>=max;
-}
-function setScroll(v){
-  const view=scrollView(),max=Math.max(0,(view.scrollHeight||0)-(view.clientHeight||0));
-  view.scrollTop=Math.max(0,Math.min(max,v));
-  refreshScrollbar();
-}
-function moveScroll(dir){
-  setScroll((scrollView().scrollTop||0)+dir*Math.max(48,Math.round(state.settings.font*1.88)));
-}
-
 function updateExpandUi(){
   const avail=hasExpansion(activeBaseKey());
   el.readerCol.classList.toggle('exp-mode',expandMode);
   el.scriptExpBanner.hidden=!expandMode;
-  el.scriptExpandBtn.classList.toggle('act',expandMode);
-  el.scriptExpandBtn.classList.toggle('has-exp',avail);
-  el.scriptExpandBtn.setAttribute('aria-pressed',String(expandMode));
-  const tip=expandMode
-    ?'العودة إلى نص القراءة — X'
-    :(avail?'التوسع في الشرح (متاح لهذا الموضع) — X':'التوسع في الشرح (لا يوجد توسع لهذا الموضع) — X');
-  el.scriptExpandBtn.title=tip;
-  el.scriptExpandBtn.setAttribute('aria-label',tip.replace(/\s*—\s*X$/,''));
+  el.thumbExpBtn.classList.toggle('act',expandMode);
+  el.thumbExpBtn.classList.toggle('has-exp',avail);
+  el.thumbExpBtn.setAttribute('aria-pressed',String(expandMode));
+  el.thumbExpLbl.textContent=expandMode?'القراءة':'التوسع';
 }
-
 function renderCurrent(){
   const c=activeCue();
   if(!c)return;
@@ -1303,13 +1346,12 @@ function renderCurrent(){
     el.scriptReader.classList.toggle('script-empty',!text);
   }
   el.pbar.style.width=(((curCue+1)/Math.max(1,cues.length))*100)+'%';
-  el.cueCounter.textContent='موضع '+AR(curCue+1)+' من '+AR(cues.length)+'  ·  شريحة '+AR(c.slideIndex+1)+' / '+AR(totalSlides);
+  el.cueCounter.textContent='موضع '+AR(curCue+1)+' من '+AR(cues.length)+' · شريحة '+AR(c.slideIndex+1)+' / '+AR(totalSlides);
   el.btnPrev.disabled=curCue<=0;
   el.btnNext.disabled=curCue>=cues.length-1;
   scrollKey=curScrollId();
-  scrollView().scrollTop=scrollPositions.get(scrollKey)||0;
-  renderOutline();
-  requestAnimationFrame(refreshScrollbar);
+  (editing?el.scriptEditor:el.scriptReader).scrollTop=scrollPositions.get(scrollKey)||0;
+  if(state.settings.sidebarOpen)renderOutline();
 }
 
 function goToCue(idx,opts={}){
@@ -1331,9 +1373,7 @@ function jumpToKey(key,slideIndex){
   const idx=cues.findIndex(c=>c.key===key);
   if(idx!==-1){goToCue(idx);return;}
   const slideIdx=cues.findIndex(c=>c.slideIndex===slideIndex);
-  if(slideIdx!==-1){
-    goToCue(slideIdx,{scope:key.endsWith(':slide')?'slide':'detail'});
-  }
+  if(slideIdx!==-1)goToCue(slideIdx,{scope:key.endsWith(':slide')?'slide':'detail'});
 }
 function setExpand(on){
   const next=!!on;
@@ -1346,19 +1386,32 @@ function setExpand(on){
 function setEditing(on){
   rememberScroll();
   editing=!!on;
+  if(editing)pauseAutoScroll();
   el.scriptEditor.hidden=!editing;
   el.scriptReader.hidden=editing;
   el.scriptEdit.hidden=editing;
   el.scriptRead.hidden=!editing;
   setStyleMenu(false);setFileMenu(false);
   if(editing)el.scriptEditor.focus({preventScroll:true});
-  else{saveState(true);el.scriptEditor.blur();el.scriptReader.focus({preventScroll:true});}
+  else{saveState(true);el.scriptEditor.blur();}
   scrollKey=curScrollId();
-  scrollView().scrollTop=scrollPositions.get(scrollKey)||0;
-  requestAnimationFrame(refreshScrollbar);
+  (editing?el.scriptEditor:el.scriptReader).scrollTop=scrollPositions.get(scrollKey)||0;
+}
+function setSidebarOpen(open){
+  state.settings.sidebarOpen=!!open;
+  document.body.classList.toggle('sidebar-collapsed',!state.settings.sidebarOpen);
+  el.scriptSidebarBtn.classList.toggle('act',state.settings.sidebarOpen);
+  el.scriptSidebarBtn.setAttribute('aria-pressed',String(state.settings.sidebarOpen));
+  if(state.settings.sidebarOpen){
+    setStyleMenu(false);setFileMenu(false);
+    renderOutline();
+    const act=el.outlineList.querySelector('.act');
+    if(act&&act.scrollIntoView)act.scrollIntoView({block:'center'});
+  }
+  saveState();
 }
 
-/* Appearance & Layout Controls */
+/* ================= Appearance & Tablet Settings ================= */
 el.scriptFontFamily.innerHTML=SCRIPT_FONTS.map(f=>`<option value="${f.id}">${f.name}</option>`).join('');
 function buildSwatches(container,list,kind){
   const picker=container.querySelector('.sp-color-pick');
@@ -1386,7 +1439,8 @@ function applyAppearance(partial={},save=false){
   if(validHex(partial.fg))st.fg=partial.fg.trim().toUpperCase();
   if(typeof partial.bold==='boolean')st.bold=partial.bold;
   if(typeof partial.fontFamily==='string'&&SCRIPT_FONTS.some(f=>f.id===partial.fontFamily))st.fontFamily=partial.fontFamily;
-  if(Number.isFinite(partial.font))st.font=Math.round(Math.max(16,Math.min(56,partial.font)));
+  if(Number.isFinite(partial.font))st.font=Math.round(Math.max(18,Math.min(68,partial.font)));
+  if(Number.isFinite(partial.lineHeight))st.lineHeight=partial.lineHeight;
   const fObj=SCRIPT_FONTS.find(f=>f.id===st.fontFamily)||SCRIPT_FONTS[0];
   const root=document.documentElement.style;
   root.setProperty('--sp-bg',st.bg);
@@ -1394,40 +1448,39 @@ function applyAppearance(partial={},save=false){
   root.setProperty('--sp-weight',st.bold?'800':'500');
   root.setProperty('--sp-font-family',fObj.css);
   root.setProperty('--sp-font-size',st.font+'px');
+  root.setProperty('--sp-line-height',String(st.lineHeight));
   document.body.classList.toggle('script-dark',!isLight(st.bg));
   el.scriptBold.classList.toggle('act',st.bold);
   el.scriptBold.setAttribute('aria-pressed',String(st.bold));
+  el.scriptFontRange.value=String(st.font);
+  el.scriptFontRange.setAttribute('aria-valuetext',AR(st.font)+' بكسل');
   el.scriptFontSizeVal.textContent=AR(st.font);
-  el.scriptSmaller.disabled=st.font<=16;
-  el.scriptLarger.disabled=st.font>=56;
   el.scriptFontFamily.value=fObj.id;
   el.scriptBgColor.value=st.bg.toLowerCase();
   el.scriptFgColor.value=st.fg.toLowerCase();
   el.scriptBgSwatches.querySelectorAll('.sp-swatch').forEach(b=>b.classList.toggle('act',b.dataset.color===st.bg));
   el.scriptFgSwatches.querySelectorAll('.sp-swatch').forEach(b=>b.classList.toggle('act',b.dataset.color===st.fg));
-  requestAnimationFrame(refreshScrollbar);
+  document.querySelectorAll('[data-lh]').forEach(b=>b.classList.toggle('act',Math.abs(Number(b.dataset.lh)-st.lineHeight)<0.05));
   if(save)saveState();
 }
-function applyLayout(save=false){
+function applyTabletPrefs(save=false){
   const st=state.settings;
   document.body.classList.toggle('sidebar-collapsed',!st.sidebarOpen);
   el.scriptSidebarBtn.classList.toggle('act',st.sidebarOpen);
   el.scriptSidebarBtn.setAttribute('aria-pressed',String(st.sidebarOpen));
-  const isLeft=st.sidebarSide==='left';
-  document.body.classList.toggle('sidebar-left',isLeft);
-  el.scriptSideBtn.setAttribute('aria-pressed',String(isLeft));
-  el.scriptSideBtn.title=isLeft?'نقل الفهرس إلى اليمين':'نقل الفهرس إلى اليسار';
+  document.body.classList.toggle('sidebar-left',st.sidebarSide==='left');
   document.body.classList.toggle('narrow-col',st.narrowCol);
-  el.scriptWidthBtn.classList.toggle('act',st.narrowCol);
-  el.scriptWidthBtn.setAttribute('aria-pressed',String(st.narrowCol));
-  el.scriptSyncBtn.classList.toggle('act',st.liveSync);
-  el.scriptSyncBtn.classList.toggle('synced',st.liveSync);
-  el.scriptSyncBtn.setAttribute('aria-pressed',String(st.liveSync));
-  el.scriptSyncBtn.title=st.liveSync?'المزامنة التلقائية مع شرائح الدرس (مفعّلة)':'المزامنة التلقائية مع شرائح الدرس (متوقفة)';
+  document.body.classList.toggle('focus-mode',st.focusMode);
+  el.focusBtn.classList.toggle('act',st.focusMode);
+  el.focusBtn.setAttribute('aria-pressed',String(st.focusMode));
+  el.optSwipe.checked=st.swipeNav;
+  el.optNarrow.checked=st.narrowCol;
+  el.optAutoClose.checked=st.autoCloseDrawer;
+  el.optLeftSide.checked=st.sidebarSide==='left';
+  updateSpeedLabel();
   if(save)saveState();
 }
 
-/* Popovers & Modals */
 function setStyleMenu(open){
   if(open)setFileMenu(false);
   el.scriptStyleMenu.hidden=!open;
@@ -1440,18 +1493,35 @@ function setFileMenu(open){
   el.scriptOptions.setAttribute('aria-expanded',String(!!open));
   el.scriptOptions.classList.toggle('act',!!open);
 }
-function toggleKeys(force){
-  const open=force===undefined?!el.keysModal.classList.contains('open'):!!force;
-  el.keysModal.classList.toggle('open',open);
-}
 function toggleFs(){
   try{
     if(!document.fullscreenElement)document.documentElement.requestFullscreen?.();
     else document.exitFullscreen?.();
-  }catch(e){toast('ملء الشاشة غير متاح هنا');}
+  }catch(e){toast('ملء الشاشة غير متاح في هذا المتصفح');}
 }
 
-/* Export / Import / Print */
+/* ================= Touch Swipe Navigation for Tablet ================= */
+let touchStartX=0, touchStartY=0, touchStartTime=0;
+el.scriptReader.addEventListener('touchstart',ev=>{
+  if(ev.touches.length!==1)return;
+  if(autoPlaying)pauseAutoScroll();
+  touchStartX=ev.touches[0].clientX;
+  touchStartY=ev.touches[0].clientY;
+  touchStartTime=Date.now();
+},{passive:true});
+el.scriptReader.addEventListener('touchend',ev=>{
+  if(!state.settings.swipeNav||editing||ev.changedTouches.length!==1)return;
+  const dx=ev.changedTouches[0].clientX-touchStartX;
+  const dy=ev.changedTouches[0].clientY-touchStartY;
+  const dt=Date.now()-touchStartTime;
+  if(dt<600&&Math.abs(dx)>75&&Math.abs(dx)>Math.abs(dy)*2){
+    // RTL reading: swipe right->left (dx < 0) goes Next; left->right (dx > 0) goes Prev
+    if(dx<0&&curCue<cues.length-1)goToCue(curCue+1);
+    else if(dx>0&&curCue>0)goToCue(curCue-1);
+  }
+},{passive:true});
+
+/* ================= Export / Import / Print ================= */
 function downloadFile(content,mime,filename){
   const url=URL.createObjectURL(new Blob([content],{type:mime}));
   const a=document.createElement('a');a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();
@@ -1476,14 +1546,14 @@ function exportHtml(){
   copy.querySelector('#scriptRead').hidden=true;
   copy.querySelector('#readerCol').classList.remove('exp-mode');
   copy.querySelector('#scriptExpBanner').hidden=true;
+  copy.querySelector('#autoScrollBar').hidden=true;
   copy.querySelector('#scriptStyleMenu').hidden=true;
   copy.querySelector('#scriptMenu').hidden=true;
-  copy.querySelector('#keysModal').classList.remove('open');
   copy.querySelector('#printSheet').replaceChildren();
   const payload={version:1,standalone:true,lesson:{...state.lesson},outline:state.outline,scripts:{...state.scripts},settings:{...state.settings}};
   copy.querySelector('#presenterScriptData').textContent=JSON.stringify(payload,null,2).replace(/</g,'\\u003c');
-  downloadFile('<!doctype html>\n'+copy.outerHTML,'text/html;charset=utf-8','Zad_Script_Standalone.html');
-  toast('تم حفظ نسخة HTML بالسكربتات والتوسع');
+  downloadFile('<!doctype html>\n'+copy.outerHTML,'text/html;charset=utf-8','Zad_Script_Tablet.html');
+  toast('تم حفظ نسخة HTML للتابلت');
 }
 async function importJson(file){
   if(!file)return;
@@ -1495,7 +1565,7 @@ async function importJson(file){
     curCue=0;lastSlideIndex=-1;expandMode=false;scrollPositions.clear();
     renderHeaderMeta();
     applyAppearance(state.settings,false);
-    applyLayout(false);
+    applyTabletPrefs(false);
     setEditing(false);
     goToCue(0);
     saveState(true);
@@ -1523,9 +1593,7 @@ function printAll(){
       const ex=(state.scripts[item.key+':exp']||'').trim();
       if(!rd&&!ex)return;
       const box=document.createElement('div');box.className='pr-cue';
-      if(slide.items.length){
-        const h3=document.createElement('h3');h3.textContent=item.label;box.appendChild(h3);
-      }
+      if(slide.items.length){const h3=document.createElement('h3');h3.textContent=item.label;box.appendChild(h3);}
       if(rd){const p=document.createElement('div');p.className='pr-read';p.textContent=rd;box.appendChild(p);}
       if(ex){const e=document.createElement('div');e.className='pr-exp';e.textContent='📚 التوسع في الشرح:\n'+ex;box.appendChild(e);}
       sec.appendChild(box);
@@ -1535,35 +1603,7 @@ function printAll(){
   window.print();
 }
 
-/* Live Sync Receiver from zad-lesson-template-v12.html */
-let lastSyncTs=0;
-function handleLiveSync(payload){
-  if(!state.settings.liveSync||!payload||payload.type!=='zad-sync')return;
-  if(payload.ts&&payload.ts<=lastSyncTs)return;
-  lastSyncTs=payload.ts||Date.now();
-  el.scriptSyncBtn.classList.remove('pulse');void el.scriptSyncBtn.offsetWidth;el.scriptSyncBtn.classList.add('pulse');
-  if(payload.key){
-    const idx=cues.findIndex(c=>c.key===payload.key);
-    if(idx!==-1){goToCue(idx);return;}
-  }
-  if(Number.isFinite(payload.slide)){
-    const idx=cues.findIndex(c=>c.slideIndex===payload.slide);
-    if(idx!==-1)goToCue(idx,{scope:payload.key&&payload.key.endsWith(':slide')?'slide':'detail'});
-  }
-}
-if(typeof BroadcastChannel!=='undefined'){
-  try{
-    const ch=new BroadcastChannel('zad-presenter-sync');
-    ch.onmessage=ev=>handleLiveSync(ev.data);
-  }catch(e){}
-}
-window.addEventListener('storage',ev=>{
-  if(ev.key==='zad-presenter-live-sync'&&ev.newValue){
-    try{handleLiveSync(JSON.parse(ev.newValue));}catch(e){}
-  }
-});
-
-/* Events */
+/* ================= Events ================= */
 el.scriptEditor.addEventListener('input',()=>{
   const k=activeTargetKey();
   if(expandMode){
@@ -1587,36 +1627,45 @@ el.scriptEditor.addEventListener('input',()=>{
     el.scriptReader.classList.toggle('script-empty',!el.scriptEditor.value);
   }
   saveState();
-  renderOutline();
-  requestAnimationFrame(refreshScrollbar);
 });
 el.scriptEditor.addEventListener('keydown',ev=>{
   if(ev.key==='Escape'||((ev.ctrlKey||ev.metaKey)&&ev.key==='Enter')){
     ev.preventDefault();ev.stopPropagation();setEditing(false);
   }
 });
+
+el.scriptSidebarBtn.onclick=()=>setSidebarOpen(!state.settings.sidebarOpen);
+el.closeDrawerBtn.onclick=()=>setSidebarOpen(false);
+el.drawerBackdrop.onclick=()=>setSidebarOpen(false);
+el.wakeLockBtn.onclick=()=>{state.settings.wakeLock=!state.settings.wakeLock;saveState();syncWakeLock(true);};
+el.autoScrollBtn.onclick=()=>setAutoScrollOpen(!autoScrollOpen);
+el.autoPlayToggle.onclick=()=>{if(autoPlaying)pauseAutoScroll();else startAutoScroll();};
+el.autoCloseBtn.onclick=()=>setAutoScrollOpen(false);
+el.autoSpeed.addEventListener('input',()=>{state.settings.autoSpeed=Number(el.autoSpeed.value);updateSpeedLabel();saveState();});
+el.focusBtn.onclick=()=>{
+  state.settings.focusMode=!state.settings.focusMode;
+  applyTabletPrefs(true);
+  toast(state.settings.focusMode?'وضع القراءة الصافية مفعّل':'تم إظهار شريط الأدوات');
+};
 el.scriptEdit.onclick=()=>setEditing(true);
 el.scriptRead.onclick=()=>setEditing(false);
-el.scriptExpandBtn.onclick=()=>setExpand(!expandMode);
+el.thumbExpBtn.onclick=()=>setExpand(!expandMode);
 el.scriptExpBack.onclick=()=>setExpand(false);
-el.scriptSyncBtn.onclick=()=>{
-  state.settings.liveSync=!state.settings.liveSync;
-  applyLayout(true);
-  toast(state.settings.liveSync?'تم تفعيل المزامنة التلقائية مع الدرس':'تم إيقاف المزامنة التلقائية');
-};
-el.scriptSidebarBtn.onclick=()=>{state.settings.sidebarOpen=!state.settings.sidebarOpen;applyLayout(true);};
-el.scriptSideBtn.onclick=()=>{state.settings.sidebarSide=state.settings.sidebarSide==='left'?'right':'left';applyLayout(true);};
-el.scriptWidthBtn.onclick=()=>{state.settings.narrowCol=!state.settings.narrowCol;applyLayout(true);};
 el.scriptBold.onclick=()=>applyAppearance({bold:!state.settings.bold},true);
-el.scriptSmaller.onclick=()=>applyAppearance({font:state.settings.font-2},true);
-el.scriptLarger.onclick=()=>applyAppearance({font:state.settings.font+2},true);
+el.scriptFontRange.addEventListener('input',()=>applyAppearance({font:Number(el.scriptFontRange.value)},true));
 el.scriptStyleBtn.onclick=()=>setStyleMenu(el.scriptStyleMenu.hidden);
 el.scriptOptions.onclick=()=>setFileMenu(el.scriptMenu.hidden);
 el.scriptFontFamily.onchange=()=>applyAppearance({fontFamily:el.scriptFontFamily.value},true);
 el.scriptBgColor.addEventListener('input',()=>applyAppearance({bg:el.scriptBgColor.value},true));
 el.scriptFgColor.addEventListener('input',()=>applyAppearance({fg:el.scriptFgColor.value},true));
+document.querySelectorAll('[data-lh]').forEach(b=>b.onclick=()=>applyAppearance({lineHeight:Number(b.dataset.lh)},true));
 el.scriptPresetLight.onclick=()=>applyAppearance({bg:'#FFFDF7',fg:'#000000',bold:true},true);
 el.scriptPresetDark.onclick=()=>applyAppearance({bg:'#0A1F2E',fg:'#F4F1E8',bold:true},true);
+el.scriptPresetHc.onclick=()=>applyAppearance({bg:'#000000',fg:'#FACC15',bold:true},true);
+el.optSwipe.onchange=()=>{state.settings.swipeNav=el.optSwipe.checked;applyTabletPrefs(true);};
+el.optNarrow.onchange=()=>{state.settings.narrowCol=el.optNarrow.checked;applyTabletPrefs(true);};
+el.optAutoClose.onchange=()=>{state.settings.autoCloseDrawer=el.optAutoClose.checked;applyTabletPrefs(true);};
+el.optLeftSide.onchange=()=>{state.settings.sidebarSide=el.optLeftSide.checked?'left':'right';applyTabletPrefs(true);};
 el.scriptScopeDetailBtn.onclick=()=>{scopeMode='detail';renderCurrent();};
 el.scriptScopeSlideBtn.onclick=()=>{scopeMode='slide';renderCurrent();};
 el.filterAllBtn.onclick=()=>{filterExpOnly=false;el.filterAllBtn.classList.add('act');el.filterExpBtn.classList.remove('act');renderOutline();};
@@ -1629,82 +1678,39 @@ el.scriptExport.onclick=exportJson;
 el.scriptImport.onclick=()=>{setFileMenu(false);el.scriptFile.click();};
 el.scriptPrint.onclick=printAll;
 el.scriptFile.onchange=()=>importJson(el.scriptFile.files[0]);
-el.scriptKeysBtn.onclick=()=>toggleKeys();
 el.scriptFsBtn.onclick=toggleFs;
-el.keysModal.addEventListener('click',ev=>{if(ev.target===el.keysModal)toggleKeys(false);});
+
 document.addEventListener('pointerdown',ev=>{
+  if(state.settings.wakeLock&&!wakeSentinel)syncWakeLock(false);
   if(!el.scriptOptions.contains(ev.target)&&!el.scriptMenu.contains(ev.target))setFileMenu(false);
   if(!el.scriptStyleBtn.contains(ev.target)&&!el.scriptStyleMenu.contains(ev.target))setStyleMenu(false);
 },true);
 
-/* Custom Scroll Rail */
-el.scriptScrollUp.onclick=()=>moveScroll(-1);
-el.scriptScrollDown.onclick=()=>moveScroll(1);
-[el.scriptReader,el.scriptEditor].forEach(v=>v.addEventListener('scroll',refreshScrollbar));
-let scrollDrag=null;
-function dragScroll(ev){
-  if(!scrollDrag||ev.pointerId!==scrollDrag.id)return;
-  const view=scrollView(),rect=el.scriptScrollTrack.getBoundingClientRect();
-  const thumbH=parseFloat(el.scriptScrollThumb.style.height)||0;
-  const travel=Math.max(0,rect.height-thumbH),max=Math.max(0,(view.scrollHeight||0)-(view.clientHeight||0));
-  if(travel>0)setScroll((ev.clientY-rect.top-scrollDrag.offset)/travel*max);
-}
-el.scriptScrollTrack.addEventListener('pointerdown',ev=>{
-  if(ev.button!==0||el.scriptScrollTrack.getAttribute('aria-disabled')==='true')return;
-  const rect=el.scriptScrollTrack.getBoundingClientRect(),top=parseFloat(el.scriptScrollThumb.style.top)||0;
-  const thumbH=parseFloat(el.scriptScrollThumb.style.height)||0;
-  scrollDrag={id:ev.pointerId,offset:ev.target===el.scriptScrollThumb?ev.clientY-rect.top-top:thumbH/2};
-  el.scriptScrollTrack.setPointerCapture(ev.pointerId);ev.preventDefault();dragScroll(ev);
-});
-el.scriptScrollTrack.addEventListener('pointermove',dragScroll);
-['pointerup','pointercancel','lostpointercapture'].forEach(t=>el.scriptScrollTrack.addEventListener(t,()=>{scrollDrag=null;}));
-
-/* Keyboard Shortcuts */
-function mapKey(e){
-  if(/^Key[A-Z]$/.test(e.code))return e.code.slice(3).toLowerCase();
-  const k=e.key.length===1?e.key.toLowerCase():e.key;
-  const ar={'ء':'x','ه':'i','ث':'e','ي':'d','ب':'f','ن':'k','؟':'?'};
-  return ar[k]||k;
-}
+/* Keyboard support (if Bluetooth keyboard is attached to tablet) */
 addEventListener('keydown',e=>{
   if(e.defaultPrevented||e.isComposing||e.ctrlKey||e.metaKey||e.altKey)return;
   if(e.target?.closest?.('input,textarea,select'))return;
-  const k=mapKey(e);
-  if(el.keysModal.classList.contains('open')){if(k==='Escape'||k==='k'||k==='?'){e.preventDefault();toggleKeys(false);}return;}
-  if(k==='Escape'){setStyleMenu(false);setFileMenu(false);return;}
+  const k=/^Key[A-Z]$/.test(e.code)?e.code.slice(3).toLowerCase():e.key;
+  if(k==='Escape'){setStyleMenu(false);setFileMenu(false);if(state.settings.sidebarOpen)setSidebarOpen(false);return;}
   if((k===' '||k==='Enter')&&e.target?.closest?.('button'))return;
-  if(k==='ArrowUp'){e.preventDefault();moveScroll(-1);return;}
-  if(k==='ArrowDown'){e.preventDefault();moveScroll(1);return;}
+  if(k==='ArrowUp'){e.preventDefault();el.scriptReader.scrollBy({top:-90,behavior:'smooth'});return;}
+  if(k==='ArrowDown'){e.preventDefault();el.scriptReader.scrollBy({top:90,behavior:'smooth'});return;}
   if(k===' '||k==='ArrowLeft'||k==='PageDown'){e.preventDefault();goToCue(curCue+1);return;}
   if(k==='ArrowRight'||k==='Backspace'||k==='PageUp'){e.preventDefault();goToCue(curCue-1);return;}
-  if(k==='Home'){e.preventDefault();goToCue(0);return;}
-  if(k==='End'){e.preventDefault();goToCue(cues.length-1);return;}
-  if(k==='x'){e.preventDefault();setExpand(!expandMode);return;}
-  if(k==='i'){e.preventDefault();state.settings.sidebarOpen=!state.settings.sidebarOpen;applyLayout(true);return;}
-  if(k==='e'){e.preventDefault();setEditing(!editing);return;}
-  if(k==='d'){
-    e.preventDefault();
-    const dark=isLight(state.settings.bg);
-    applyAppearance(dark?{bg:'#0A1F2E',fg:'#F4F1E8'}:{bg:'#FFFDF7',fg:'#000000'},true);
-    return;
-  }
-  if(e.code==='BracketRight'||k===']'||k==='+'||k==='='){e.preventDefault();applyAppearance({font:state.settings.font+2},true);return;}
-  if(e.code==='BracketLeft'||k==='['||k==='-'){e.preventDefault();applyAppearance({font:state.settings.font-2},true);return;}
-  if(k==='f'){e.preventDefault();toggleFs();return;}
-  if(k==='k'||k==='?'){e.preventDefault();toggleKeys();return;}
+  if(k==='x'||k==='ء'){e.preventDefault();setExpand(!expandMode);return;}
+  if(k==='i'||k==='ه'){e.preventDefault();setSidebarOpen(!state.settings.sidebarOpen);return;}
+  if(k==='f'||k==='ب'){e.preventDefault();toggleFs();return;}
 });
 
-addEventListener('resize',refreshScrollbar);
 addEventListener('pagehide',()=>saveState(true));
-document.addEventListener('visibilitychange',()=>{if(document.hidden)saveState(true);});
-if(window.ResizeObserver)new ResizeObserver(refreshScrollbar).observe(el.scriptTextArea);
 
 /* Boot */
 buildCues();
 renderHeaderMeta();
 applyAppearance(state.settings,false);
-applyLayout(false);
+applyTabletPrefs(false);
 goToCue(0);
+if(state.settings.wakeLock)syncWakeLock(false);
 </script>
 </body>
 </html>
