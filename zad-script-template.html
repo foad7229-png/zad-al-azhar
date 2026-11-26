@@ -1,0 +1,1710 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>سكربت الدرس — [عنوان الدرس]</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Noto+Kufi+Arabic:wght@600;700;800;900&family=Tajawal:wght@500;700;800;900&family=Cairo:wght@600;700;800;900&family=Changa:wght@500..800&family=IBM+Plex+Sans+Arabic:wght@500;600;700&family=Noto+Naskh+Arabic:wght@400..700&family=Noto+Sans+Arabic:wght@400..900&family=Reem+Kufi:wght@400..700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --brand:#123F35; --brand-2:#246252; --gold:#B89555; --gold-soft:#F6EEDC;
+  --page-bg:#F3F0E7; --panel-bg:#FFFDF7; --panel-fg:#000000;
+  --sp-bg:#FFFDF7; --sp-fg:#000000; --sp-weight:800;
+  --sp-font-family:'Tajawal','Segoe UI',Tahoma,sans-serif;
+  --sp-font-size:26px;
+  --sp-surface:rgba(18,63,53,.045); --sp-border:rgba(18,63,53,.18);
+  --sp-muted:#475569; --sp-btn-bg:rgba(18,63,53,.06); --sp-btn-hover:rgba(18,63,53,.13);
+  --sp-btn-ink:#123F35; --sp-act-bg:#123F35; --sp-act-border:#123F35; --sp-act-ink:#ffffff;
+  --sp-pop-bg:#ffffff; --sp-pop-border:#cbd5e1; --sp-pop-ink:#0f172a;
+  --sp-track:rgba(18,63,53,.10); --sp-thumb:#64748b; --sp-editor-bg:rgba(18,63,53,.04);
+  --font-heading:'Noto Kufi Arabic','Tajawal','Segoe UI',Tahoma,sans-serif;
+  --font-body:'Tajawal','Segoe UI',Tahoma,sans-serif;
+  --sidebar-w:320px;
+}
+body.script-dark{
+  --page-bg:#06141e;
+  --sp-surface:rgba(255,255,255,.045); --sp-border:rgba(148,189,210,.24);
+  --sp-muted:#9dc2d6; --sp-btn-bg:rgba(255,255,255,.06); --sp-btn-hover:rgba(121,220,242,.18);
+  --sp-btn-ink:#e0f4ff; --sp-act-bg:#194b61; --sp-act-border:#67b8d6; --sp-act-ink:#ffffff;
+  --sp-pop-bg:#0b2435; --sp-pop-border:#547c93; --sp-pop-ink:#f4f1e8;
+  --sp-track:rgba(255,255,255,.10); --sp-thumb:#79afc8; --sp-editor-bg:rgba(0,0,0,.25);
+}
+*{box-sizing:border-box}
+html,body{
+  margin:0;height:100%;overflow:hidden;background:var(--page-bg);color:var(--sp-fg);
+  font-family:var(--font-body);-webkit-font-smoothing:antialiased;
+}
+[hidden]{display:none!important}
+.sr-only{
+  position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+  clip:rect(0,0,0,0);clip-path:inset(50%);white-space:nowrap;border:0;
+}
+
+/* App Shell */
+#shell{
+  position:fixed;inset:0;display:flex;flex-direction:column;
+  background:var(--sp-bg);color:var(--sp-fg);
+}
+/* Top Header */
+#topBar{
+  flex:0 0 auto;position:relative;display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:8px 14px 10px;background:var(--brand);color:#ffffff;
+  border-bottom:1px solid rgba(184,149,85,.45);
+}
+.brand-wrap{display:flex;align-items:center;gap:10px;min-width:0}
+.brand-mark{
+  flex:none;width:36px;height:36px;border-radius:10px;display:grid;place-items:center;
+  background:rgba(255,255,255,.10);border:1px solid rgba(241,216,160,.55);color:#F1D8A0;
+}
+.brand-mark svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.brand-titles{display:flex;flex-direction:column;min-width:0}
+.brand-lesson{
+  font:800 16px/1.3 var(--font-heading);color:#ffffff;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.brand-meta{
+  font:700 12.5px/1.35 var(--font-body);color:#F1D8A0;opacity:.92;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+#posCenter{
+  flex:1;min-width:0;display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:nowrap;
+}
+#scriptContext{
+  font:800 15px/1.35 var(--font-heading);color:#ffffff;
+  background:rgba(255,255,255,.12);border-radius:8px;padding:4px 12px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:460px;
+}
+#scriptBadge{
+  flex:none;font:800 12.5px/1.4 var(--font-body);color:#123F35;background:#F1D8A0;
+  border-radius:999px;padding:2px 10px;white-space:nowrap;
+}
+#headBtns{flex:0 0 auto;display:flex;align-items:center;gap:5px}
+.top-icon{
+  appearance:none;position:relative;display:inline-grid;place-items:center;width:34px;height:34px;
+  border:1px solid rgba(255,255,255,.22);border-radius:9px;background:rgba(255,255,255,.09);
+  color:#ffffff;padding:5px;cursor:pointer;transition:background .15s,border-color .15s,transform .12s;
+}
+.top-icon svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
+.top-icon:hover{background:rgba(255,255,255,.20);border-color:#F1D8A0}
+.top-icon:focus-visible{outline:2px solid #F1D8A0;outline-offset:2px}
+.top-icon.act,.top-icon[aria-pressed="true"]{background:#246252;border-color:#F1D8A0;color:#ffffff}
+#scriptExpandBtn.has-exp::after{
+  content:'';position:absolute;top:3px;left:3px;width:8px;height:8px;border-radius:50%;
+  background:#f59e0b;box-shadow:0 0 0 1.5px var(--brand);pointer-events:none;
+}
+#scriptExpandBtn.act,#scriptExpandBtn[aria-pressed="true"]{
+  background:#b45309;border-color:#fbbf24;color:#ffffff;
+}
+#scriptSyncBtn.synced::after{
+  content:'';position:absolute;top:3px;left:3px;width:7px;height:7px;border-radius:50%;
+  background:#34d399;box-shadow:0 0 0 1.5px var(--brand);pointer-events:none;
+}
+#scriptSyncBtn.pulse{animation:syncPulse .5s ease}
+@keyframes syncPulse{0%{transform:scale(1)}50%{transform:scale(1.16);background:#059669}100%{transform:scale(1)}}
+.top-icon.script-warning{color:#fde68a;border-color:#f59e0b}
+#pbar{position:absolute;right:0;bottom:0;height:3px;width:0%;background:var(--gold);transition:width .25s ease}
+
+/* Main Workspace: Sidebar + Reading Pane */
+#workspace{
+  flex:1;min-height:0;display:flex;flex-direction:row;position:relative;overflow:hidden;
+}
+body.sidebar-left #workspace{flex-direction:row-reverse}
+body.sidebar-left #scriptSideBtn svg{transform:scaleX(-1)}
+
+/* Collapsible Outline Sidebar */
+#scriptSidebar{
+  flex:0 0 var(--sidebar-w);width:var(--sidebar-w);min-height:0;display:flex;flex-direction:column;
+  background:var(--sp-surface);border-inline-end:1.5px solid var(--sp-border);
+  overflow:hidden;
+}
+body.sidebar-left #scriptSidebar{border-inline-end:0;border-inline-start:1.5px solid var(--sp-border)}
+body.sidebar-collapsed #scriptSidebar{display:none}
+.sb-head{
+  flex:0 0 auto;padding:10px;border-bottom:1px solid var(--sp-border);display:flex;flex-direction:column;gap:8px;
+}
+.sb-search{
+  width:100%;height:34px;padding:0 12px;border-radius:9px;border:1.5px solid var(--sp-border);
+  background:var(--sp-bg);color:var(--sp-fg);font:700 13.5px/1 var(--font-body);
+}
+.sb-search:focus{outline:2px solid var(--gold);outline-offset:1px}
+.sb-filters{display:flex;gap:5px}
+.sb-filter-btn{
+  appearance:none;flex:1;height:28px;border:1px solid var(--sp-border);border-radius:8px;
+  background:var(--sp-btn-bg);color:var(--sp-muted);cursor:pointer;
+  font:800 12.5px/1 var(--font-body);transition:background .15s,color .15s;
+}
+.sb-filter-btn.act{background:var(--sp-act-bg);border-color:var(--sp-act-border);color:var(--sp-act-ink)}
+#outlineList{
+  flex:1;min-height:0;overflow:auto;padding:8px;display:flex;flex-direction:column;gap:6px;
+}
+.ol-slide{
+  border:1px solid var(--sp-border);border-radius:10px;background:var(--sp-bg);overflow:hidden;
+}
+.ol-slide.cur-slide{border-color:var(--gold);box-shadow:0 2px 10px rgba(18,63,53,.09)}
+.ol-slide-btn{
+  appearance:none;width:100%;display:flex;align-items:center;gap:8px;padding:7px 9px;border:0;
+  background:transparent;color:var(--sp-btn-ink);text-align:right;cursor:pointer;
+  font:800 13.5px/1.35 var(--font-heading);
+}
+.ol-slide-btn:hover{background:var(--sp-btn-hover)}
+.ol-slide-btn.act{background:var(--sp-act-bg);color:var(--sp-act-ink)}
+.ol-num{
+  flex:none;min-width:24px;height:24px;padding:0 5px;border-radius:7px;display:grid;place-items:center;
+  background:var(--sp-btn-bg);color:var(--sp-btn-ink);font:900 12px/1 var(--font-heading);
+}
+.ol-slide-btn.act .ol-num{background:rgba(255,255,255,.22);color:#ffffff}
+.ol-sec{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ol-exp-tag{
+  flex:none;font-size:12px;line-height:1;padding:2px 5px;border-radius:6px;
+  background:rgba(217,119,6,.16);color:#b45309;font-weight:900;
+}
+body.script-dark .ol-exp-tag{color:#fbbf24}
+.ol-items{
+  display:flex;flex-direction:column;gap:2px;padding:3px 7px 7px 7px;border-top:1px dashed var(--sp-border);
+}
+.ol-item-btn{
+  appearance:none;width:100%;display:flex;align-items:center;justify-content:space-between;gap:6px;
+  padding:5px 9px;border:1px solid transparent;border-radius:7px;background:transparent;
+  color:var(--sp-muted);text-align:right;cursor:pointer;font:700 13px/1.35 var(--font-body);
+}
+.ol-item-btn:hover{background:var(--sp-btn-hover);color:var(--sp-btn-ink)}
+.ol-item-btn.act{
+  background:var(--sp-act-bg);border-color:var(--sp-act-border);color:var(--sp-act-ink);font-weight:800;
+}
+.ol-item-btn.act .ol-exp-tag{background:rgba(255,255,255,.2);color:#fde68a}
+.ol-item-txt{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sb-stats{
+  flex:0 0 auto;padding:7px 10px;border-top:1px solid var(--sp-border);
+  font:700 12px/1.4 var(--font-body);color:var(--sp-muted);display:flex;justify-content:space-between;gap:6px;
+}
+
+/* Reader Main Column */
+#readerCol{
+  flex:1;min-width:0;min-height:0;display:flex;flex-direction:column;position:relative;
+  background:var(--sp-bg);
+}
+/* Quick Action Bar */
+#scriptQuickBar{
+  flex:0 0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;
+  padding:7px 14px;border-bottom:1px solid var(--sp-border);background:var(--sp-surface);
+}
+.script-quick-group{display:inline-flex;align-items:center;flex-wrap:wrap;gap:6px}
+.script-pill-btn{
+  appearance:none;display:inline-flex;align-items:center;justify-content:center;gap:5px;
+  height:32px;padding:0 11px;border:1px solid var(--sp-border);border-radius:8px;
+  background:var(--sp-btn-bg);color:var(--sp-btn-ink);cursor:pointer;
+  font:700 13.5px/1 var(--font-body);white-space:nowrap;transition:background .15s,border-color .15s,color .15s;
+}
+.script-pill-btn svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
+.script-pill-btn:hover:not(:disabled){background:var(--sp-btn-hover);border-color:var(--sp-act-border)}
+.script-pill-btn:focus-visible,.sp-seg-btn:focus-visible,.sp-size-cap button:focus-visible,.sp-swatch:focus-visible,.sp-menu-item:focus-visible,#scriptReader:focus-visible,#scriptEditor:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.script-pill-btn:disabled{opacity:.38;cursor:default}
+.script-pill-btn.act,.script-pill-btn[aria-pressed="true"]{background:var(--sp-act-bg);border-color:var(--sp-act-border);color:var(--sp-act-ink)}
+#scriptRead{background:#047857;border-color:#047857;color:#ffffff}
+.sp-size-cap{
+  display:inline-flex;align-items:center;border:1px solid var(--sp-border);border-radius:8px;overflow:hidden;
+  background:var(--sp-btn-bg);height:32px;
+}
+.sp-size-cap button{
+  appearance:none;border:0;background:transparent;color:var(--sp-btn-ink);
+  height:100%;padding:0 10px;cursor:pointer;font:800 13.5px/1 var(--font-heading);
+}
+.sp-size-cap button:hover:not(:disabled){background:var(--sp-btn-hover)}
+.sp-size-cap button:disabled{opacity:.35;cursor:default}
+.sp-size-cap span{
+  padding:0 8px;min-width:30px;text-align:center;color:var(--sp-muted);
+  font:800 13.5px/1 var(--font-body);border-inline:1px solid var(--sp-border);
+}
+#scriptScopeSeg{
+  display:inline-flex;align-items:center;border:1px solid var(--sp-border);border-radius:8px;overflow:hidden;
+  background:var(--sp-btn-bg);height:32px;
+}
+.sp-seg-btn{
+  appearance:none;border:0;background:transparent;color:var(--sp-muted);
+  height:100%;padding:0 12px;cursor:pointer;font:700 13px/1 var(--font-body);
+  white-space:nowrap;transition:background .15s,color .15s;
+}
+.sp-seg-btn.act{background:var(--sp-act-bg);color:var(--sp-act-ink);font-weight:800}
+.sp-seg-btn:hover:not(.act){background:var(--sp-btn-hover);color:var(--sp-btn-ink)}
+#statusPill{
+  font:700 12.5px/1.3 var(--font-body);color:var(--sp-muted);padding:3px 9px;
+  border-radius:999px;background:var(--sp-btn-bg);border:1px solid var(--sp-border);
+  white-space:nowrap;
+}
+#statusPill.warn{color:#b45309;border-color:#d97706}
+
+/* Expansion Mode Banner */
+#readerCol.exp-mode{box-shadow:inset 0 0 0 2px rgba(217,119,6,.55)}
+#scriptExpBanner{
+  flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding:7px 16px;border-bottom:1.5px solid rgba(180,83,9,.28);
+  background:#fef3c7;color:#92400e;font:800 14px/1.4 var(--font-heading);
+}
+body.script-dark #scriptExpBanner{
+  background:rgba(217,119,6,.18);border-bottom-color:rgba(217,119,6,.42);color:#fde68a;
+}
+#scriptExpBack{
+  appearance:none;border:1.5px solid currentColor;border-radius:8px;background:transparent;color:inherit;
+  padding:3px 12px;cursor:pointer;font:800 13px/1.4 var(--font-body);white-space:nowrap;
+}
+#scriptExpBack:hover{background:rgba(217,119,6,.18)}
+
+/* Reading & Editor Body */
+#scriptBody{flex:1;min-height:0;display:flex;flex-direction:row;align-items:stretch}
+#scriptTextArea{position:relative;flex:1;min-width:0;min-height:0;padding:12px 16px}
+#scriptReader,#scriptEditor{
+  box-sizing:border-box;width:100%;height:100%;overflow:auto;margin:0 auto;border:0;border-radius:12px;
+  padding:14px 20px;color:var(--sp-fg);background:transparent;text-align:right;direction:rtl;
+  font-family:var(--sp-font-family);font-weight:var(--sp-weight,800);
+  font-size:var(--sp-font-size,26px);line-height:1.88;
+  white-space:pre-wrap;overflow-wrap:anywhere;scrollbar-width:none;overscroll-behavior:contain;
+}
+body.narrow-col #scriptReader,body.narrow-col #scriptEditor{max-width:860px}
+#scriptReader::-webkit-scrollbar,#scriptEditor::-webkit-scrollbar{display:none}
+#scriptEditor{
+  display:block;resize:none;background:var(--sp-editor-bg);
+  outline:1.5px solid var(--sp-act-border);caret-color:var(--sp-fg);
+}
+#scriptEditor::placeholder{color:var(--sp-muted);opacity:.8}
+#scriptReader.script-empty{color:var(--sp-muted);font-weight:600}
+
+/* Structured Expansion Formatting */
+#scriptReader.exp-view{white-space:normal}
+#scriptReader.exp-view .sp-exp-head{
+  margin:18px 0 8px;padding:4px 0 5px;border-bottom:1.5px dashed rgba(180,83,9,.35);
+  color:#92400e;font-family:var(--font-heading);font-weight:900;font-size:.95em;line-height:1.5;
+}
+#scriptReader.exp-view .sp-exp-head:first-child{margin-top:2px}
+body.script-dark #scriptReader.exp-view .sp-exp-head{color:#fbbf24;border-bottom-color:rgba(217,119,6,.45)}
+#scriptReader.exp-view .sp-exp-p{margin:0 0 10px;line-height:1.88}
+#scriptReader.exp-view .sp-exp-item{position:relative;margin:0 0 9px;padding-right:18px;line-height:1.88}
+#scriptReader.exp-view .sp-exp-item::before{content:'•';position:absolute;right:2px;top:0;color:#d97706;font-weight:900}
+#scriptReader.exp-view .sp-exp-label{color:#78350f;font-weight:900}
+body.script-dark #scriptReader.exp-view .sp-exp-label{color:#fde68a}
+#scriptReader.exp-view .sp-exp-cite{
+  display:inline;font-style:italic;font-size:.82em;font-weight:600;color:var(--sp-muted);margin-inline-start:5px;
+}
+
+/* Custom Scrollbar Rail */
+#scriptScrollRail{flex:0 0 28px;display:flex;flex-direction:column;align-items:center;gap:5px;padding:12px 4px;user-select:none}
+.script-scroll-button{
+  appearance:none;display:grid;place-items:center;flex:0 0 24px;width:22px;height:24px;padding:0;
+  border:0;border-radius:6px;background:transparent;color:var(--sp-muted);cursor:pointer;
+}
+.script-scroll-button svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
+.script-scroll-button:hover{color:var(--sp-btn-ink);background:var(--sp-btn-hover)}
+.script-scroll-button:disabled{opacity:.3;cursor:default}
+#scriptScrollTrack{position:relative;flex:1;width:9px;min-height:16px;background:var(--sp-track);border-radius:6px;cursor:pointer;touch-action:none}
+#scriptScrollThumb{position:absolute;left:0;right:0;top:0;min-height:18px;border-radius:6px;background:var(--sp-thumb);cursor:grab;touch-action:none}
+#scriptScrollTrack:active #scriptScrollThumb{cursor:grabbing;background:var(--sp-act-bg)}
+
+/* Bottom Navigation Footer */
+#navFooter{
+  flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:8px 16px;border-top:1px solid var(--sp-border);background:var(--sp-surface);
+}
+.nav-btn{
+  appearance:none;display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 16px;
+  border:1.5px solid var(--sp-border);border-radius:10px;background:var(--sp-btn-bg);
+  color:var(--sp-btn-ink);cursor:pointer;font:800 14.5px/1 var(--font-heading);
+  transition:background .15s,border-color .15s,transform .12s;
+}
+.nav-btn:hover:not(:disabled){background:var(--sp-btn-hover);border-color:var(--sp-act-border);transform:translateY(-1px)}
+.nav-btn.primary{background:var(--brand);border-color:var(--brand);color:#ffffff}
+.nav-btn.primary:hover:not(:disabled){background:var(--brand-2);border-color:var(--gold)}
+.nav-btn:disabled{opacity:.38;cursor:default;transform:none}
+#cueCounter{
+  font:800 14px/1.3 var(--font-heading);color:var(--sp-muted);text-align:center;
+}
+
+/* Popovers */
+.sp-popover{
+  position:fixed;top:58px;left:16px;width:min(340px,calc(100vw - 24px));z-index:30;
+  display:flex;flex-direction:column;gap:11px;padding:14px;
+  background:var(--sp-pop-bg);color:var(--sp-pop-ink);
+  border:1.5px solid var(--sp-pop-border);border-radius:14px;
+  box-shadow:0 14px 36px rgba(0,0,0,.28);max-height:calc(100vh - 80px);overflow:auto;
+}
+.sp-sec-label{
+  display:flex;align-items:center;justify-content:space-between;gap:8px;
+  font:800 13.5px/1.3 var(--font-heading);color:var(--sp-pop-ink);margin-bottom:6px;
+}
+.sp-select{
+  width:100%;appearance:none;-webkit-appearance:none;
+  background-color:var(--sp-btn-bg);color:var(--sp-pop-ink);
+  border:1.5px solid var(--sp-border);border-radius:9px;padding:8px 12px 8px 34px;
+  font:700 14px/1.4 var(--font-body);cursor:pointer;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:left 10px center;
+}
+.sp-select option{background:var(--sp-pop-bg);color:var(--sp-pop-ink)}
+.sp-swatches-row{display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+.sp-swatch{
+  appearance:none;width:28px;height:28px;border-radius:50%;padding:0;cursor:pointer;
+  border:2px solid var(--sp-border);box-shadow:0 1px 3px rgba(0,0,0,.18);transition:transform .14s;
+}
+.sp-swatch:hover{transform:scale(1.12)}
+.sp-swatch.act{border-color:var(--gold);box-shadow:0 0 0 2.5px var(--gold);transform:scale(1.08)}
+.sp-color-pick{
+  position:relative;display:inline-flex;align-items:center;justify-content:center;
+  width:28px;height:28px;border-radius:50%;border:1.5px dashed var(--sp-muted);
+  cursor:pointer;overflow:hidden;background:conic-gradient(#ef4444,#f59e0b,#10b981,#3b82f6,#8b5cf6,#ef4444);
+}
+.sp-color-pick input[type="color"]{position:absolute;inset:-6px;width:44px;height:44px;opacity:0;cursor:pointer;border:0;padding:0}
+.sp-style-footer{display:flex;gap:7px;padding-top:8px;border-top:1px solid var(--sp-border)}
+.sp-style-footer button{flex:1}
+.sp-menu-item{
+  appearance:none;display:flex;align-items:center;gap:10px;width:100%;
+  padding:9px 11px;border:1px solid var(--sp-border);border-radius:9px;
+  background:var(--sp-btn-bg);color:var(--sp-pop-ink);cursor:pointer;text-align:right;
+  font:700 14px/1.4 var(--font-body);transition:background .15s,border-color .15s;
+}
+.sp-menu-item:hover{background:var(--sp-btn-hover);border-color:var(--sp-act-border)}
+.sp-menu-item svg{width:19px;height:19px;flex:none;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+
+/* Keys Modal & Toast */
+#keysModal{
+  position:fixed;inset:0;z-index:50;display:none;align-items:center;justify-content:center;
+  background:rgba(6,25,20,.58);backdrop-filter:blur(4px);padding:16px;
+}
+#keysModal.open{display:flex}
+.kbox{
+  background:var(--sp-pop-bg);color:var(--sp-pop-ink);border:2px solid var(--gold);border-radius:20px;
+  padding:18px 24px;width:min(760px,95vw);max-height:88vh;overflow:auto;
+  box-shadow:0 20px 50px rgba(0,0,0,.35);
+}
+.kbox h2{margin:0 0 12px;font:800 22px/1.3 var(--font-heading);color:var(--brand)}
+body.script-dark .kbox h2{color:#F1D8A0}
+.kgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px 22px}
+.kr{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding:5px 0;border-bottom:1px dashed var(--sp-border);font-size:15px;font-weight:700;
+}
+kbd{
+  display:inline-block;min-width:28px;text-align:center;font:800 14px/1.4 var(--font-body);
+  padding:1px 7px;margin:0 2px;border-radius:7px;background:var(--sp-btn-bg);
+  border:1.5px solid var(--sp-border);border-bottom-width:3px;color:var(--sp-pop-ink);
+}
+#toast{
+  position:fixed;left:50%;bottom:64px;transform:translateX(-50%) translateY(14px);z-index:60;
+  opacity:0;pointer-events:none;background:var(--brand);color:#ffffff;border:1px solid var(--gold);
+  font:800 15px/1.4 var(--font-body);padding:6px 18px;border-radius:999px;
+  box-shadow:0 8px 22px rgba(0,0,0,.28);transition:opacity .2s,transform .2s;
+}
+#toast.on{opacity:1;transform:translateX(-50%)}
+
+/* Responsive */
+@media(max-width:900px){
+  #posCenter{display:none}
+  .kgrid{grid-template-columns:1fr}
+  #scriptSidebar{
+    position:absolute;top:0;bottom:0;right:0;z-index:20;
+    box-shadow:-6px 0 24px rgba(0,0,0,.22);background:var(--sp-pop-bg);
+  }
+  body.sidebar-left #scriptSidebar{right:auto;left:0;box-shadow:6px 0 24px rgba(0,0,0,.22)}
+}
+@media(max-width:560px){
+  #topBar{padding:6px 10px 8px}
+  .brand-meta{display:none}
+  #scriptTextArea{padding:8px 6px}
+  #scriptReader,#scriptEditor{padding:10px 12px}
+  #navFooter{padding:6px 10px}
+  .nav-btn{padding:0 12px;font-size:13.5px}
+}
+
+/* Print View */
+#printSheet{display:none}
+@media print{
+  html,body{height:auto;overflow:visible;background:#ffffff;color:#000000}
+  #shell,#keysModal,#toast{display:none!important}
+  #printSheet{display:block;padding:12mm;direction:rtl;font-family:'Tajawal',sans-serif;color:#000}
+  #printSheet h1{font-family:'Noto Kufi Arabic',sans-serif;font-size:20pt;margin:0 0 4pt;color:#123F35}
+  #printSheet .pr-meta{font-size:11pt;color:#444;margin-bottom:14pt;border-bottom:1.5pt solid #B89555;padding-bottom:6pt}
+  #printSheet .pr-slide{margin-bottom:14pt;page-break-inside:avoid}
+  #printSheet .pr-slide h2{font-family:'Noto Kufi Arabic',sans-serif;font-size:13.5pt;background:#F3F0E7;padding:4pt 8pt;border-right:4pt solid #123F35;margin:0 0 6pt}
+  #printSheet .pr-cue{margin:0 0 8pt 0;padding-right:8pt}
+  #printSheet .pr-cue h3{font-size:11.5pt;margin:0 0 3pt;color:#123F35}
+  #printSheet .pr-read{white-space:pre-wrap;font-size:11.5pt;line-height:1.7;margin:0 0 4pt}
+  #printSheet .pr-exp{white-space:pre-wrap;font-size:10.5pt;line-height:1.65;background:#FFFBEB;border-right:3pt solid #B89555;padding:5pt 8pt;margin:4pt 0 0}
+}
+</style>
+</head>
+<body class="narrow-col">
+<div id="shell">
+  <header id="topBar">
+    <div class="brand-wrap">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M2 5.5A2.5 2.5 0 0 1 4.5 3H11v17H4.5A2.5 2.5 0 0 0 2 22Z"/><path d="M22 5.5A2.5 2.5 0 0 0 19.5 3H13v17h6.5a2.5 2.5 0 0 1 2.5 2Z"/></svg>
+      </span>
+      <div class="brand-titles">
+        <span class="brand-lesson" id="lessonTitle">[عنوان الدرس]</span>
+        <span class="brand-meta" id="lessonMeta">زاد الطالب الأزهري · [المادة] · [الصف الدراسي]</span>
+      </div>
+    </div>
+    <div id="posCenter">
+      <span id="scriptContext"></span>
+      <span id="scriptBadge" hidden></span>
+    </div>
+    <div id="headBtns">
+      <button type="button" class="top-icon" id="scriptExpandBtn" title="التوسع في الشرح (مرجع علمي) — X" aria-label="التوسع في الشرح" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 5.5A2.5 2.5 0 0 1 4.5 3H11v17H4.5A2.5 2.5 0 0 0 2 22Z"/><path d="M22 5.5A2.5 2.5 0 0 0 19.5 3H13v17h6.5a2.5 2.5 0 0 1 2.5 2Z"/></svg></button>
+      <button type="button" class="top-icon act synced" id="scriptSyncBtn" title="المزامنة التلقائية مع شرائح الدرس (مفعّلة)" aria-label="المزامنة التلقائية مع شرائح الدرس" aria-pressed="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 16h5v5"/></svg></button>
+      <button type="button" class="top-icon act" id="scriptSidebarBtn" title="إظهار / إخفاء فهرس الشرائح — I" aria-label="فهرس الشرائح" aria-pressed="true"><svg viewBox="0 0 24 24" aria-hidden="true"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><circle cx="4" cy="6" r="1.5"/><circle cx="4" cy="12" r="1.5"/><circle cx="4" cy="18" r="1.5"/></svg></button>
+      <button type="button" class="top-icon" id="scriptSideBtn" title="نقل الفهرس إلى اليسار" aria-label="نقل الفهرس إلى اليسار" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M9 4v16"/><path d="M17 12h-5m2-2.5L11.5 12l2.5 2.5"/></svg></button>
+      <button type="button" class="top-icon" id="scriptStyleBtn" title="الألوان والخطوط" aria-label="الألوان والخطوط" aria-expanded="false" aria-controls="scriptStyleMenu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18c1.5 0 2-.9 2-1.7 0-.8-.5-1.3-.5-2 0-1 .8-1.6 1.8-1.6H17a4 4 0 0 0 4-4C21 6.8 17 3 12 3Z"/><circle cx="7.5" cy="11" r="1.2"/><circle cx="10.5" cy="7.5" r="1.2"/><circle cx="15" cy="8" r="1.2"/></svg></button>
+      <button type="button" class="top-icon" id="scriptOptions" title="ملفات السكربت (حفظ، تصدير، استيراد، طباعة)" aria-label="ملفات السكربت" aria-expanded="false" aria-controls="scriptMenu"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="5" r="1.6" fill="currentColor"/><circle cx="12" cy="12" r="1.6" fill="currentColor"/><circle cx="12" cy="19" r="1.6" fill="currentColor"/></svg></button>
+      <button type="button" class="top-icon" id="scriptKeysBtn" title="اختصارات لوحة المفاتيح — K" aria-label="اختصارات لوحة المفاتيح"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="6" width="20" height="12" rx="3"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M7 14h10"/></svg></button>
+      <button type="button" class="top-icon" id="scriptFsBtn" title="ملء الشاشة — F" aria-label="ملء الشاشة"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3M16 21h3a2 2 0 0 0 2-2v-3"/></svg></button>
+    </div>
+    <div id="pbar"></div>
+  </header>
+
+  <div id="workspace">
+    <aside id="scriptSidebar" aria-label="فهرس شرائح وعناصر الدرس">
+      <div class="sb-head">
+        <input type="search" id="outlineSearch" class="sb-search" placeholder="ابحث في الشرائح أو السكربت أو التوسع…" aria-label="بحث في الشرائح والنصوص">
+        <div class="sb-filters" role="group" aria-label="تصفية الفهرس">
+          <button type="button" class="sb-filter-btn act" id="filterAllBtn">الكل</button>
+          <button type="button" class="sb-filter-btn" id="filterExpBtn">بها توسع 📚</button>
+        </div>
+      </div>
+      <div id="outlineList" role="navigation" aria-label="قائمة الشرائح"></div>
+      <div class="sb-stats" id="sbStats"></div>
+    </aside>
+
+    <main id="readerCol">
+      <div id="scriptQuickBar" role="toolbar" aria-label="أدوات القراءة والتحرير">
+        <div class="script-quick-group">
+          <button type="button" class="script-pill-btn" id="scriptEdit" title="تعديل النص الحالي — E"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m16 3 5 5-12 12-6 1 1-6Z"/><path d="m14 5 5 5"/></svg><span>تعديل</span></button>
+          <button type="button" class="script-pill-btn" id="scriptRead" title="حفظ والعودة للقراءة — Esc" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4L20 5"/></svg><span>حفظ</span></button>
+          <div class="sp-size-cap" role="group" aria-label="حجم الخط">
+            <button type="button" id="scriptSmaller" title="تصغير الخط — [">أ-</button>
+            <span id="scriptFontSizeVal" aria-hidden="true">٢٦</span>
+            <button type="button" id="scriptLarger" title="تكبير الخط — ]">أ+</button>
+          </div>
+          <button type="button" class="script-pill-btn act" id="scriptBold" title="خط عريض / عادي" aria-pressed="true">عريض</button>
+          <button type="button" class="script-pill-btn act" id="scriptWidthBtn" title="تبديل عرض عمود القراءة (مريح / كامل)" aria-pressed="true">عمود مريح</button>
+        </div>
+        <div class="script-quick-group">
+          <div id="scriptScopeSeg" role="group" aria-label="نطاق العرض" hidden>
+            <button type="button" class="sp-seg-btn act" id="scriptScopeDetailBtn">العنصر ١</button>
+            <button type="button" class="sp-seg-btn" id="scriptScopeSlideBtn">تمهيد الشريحة</button>
+          </div>
+          <span id="statusPill" role="status" aria-live="polite">محفوظ تلقائيًا</span>
+        </div>
+      </div>
+
+      <div id="scriptExpBanner" role="status" hidden>
+        <span>📚 التوسع في الشرح (مرجع علمي موثّق)</span>
+        <button type="button" id="scriptExpBack">العودة للقراءة (X)</button>
+      </div>
+
+      <div id="scriptBody">
+        <div id="scriptTextArea">
+          <div id="scriptReader" tabindex="0" aria-label="نص السكربت الحالي"></div>
+          <textarea id="scriptEditor" aria-label="تحرير النص الحالي" placeholder="اكتب أو الصق سكربت الشرح هنا…" spellcheck="false" hidden></textarea>
+        </div>
+        <div id="scriptScrollRail" aria-label="تمرير النص">
+          <button type="button" class="script-scroll-button" id="scriptScrollUp" title="تمرير لأعلى — ↑"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4 10 4-4 4 4"/></svg></button>
+          <div id="scriptScrollTrack" role="scrollbar" aria-orientation="vertical" aria-label="موضع التمرير" aria-controls="scriptReader" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0"><div id="scriptScrollThumb"></div></div>
+          <button type="button" class="script-scroll-button" id="scriptScrollDown" title="تمرير لأسفل — ↓"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></button>
+        </div>
+      </div>
+
+      <footer id="navFooter">
+        <button type="button" class="nav-btn" id="btnPrev" title="الموضع السابق — →">→ السابق</button>
+        <div id="cueCounter"></div>
+        <button type="button" class="nav-btn primary" id="btnNext" title="الموضع التالي — Space أو ←">التالي ←</button>
+      </footer>
+    </main>
+  </div>
+
+  <!-- Popover: Appearance -->
+  <div id="scriptStyleMenu" class="sp-popover" role="group" aria-label="إعدادات مظهر السكربت" hidden>
+    <div>
+      <label class="sp-sec-label" for="scriptFontFamily">خط السكربت</label>
+      <select id="scriptFontFamily" class="sp-select" aria-label="اختيار خط السكربت"></select>
+    </div>
+    <div>
+      <div class="sp-sec-label"><span>لون الخلفية</span></div>
+      <div class="sp-swatches-row" id="scriptBgSwatches">
+        <label class="sp-color-pick" title="اختر لون خلفية مخصص"><input type="color" id="scriptBgColor" aria-label="لون خلفية مخصص"></label>
+      </div>
+    </div>
+    <div>
+      <div class="sp-sec-label"><span>لون الخط</span></div>
+      <div class="sp-swatches-row" id="scriptFgSwatches">
+        <label class="sp-color-pick" title="اختر لون خط مخصص"><input type="color" id="scriptFgColor" aria-label="لون خط مخصص"></label>
+      </div>
+    </div>
+    <div class="sp-style-footer">
+      <button type="button" class="script-pill-btn" id="scriptPresetLight">أسود عريض (ورقي)</button>
+      <button type="button" class="script-pill-btn" id="scriptPresetDark">داكن مريح</button>
+    </div>
+  </div>
+
+  <!-- Popover: Files -->
+  <div id="scriptMenu" class="sp-popover" role="group" aria-label="ملفات السكربت" hidden>
+    <button type="button" class="sp-menu-item" id="scriptSaveHtml"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h12l4 4v12a2 2 0 0 1-2 2Z"/><path d="M7 3v6h10V3M7 21v-8h10v8"/></svg><span>حفظ نسخة HTML بالسكربتات والتوسع</span></button>
+    <button type="button" class="sp-menu-item" id="scriptExport"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-4-4 4 4 4-4M4 16v5h16v-5"/></svg><span>تصدير السكربتات والتوسع (JSON)</span></button>
+    <button type="button" class="sp-menu-item" id="scriptImport"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4m-4 4 4-4 4 4M4 16v5h16v-5"/></svg><span>استيراد ملف سكربتات (JSON)</span></button>
+    <button type="button" class="sp-menu-item" id="scriptPrint"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg><span>طباعة السكربت والتوسع</span></button>
+  </div>
+  <input type="file" id="scriptFile" accept="application/json,.json" hidden>
+</div>
+
+<div id="keysModal" role="dialog" aria-modal="true" aria-label="اختصارات لوحة المفاتيح">
+  <div class="kbox">
+    <h2>اختصارات قالب السكربت والتوسع</h2>
+    <div class="kgrid">
+      <div class="kr"><span>الموضع التالي</span><span><kbd>Space</kbd><kbd>←</kbd><kbd>PageDown</kbd></span></div>
+      <div class="kr"><span>الموضع السابق</span><span><kbd>→</kbd><kbd>Backspace</kbd><kbd>PageUp</kbd></span></div>
+      <div class="kr"><span>تمرير النص لأعلى / لأسفل</span><span><kbd>↑</kbd><kbd>↓</kbd></span></div>
+      <div class="kr"><span>التبديل بين القراءة والتوسع</span><span><kbd>X</kbd><kbd>ء</kbd></span></div>
+      <div class="kr"><span>إظهار / إخفاء فهرس الشرائح</span><span><kbd>I</kbd><kbd>ه</kbd></span></div>
+      <div class="kr"><span>تعديل النص الحالي</span><span><kbd>E</kbd><kbd>ث</kbd></span></div>
+      <div class="kr"><span>حفظ وإغلاق التعديل</span><span><kbd>Esc</kbd><kbd>Ctrl+Enter</kbd></span></div>
+      <div class="kr"><span>تكبير / تصغير الخط</span><span><kbd>]</kbd><kbd>[</kbd></span></div>
+      <div class="kr"><span>التبديل بين الورقي والداكن</span><span><kbd>D</kbd><kbd>ي</kbd></span></div>
+      <div class="kr"><span>أول / آخر موضع</span><span><kbd>Home</kbd><kbd>End</kbd></span></div>
+      <div class="kr"><span>ملء الشاشة</span><span><kbd>F</kbd><kbd>ب</kbd></span></div>
+      <div class="kr"><span>قائمة الاختصارات</span><span><kbd>K</kbd><kbd>ن</kbd><kbd>?</kbd></span></div>
+    </div>
+    <p style="margin:12px 0 0;text-align:center;color:var(--sp-muted);font-size:14px">انقر في أي مكان أو اضغط Esc للإغلاق</p>
+  </div>
+</div>
+
+<div id="toast"></div>
+<div id="printSheet" aria-hidden="true"></div>
+
+<script id="presenterScriptData" type="application/json">
+{
+  "version": 1,
+  "standalone": true,
+  "lesson": {
+    "title": "[عنوان الدرس]",
+    "book": "[اسم الكتاب]",
+    "subject": "[المادة]",
+    "grade": "[الصف الدراسي]",
+    "channel": "زاد الطالب الأزهري"
+  },
+  "outline": [
+    {
+      "index": 0,
+      "sec": "الدرس",
+      "type": "cover",
+      "items": []
+    },
+    {
+      "index": 1,
+      "sec": "مقدمة الدرس",
+      "type": "intro",
+      "items": [
+        {
+          "key": "1:intro:0",
+          "label": "التمهيد"
+        },
+        {
+          "key": "1:intro:1",
+          "label": "السؤال ١"
+        },
+        {
+          "key": "1:intro:2",
+          "label": "السؤال ٢"
+        },
+        {
+          "key": "1:intro:3",
+          "label": "السؤال ٣"
+        },
+        {
+          "key": "1:intro:4",
+          "label": "السؤال ٤"
+        },
+        {
+          "key": "1:intro:5",
+          "label": "السؤال ٥"
+        },
+        {
+          "key": "1:intro:6",
+          "label": "محاور الدرس"
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "sec": "المحور ١ · [عنوان المحور الأول]",
+      "type": "divider",
+      "items": []
+    },
+    {
+      "index": 3,
+      "sec": "[عنوان الشريحة: التعريف]",
+      "type": "explain",
+      "items": [
+        {
+          "key": "3:step:0",
+          "label": "العنصر ١ · لغةً"
+        },
+        {
+          "key": "3:step:1",
+          "label": "العنصر ٢ · اصطلاحًا"
+        }
+      ]
+    },
+    {
+      "index": 4,
+      "sec": "[عنوان الشريحة: الأنواع]",
+      "type": "explain",
+      "items": [
+        {
+          "key": "4:step:0",
+          "label": "العنصر ١ · التمهيد"
+        },
+        {
+          "key": "4:step:1",
+          "label": "العنصر ٢ · القسم الأول"
+        },
+        {
+          "key": "4:step:2",
+          "label": "العنصر ٣ · القسم الثاني"
+        },
+        {
+          "key": "4:step:3",
+          "label": "العنصر ٤ · القسم الثالث"
+        }
+      ]
+    },
+    {
+      "index": 5,
+      "sec": "[عنوان الشريحة: الدليل]",
+      "type": "explain",
+      "items": [
+        {
+          "key": "5:step:0",
+          "label": "العنصر ١ · الآية الكريمة"
+        },
+        {
+          "key": "5:step:1",
+          "label": "العنصر ٢ · الحديث الشريف"
+        },
+        {
+          "key": "5:step:2",
+          "label": "العنصر ٣ · تنبيه / الإجماع"
+        }
+      ]
+    },
+    {
+      "index": 6,
+      "sec": "[عنوان الشريحة: الشروط]",
+      "type": "conditions",
+      "items": [
+        {
+          "key": "6:condition:0",
+          "label": "الشرط ١"
+        },
+        {
+          "key": "6:condition:1",
+          "label": "الشرط ٢"
+        },
+        {
+          "key": "6:condition:2",
+          "label": "الشرط ٣"
+        }
+      ]
+    },
+    {
+      "index": 7,
+      "sec": "[عنوان الشريحة: شبكة عناصر]",
+      "type": "explain",
+      "items": [
+        {
+          "key": "7:step:0",
+          "label": "العنصر ١"
+        },
+        {
+          "key": "7:step:1",
+          "label": "العنصر ٢"
+        },
+        {
+          "key": "7:step:2",
+          "label": "العنصر ٣"
+        },
+        {
+          "key": "7:step:3",
+          "label": "العنصر ٤"
+        },
+        {
+          "key": "7:step:4",
+          "label": "العنصر ٥"
+        }
+      ]
+    },
+    {
+      "index": 8,
+      "sec": "ملخص الدرس",
+      "type": "summary",
+      "items": [
+        {
+          "key": "8:step:0",
+          "label": "البطاقة ١ · المحور الأول"
+        },
+        {
+          "key": "8:step:1",
+          "label": "البطاقة ٢ · المحور الثاني"
+        },
+        {
+          "key": "8:step:2",
+          "label": "البطاقة ٣ · المحور الثالث"
+        },
+        {
+          "key": "8:step:3",
+          "label": "البطاقة ٤ · المحور الرابع"
+        }
+      ]
+    },
+    {
+      "index": 9,
+      "sec": "المحور ٢ · المناقشة والتدريبات",
+      "type": "divider",
+      "items": []
+    },
+    {
+      "index": 10,
+      "sec": "المناقشة والتدريبات · أجب عما يأتي",
+      "type": "quiz",
+      "items": [
+        {
+          "key": "10:question:0",
+          "label": "السؤال ١"
+        },
+        {
+          "key": "10:answer:0",
+          "label": "إجابة السؤال ١"
+        }
+      ]
+    },
+    {
+      "index": 11,
+      "sec": "المناقشة والتدريبات · اختر الإجابة الصحيحة",
+      "type": "quiz",
+      "items": [
+        {
+          "key": "11:question:0",
+          "label": "السؤال ١"
+        },
+        {
+          "key": "11:answer:0",
+          "label": "إجابة السؤال ١"
+        }
+      ]
+    },
+    {
+      "index": 12,
+      "sec": "المناقشة والتدريبات · صح أم خطأ",
+      "type": "quiz",
+      "items": [
+        {
+          "key": "12:question:0",
+          "label": "السؤال ١"
+        },
+        {
+          "key": "12:answer:0",
+          "label": "إجابة السؤال ١"
+        },
+        {
+          "key": "12:question:1",
+          "label": "السؤال ٢"
+        },
+        {
+          "key": "12:answer:1",
+          "label": "إجابة السؤال ٢"
+        }
+      ]
+    },
+    {
+      "index": 13,
+      "sec": "ختام الدرس",
+      "type": "closing",
+      "items": []
+    },
+    {
+      "index": 14,
+      "sec": "الصورة المصغرة",
+      "type": "thumb",
+      "items": []
+    }
+  ],
+  "scripts": {
+    "0:slide": "بسم الله الرحمن الرحيم، والحمد لله رب العالمين، والصلاة والسلام على أشرف المرسلين سيدنا محمد وعلى آله وصحبه أجمعين.\nأهلاً بكم أبنائي وبناتي طلاب [الصف الدراسي] في قناة «زاد الطالب الأزهري». نتناول اليوم بمشيئة الله تعالى درسًا مهمًا من مادة [المادة]، من كتاب «[اسم الكتاب]»، وهو: [عنوان الدرس].",
+    "1:slide": "نمهّد الآن للدرس ونستعرض معًا التساؤلات الخمسة التي سنجيب عنها في هذه الحلقة.",
+    "1:intro:0": "قبل أن نبدأ في تفاصيل الأحكام، دعونا نتعرف على أهمية هذا الموضوع وصلته بحياتنا اليومية، وما الذي سنخرج به بعد انتهاء هذا الدرس.",
+    "1:intro:1": "السؤال الأول الذي سنجيب عنه اليوم: [السؤال الأول من محاور الدرس؟]",
+    "1:intro:2": "والسؤال الثاني: [السؤال الثاني من محاور الدرس؟]",
+    "1:intro:3": "أما السؤال الثالث فهو: [السؤال الثالث من محاور الدرس؟]",
+    "1:intro:4": "وفي السؤال الرابع نتعرف على: [السؤال الرابع من محاور الدرس؟]",
+    "1:intro:5": "وأخيرًا، السؤال الخامس: [السؤال الخامس من محاور الدرس؟]",
+    "1:intro:6": "هذه هي المحاور الخمسة التي يدور حولها درسنا اليوم. هيا بنا ننطلق معًا إلى المحور الأول.",
+    "2:slide": "ننتقل الآن إلى المحور الأول من درسنا، وهو: [عنوان المحور الأول].",
+    "3:slide": "نبدأ أولًا بالتعرف على معنى المصطلح في اللغة والاصطلاح كما ورد في كتاب المعهد.",
+    "3:step:0": "أولًا في اللغة: لاحظوا معي أن [المصطلح] في اللغة يُطلق على [التعريف اللغوي].",
+    "3:step:0:exp": "📚 التعليل:\nبيان الصلة اللغوية بين المعنى اللغوي والمعنى الشرعي، وكيف خُصّص اللفظ في الاستعمال الفقهي. *(كتاب المعهد / المصباح المنير، الفيومي)*\n\n📝 أمثلة إضافية:\n- مثال لغوي موثّق يوضح أصل الاشتقاق في كلام العرب. *(المصباح المنير، الفيومي)*",
+    "3:step:1": "أما في الاصطلاح الشرعي فهو: [التعريف الاصطلاحي]. ولاحظوا القيد المهم هنا، وهو [القيد الرئيس]؛ لأنه يخرج غير المقصود من التعريف. وبعد أن عرفنا التعريف، ننتقل الآن إلى الأقسام والأنواع.",
+    "3:step:1:exp": "📚 التعليل:\nتوضيح أثر كل قيد في التعريف الاصطلاحي وما يحترز به عنه في المذهب الشافعي. *(مغني المحتاج، الخطيب الشربيني)*\n\n⚖️ خلاف المذاهب:\n- الحنفية: [صياغة الحنفية للتعريف أو ضابطهم في المسألة]. *(رد المحتار، ابن عابدين)*\n- المالكية: [صياغة المالكية وضابطهم]. *(الشرح الكبير، الدردير)*\n- الحنبلية: [صياغة الحنبلية وضابطهم]. *(كشاف القناع، البهوتي)*\n\n🔍 داخل المذهب الشافعي:\n- المعتمد في المذهب: [القول الأصح في المذهب]. *(نهاية المحتاج، الرملي)*\n- الوجه المقابل: [الوجه الآخر وتوجيهه]. *(تحفة المحتاج، ابن حجر الهيتمي)*\n\n⚠️ استثناءات وقيود:\n- [قيد دقيق أو مسألة مستثناة من عموم التعريف]. *(الإقناع، الخطيب الشربيني)*",
+    "4:slide": "نتعرف الآن على أقسام هذا الحكم وأنواعه كما بيّنها كتاب المعهد.",
+    "4:step:0": "يقرر كتاب المعهد أن هذه المسألة تنقسم إلى ثلاثة أقسام رئيسية، دعونا نستعرضها واحدًا تلو الآخر.",
+    "4:step:1": "القسم الأول: [القسم الأول]، وحكمه [حكمه المختصر]، والمراد به [شرح مختصر للقسم الأول].",
+    "4:step:1:exp": "📚 التعليل:\nوجه إفراد هذا القسم وحكمته الشرعية. *(مغني المحتاج، الخطيب الشربيني)*\n\n⚖️ خلاف المذاهب:\n- الحنفية: [حكم القسم عند الحنفية]. *(الاختيار لتعليل المختار، الموصلي)*\n- المالكية: [حكم القسم عند المالكية]. *(مواهب الجليل، الحطاب)*\n- الحنبلية: [حكم القسم عند الحنبلية]. *(المغني، ابن قدامة)*",
+    "4:step:2": "القسم الثاني: [القسم الثاني]، وحكمه [حكمه المختصر]، والمقصود به [شرح مختصر للقسم الثاني].",
+    "4:step:3": "أما القسم الثالث فهو: [القسم الثالث]، ويمتاز بحكم خاص وهو [حكمه المختصر]. وبعد أن تعرفنا على الأقسام الثلاثة، ما الدليل الشرعي على هذا الحكم؟ هذا ما نراه في الشريحة التالية.",
+    "5:slide": "ننتقل الآن إلى الأدلة الشرعية على هذا الحكم من الكتاب والسنة والإجماع.",
+    "5:step:0": "الدليل الأول من القرآن الكريم، قال الله تعالى: ﴿[نص الآية الكريمة]﴾. ووجه الاستدلال من هذه الآية الكريمة ظاهر في إثبات الحكم.",
+    "5:step:0:exp": "📚 التعليل:\nتوجيه الاستدلال بالآية الكريمة وبيان دلالتها الأصولية عند فقهاء الشافعية. *(المجموع شرح المهذب، النووي)*",
+    "5:step:1": "والدليل الثاني من السنة النبوية الشريفة، قوله صلى الله عليه وسلم: «[نص الحديث الشريف]»، وهو يبيّن تفصيل الحكم ويؤكده.",
+    "5:step:2": "وتنبيه مهم أشار إليه كتاب المعهد: [نص التنبيه أو الإجماع]. والآن ننتقل إلى الشروط المعتبرة لهذا الحكم.",
+    "6:slide": "نتعرف في هذه الشريحة التفاعلية على الشروط الثلاثة المعتبرة للحكم وأثر اختلال كل شرط منها.",
+    "6:condition:0": "الشرط الأول: [عنوان الشرط الأول]، والمراد به [بيان الشرط]. فإذا اختل هذا الشرط فإن الحكم يكون: [أثر اختلال الشرط].",
+    "6:condition:0:exp": "📚 التعليل:\nلماذا اشترط الشافعية هذا الشرط تحديدًا؟ *(مغني المحتاج، الخطيب الشربيني)*\n\n⚖️ خلاف المذاهب:\n- الحنفية: [موقف الحنفية من هذا الشرط]. *(بدائع الصنائع، الكاساني)*\n- المالكية: [موقف المالكية]. *(الشرح الصغير، الدردير)*\n- الحنبلية: [موقف الحنبلية]. *(كشاف القناع، البهوتي)*\n\n⚠️ استثناءات وقيود:\n- [الحالة المستثناة من هذا الشرط إن وجدت]. *(نهاية المحتاج، الرملي)*",
+    "6:condition:1": "الشرط الثاني: [عنوان الشرط الثاني]، وبيانه [بيان الشرط]. أما إذا لم يتحقق هذا الشرط فيترتب عليه: [أثر اختلال الشرط].",
+    "6:condition:2": "أما الشرط الثالث والأخير فهو: [عنوان الشرط الثالث]، وأثر تخلفه [أثر اختلال الشرط]. ننتقل الآن إلى الشريحة التالية.",
+    "7:slide": "نستعرض معًا في هذه الشريحة العناصر الخمسة المرتبطة بالدرس.",
+    "7:step:0": "العنصر الأول: [العنصر ١]، ومعناه [شرح موجز].",
+    "7:step:1": "العنصر الثاني: [العنصر ٢]، ومعناه [شرح موجز].",
+    "7:step:2": "العنصر الثالث: [العنصر ٣]، ومعناه [شرح موجز].",
+    "7:step:3": "العنصر الرابع: [العنصر ٤]، ومعناه [شرح موجز].",
+    "7:step:4": "والعنصر الخامس: [العنصر ٥]، ومعناه [شرح موجز]. وبذلك نكون قد أتممنا شرح محاور الدرس، فلنراجعها معًا في ملخص سريع.",
+    "8:slide": "قبل الانتقال إلى التدريبات، نراجع سويًا أهم نقاط الدرس في أربع بطاقات مركّزة.",
+    "8:step:0": "في المحور الأول تذكروا أهم نقطتين: [نقطة ١] و[نقطة ٢].",
+    "8:step:0:exp": "📚 التعليل:\nمراجعة سريعة للربط بين محاور الدرس وضبط الفروق الأساسية قبل الدخول في حل أسئلة الامتحانات. *(كتاب المعهد)*",
+    "8:step:1": "وفي المحور الثاني تناولنا: [نقطة ١] و[نقطة ٢].",
+    "8:step:2": "أما المحور الثالث فكان عن: [نقطة ١] و[نقطة ٢].",
+    "8:step:3": "وأخيرًا في المحور الرابع لخّصنا: [نقطة ١] و[نقطة ٢]. والآن هيا بنا نختبر فهمنا بحل أسئلة كتاب المعهد وامتحانات المحافظات.",
+    "9:slide": "ننتقل الآن إلى المحور الثاني من حلقتنا، وهو: المناقشة والتدريبات.",
+    "10:slide": "نبدأ أولًا بمجموعة الأسئلة المقالية: أجب عما يأتي.",
+    "10:question:0": "السؤال الأول من كتاب المعهد يقول: [نص السؤال المقالي الأول؟] فكّروا في الإجابة قبل أن تظهر على الشاشة.",
+    "10:answer:0": "الإجابة النموذجية كما وردت في كتاب المعهد هي: [الإجابة النموذجية]. ننتقل الآن إلى نوع آخر من الأسئلة.",
+    "11:slide": "ننتقل الآن إلى أسئلة الاختيار من متعدد.",
+    "11:question:0": "السؤال الأول: [نص سؤال الاختيار من متعدد]، والخيارات أمامكم: [خيار ١]، أو [خيار ٢]، أو [خيار ٣]. فكّروا جيدًا خلال العدّاد.",
+    "11:answer:0": "الصواب هو: [خيار ١]، لأنه يوافق القاعدة التي درسناها في كتاب المعهد. ننتقل الآن إلى أسئلة الصواب والخطأ.",
+    "12:slide": "المجموعة الأخيرة من التدريبات: ضع علامة صح أو خطأ مع تصويب الخطأ.",
+    "12:question:0": "العبارة الأولى: [عبارة صحيحة للاختبار]. هل هذه العبارة صحيحة أم خاطئة؟",
+    "12:answer:0": "العبارة صحيحة تمامًا، وتوافق ما قررناه في الشرح. ننتقل للعبارة الثانية.",
+    "12:question:1": "العبارة الثانية: [عبارة خاطئة للاختبار]. فكّروا فيها جيدًا، هل هي صحيحة أم خاطئة؟",
+    "12:answer:1": "العبارة خاطئة، والصواب هو: [تصويب العبارة الخاطئة]. وبذلك نكون قد انتهينا من التدريبات.",
+    "13:slide": "إلى هنا نصل إلى ختام درسنا اليوم. أسأل الله تعالى أن ينفعكم بما علّمكم، وأن يعلّمكم ما ينفعكم، وأن يزيدكم علمًا.\n﴿وَقُل رَّبِّ زِدْنِي عِلْمًا﴾. سبحانك اللهم وبحمدك، أشهد أن لا إله إلا أنت، أستغفرك وأتوب إليك.\nإن أعجبكم الدرس لا تنسوا الاشتراك في قناة «زاد الطالب الأزهري» وتفعيل الجرس لتصلكم الدروس الجديدة. تقبّل الله منا ومنكم، والسلام عليكم ورحمة الله وبركاته.",
+    "14:slide": "تنبيه للمقدّم: هذه شريحة الصورة المصغّرة لغلاف الفيديو بنسبة 16:9 ولا يُقرأ عليها نص."
+  }
+}
+</script>
+
+<script>
+const AR=n=>String(n).replace(/\d/g,d=>'٠١٢٣٤٥٦٧٨٩'[d]);
+function hashStr(text){
+  let v=2166136261;
+  for(let i=0;i<text.length;i++){v^=text.charCodeAt(i);v=Math.imul(v,16777619);}
+  return (v>>>0).toString(36);
+}
+const SCRIPT_FONTS=[
+  {id:'Tajawal',name:'تجوّل — Tajawal (واضح ومقروء)',css:"'Tajawal','Segoe UI',Tahoma,sans-serif"},
+  {id:'Cairo',name:'القاهرة — Cairo (عصري)',css:"'Cairo','Tajawal',Tahoma,sans-serif"},
+  {id:'IBM Plex Sans Arabic',name:'آي بي إم بلكس — IBM Plex (تعليمي)',css:"'IBM Plex Sans Arabic','Tajawal',Tahoma,sans-serif"},
+  {id:'Noto Sans Arabic',name:'نوتو سانس — Noto Sans (بسيط)',css:"'Noto Sans Arabic','Tajawal',Tahoma,sans-serif"},
+  {id:'Noto Naskh Arabic',name:'نوتو نسخ — Noto Naskh (نسخي)',css:"'Noto Naskh Arabic','Amiri',serif"},
+  {id:'Amiri',name:'أميري — Amiri (تراثي)',css:"'Amiri','Traditional Arabic',serif"},
+  {id:'Noto Kufi Arabic',name:'نوتو كوفي — Noto Kufi',css:"'Noto Kufi Arabic','Tajawal',sans-serif"},
+  {id:'Changa',name:'تشانغا — Changa (بارز)',css:"'Changa','Tajawal',sans-serif"},
+  {id:'Reem Kufi',name:'ريم الكوفي — Reem Kufi',css:"'Reem Kufi','Tajawal',sans-serif"}
+];
+const BG_SWATCHES=[
+  {c:'#FFFDF7',name:'ورقي فاتح'},
+  {c:'#FFFFFF',name:'أبيض ناصع'},
+  {c:'#F5ECD7',name:'كريمي دافئ'},
+  {c:'#E2ECE9',name:'زمردي فاتح جدًا'},
+  {c:'#0A1F2E',name:'كحلي داكن'},
+  {c:'#111827',name:'أسود فحمي'}
+];
+const FG_SWATCHES=[
+  {c:'#000000',name:'أسود خالص'},
+  {c:'#1E293B',name:'فحمي داكن'},
+  {c:'#123F35',name:'زمردي أزهري'},
+  {c:'#7C2D12',name:'بني داكن'},
+  {c:'#F4F1E8',name:'كريمي فاتح'},
+  {c:'#FFFFFF',name:'أبيض ناصع'}
+];
+const DEFAULTS={
+  font:26, bg:'#FFFDF7', fg:'#000000', bold:true, fontFamily:'Tajawal',
+  sidebarOpen:true, sidebarSide:'right', narrowCol:true, liveSync:true
+};
+const rawEmbedded=document.getElementById('presenterScriptData').textContent;
+const storeKey='zad-standalone-script-v1:'+hashStr(rawEmbedded);
+
+const el={};
+['lessonTitle','lessonMeta','scriptContext','scriptBadge','scriptExpandBtn','scriptSyncBtn','scriptSidebarBtn','scriptSideBtn','scriptStyleBtn','scriptOptions','scriptKeysBtn','scriptFsBtn','pbar','outlineSearch','filterAllBtn','filterExpBtn','outlineList','sbStats','readerCol','scriptEdit','scriptRead','scriptSmaller','scriptFontSizeVal','scriptLarger','scriptBold','scriptWidthBtn','scriptScopeSeg','scriptScopeDetailBtn','scriptScopeSlideBtn','statusPill','scriptExpBanner','scriptExpBack','scriptTextArea','scriptReader','scriptEditor','scriptScrollUp','scriptScrollDown','scriptScrollTrack','scriptScrollThumb','btnPrev','btnNext','cueCounter','scriptStyleMenu','scriptFontFamily','scriptBgSwatches','scriptFgSwatches','scriptBgColor','scriptFgColor','scriptPresetLight','scriptPresetDark','scriptMenu','scriptSaveHtml','scriptExport','scriptImport','scriptPrint','scriptFile','keysModal','toast','printSheet'].forEach(id=>el[id]=document.getElementById(id));
+
+function validHex(v){return typeof v==='string'&&/^#[0-9a-fA-F]{6}$/.test(v.trim());}
+function isLight(hex){
+  const m=/^#?([0-9a-f]{6})$/i.exec(String(hex||'').trim());
+  if(!m)return true;
+  const n=parseInt(m[1],16);
+  return (0.299*((n>>16)&255)+0.587*((n>>8)&255)+0.114*(n&255))>145;
+}
+function reconstructOutlineFromScripts(scripts){
+  const map=new Map();
+  const keyRe=/^(\d+):(slide|intro:(\d+)|condition:(\d+)|step:(\d+)|question:(\d+)|answer:(\d+))(?::exp)?$/;
+  for(const k of Object.keys(scripts||{})){
+    const m=keyRe.exec(k);
+    if(!m)continue;
+    const idx=Number(m[1]);
+    if(!map.has(idx))map.set(idx,{index:idx,sec:'شريحة '+AR(idx+1),type:'explain',itemsMap:new Map()});
+    const entry=map.get(idx);
+    if(m[2]==='slide')continue;
+    const cleanKey=idx+':'+m[2];
+    if(entry.itemsMap.has(cleanKey))continue;
+    let label='', order=0;
+    if(m[3]!==undefined){const n=Number(m[3]);entry.type='intro';label=n===0?'التمهيد':n===6?'محاور الدرس':'السؤال '+AR(n);order=n;}
+    else if(m[4]!==undefined){const n=Number(m[4]);entry.type='conditions';label='الشرط '+AR(n+1);order=n;}
+    else if(m[5]!==undefined){const n=Number(m[5]);label='العنصر '+AR(n+1);order=n;}
+    else if(m[6]!==undefined){const n=Number(m[6]);entry.type='quiz';label='السؤال '+AR(n+1);order=n*2;}
+    else if(m[7]!==undefined){const n=Number(m[7]);entry.type='quiz';label='إجابة السؤال '+AR(n+1);order=n*2+1;}
+    entry.itemsMap.set(cleanKey,{key:cleanKey,label,order});
+  }
+  return [...map.values()].sort((a,b)=>a.index-b.index).map(s=>({
+    index:s.index, sec:s.sec, type:s.type,
+    items:[...s.itemsMap.values()].sort((a,b)=>a.order-b.order).map(({key,label})=>({key,label}))
+  }));
+}
+function normalizeData(data){
+  if(!data||data.version!==1||!data.scripts||Array.isArray(data.scripts)||typeof data.scripts!=='object')throw Error('صيغة ملف السكربتات غير صحيحة.');
+  const scripts=Object.create(null);
+  for(const [k,v] of Object.entries(data.scripts)){
+    if(typeof v==='string'&&v.length<=200000)scripts[k]=v;
+  }
+  const lesson={
+    title:data.lesson?.title||'[عنوان الدرس]',
+    book:data.lesson?.book||'[اسم الكتاب]',
+    subject:data.lesson?.subject||'[المادة]',
+    grade:data.lesson?.grade||'[الصف الدراسي]',
+    channel:data.lesson?.channel||'زاد الطالب الأزهري'
+  };
+  let outline=Array.isArray(data.outline)&&data.outline.length
+    ?data.outline.map((s,i)=>({
+      index:Number.isFinite(Number(s.index))?Number(s.index):i,
+      sec:String(s.sec||('شريحة '+AR(i+1))),
+      type:String(s.type||'explain'),
+      items:Array.isArray(s.items)?s.items.filter(it=>it&&typeof it.key==='string').map(it=>({key:it.key,label:String(it.label||it.key)})):[]
+    }))
+    :reconstructOutlineFromScripts(scripts);
+  if(!outline.length)outline=[{index:0,sec:'الدرس',type:'cover',items:[]}];
+  const settings={...DEFAULTS};
+  if(data.settings&&typeof data.settings==='object'){
+    if(Number.isFinite(data.settings.font))settings.font=Math.round(Math.max(16,Math.min(56,data.settings.font)));
+    if(validHex(data.settings.bg))settings.bg=data.settings.bg.trim().toUpperCase();
+    if(validHex(data.settings.fg))settings.fg=data.settings.fg.trim().toUpperCase();
+    if(typeof data.settings.bold==='boolean')settings.bold=data.settings.bold;
+    if(typeof data.settings.fontFamily==='string'&&SCRIPT_FONTS.some(f=>f.id===data.settings.fontFamily))settings.fontFamily=data.settings.fontFamily;
+    if(typeof data.settings.sidebarOpen==='boolean')settings.sidebarOpen=data.settings.sidebarOpen;
+    if(data.settings.sidebarSide==='left'||data.settings.sidebarSide==='right')settings.sidebarSide=data.settings.sidebarSide;
+    if(typeof data.settings.narrowCol==='boolean')settings.narrowCol=data.settings.narrowCol;
+    if(typeof data.settings.liveSync==='boolean')settings.liveSync=data.settings.liveSync;
+  }
+  return {version:1,standalone:true,lesson,outline,scripts,settings};
+}
+
+let state=normalizeData(JSON.parse(rawEmbedded));
+let persisted=true;
+try{
+  const saved=localStorage.getItem(storeKey);
+  if(saved)state=normalizeData(JSON.parse(saved));
+}catch(e){persisted=false;}
+
+/* Build ordered cue sequence matching zad-lesson-template progression */
+let cues=[];
+function buildCues(){
+  cues=[];
+  state.outline.forEach(slide=>{
+    const base=slide.index+':slide';
+    if(!slide.items.length){
+      cues.push({slideIndex:slide.index,sec:slide.sec,type:slide.type,key:base,base,detail:null,detailName:''});
+      return;
+    }
+    if(slide.type==='explain'||slide.type==='summary'){
+      cues.push({slideIndex:slide.index,sec:slide.sec,type:slide.type,key:base,base,detail:null,detailName:'تمهيد الشريحة'});
+    }
+    slide.items.forEach(it=>{
+      cues.push({slideIndex:slide.index,sec:slide.sec,type:slide.type,key:it.key,base,detail:it.key,detailName:it.label});
+    });
+  });
+}
+
+let curCue=0, lastSlideIndex=-1, scopeMode='detail', expandMode=false, editing=false, filterExpOnly=false;
+let saveTimer=null, toastTimer=null, scrollKey=null;
+const scrollPositions=new Map();
+
+function activeCue(){return cues[curCue]||cues[0];}
+function activeBaseKey(){
+  const c=activeCue();
+  if(!c)return '0:slide';
+  return (c.detail&&scopeMode==='detail')?c.detail:c.base;
+}
+function activeTargetKey(){
+  const k=activeBaseKey();
+  return expandMode?(k+':exp'):k;
+}
+function curScrollId(){return activeTargetKey()+':'+(editing?'edit':'read');}
+function hasExpansion(baseKey){
+  const ek=baseKey+':exp';
+  return Object.prototype.hasOwnProperty.call(state.scripts,ek)&&state.scripts[ek].trim().length>0;
+}
+function slideHasAnyExpansion(slide){
+  if(hasExpansion(slide.index+':slide'))return true;
+  return slide.items.some(it=>hasExpansion(it.key));
+}
+
+function toast(msg){
+  el.toast.textContent=msg;
+  el.toast.classList.add('on');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>el.toast.classList.remove('on'),1600);
+}
+function setStatus(msg,warn=false){
+  el.statusPill.textContent=msg;
+  el.statusPill.classList.toggle('warn',warn);
+  el.scriptOptions.classList.toggle('script-warning',warn);
+}
+function saveState(immediate=false){
+  clearTimeout(saveTimer);
+  const write=()=>{
+    try{
+      localStorage.setItem(storeKey,JSON.stringify(state));
+      persisted=true;setStatus('محفوظ تلقائيًا');
+    }catch(e){
+      persisted=false;setStatus('محفوظ في الجلسة — صدّره للاحتفاظ به',true);
+    }
+    saveTimer=null;
+  };
+  if(immediate)write();
+  else{setStatus('جارٍ الحفظ…');saveTimer=setTimeout(write,280);}
+}
+
+/* Formatted Scientific Reference Renderer (DOM-safe) */
+function appendExpInline(parent,text){
+  const re=/\*\(([^)]+)\)\*/g;
+  let last=0,m;
+  while((m=re.exec(text))!==null){
+    if(m.index>last)parent.appendChild(document.createTextNode(text.slice(last,m.index)));
+    const cite=document.createElement('span');
+    cite.className='sp-exp-cite';
+    cite.textContent='('+m[1]+')';
+    parent.appendChild(cite);
+    last=re.lastIndex;
+  }
+  if(last<text.length)parent.appendChild(document.createTextNode(text.slice(last)));
+}
+function renderExpansionDom(container,text){
+  const lines=text.replace(/\r\n?/g,'\n').split('\n');
+  const headEmoji=/^(?:📚|⚖️?|🔍|⚠️?|📝|📌|📖)/;
+  for(const raw of lines){
+    const line=raw.trim();
+    if(!line)continue;
+    if(headEmoji.test(line)||(!/^[-•–]\s*/.test(line)&&line.endsWith(':')&&line.length<=60)){
+      const h=document.createElement('div');
+      h.className='sp-exp-head';
+      h.textContent=line;
+      container.appendChild(h);
+    }else if(/^[-•–]\s+/.test(line)){
+      const body=line.replace(/^[-•–]\s+/,'');
+      const item=document.createElement('div');
+      item.className='sp-exp-item';
+      const colon=body.indexOf(':');
+      if(colon>0&&colon<=40&&!/\*\(/.test(body.slice(0,colon))){
+        const lbl=document.createElement('strong');
+        lbl.className='sp-exp-label';
+        lbl.textContent=body.slice(0,colon+1)+' ';
+        item.appendChild(lbl);
+        appendExpInline(item,body.slice(colon+1).trimStart());
+      }else{
+        appendExpInline(item,body);
+      }
+      container.appendChild(item);
+    }else{
+      const p=document.createElement('p');
+      p.className='sp-exp-p';
+      appendExpInline(p,line);
+      container.appendChild(p);
+    }
+  }
+}
+
+/* Render Header & Sidebar */
+function renderHeaderMeta(){
+  const L=state.lesson;
+  document.title='سكربت الدرس — '+L.title;
+  el.lessonTitle.textContent=L.title;
+  el.lessonMeta.textContent=[L.channel,L.book,L.subject,L.grade].filter(Boolean).join(' · ');
+}
+function renderOutline(){
+  const q=(el.outlineSearch.value||'').trim().toLowerCase();
+  const cur=activeCue();
+  el.outlineList.replaceChildren();
+  let expCount=0, readCount=0;
+  for(const [k,v] of Object.entries(state.scripts)){
+    if(!v||!v.trim())continue;
+    if(k.endsWith(':exp'))expCount++;
+    else readCount++;
+  }
+  state.outline.forEach(slide=>{
+    const slideExp=slideHasAnyExpansion(slide);
+    if(filterExpOnly&&!slideExp)return;
+    const baseKey=slide.index+':slide';
+    const matchesText=k=>((state.scripts[k]||'')+' '+(state.scripts[k+':exp']||'')).toLowerCase().includes(q);
+    const slideMatch=!q||slide.sec.toLowerCase().includes(q)||matchesText(baseKey);
+    const matchingItems=slide.items.filter(it=>{
+      if(filterExpOnly&&!hasExpansion(it.key))return false;
+      if(!q)return true;
+      return slideMatch||it.label.toLowerCase().includes(q)||matchesText(it.key);
+    });
+    if(q&&!slideMatch&&!matchingItems.length)return;
+
+    const card=document.createElement('div');
+    card.className='ol-slide'+(cur&&cur.slideIndex===slide.index?' cur-slide':'');
+    const sBtn=document.createElement('button');
+    sBtn.type='button';
+    sBtn.className='ol-slide-btn'+(cur&&cur.slideIndex===slide.index&&activeBaseKey()===baseKey?' act':'');
+    const num=document.createElement('span');
+    num.className='ol-num';
+    num.textContent=AR(slide.index+1);
+    const sec=document.createElement('span');
+    sec.className='ol-sec';
+    sec.textContent=slide.sec;
+    sBtn.append(num,sec);
+    if(hasExpansion(baseKey)){
+      const tag=document.createElement('span');
+      tag.className='ol-exp-tag';tag.textContent='📚';tag.title='يوجد توسع للشريحة';
+      sBtn.appendChild(tag);
+    }
+    sBtn.onclick=()=>jumpToKey(baseKey,slide.index);
+    card.appendChild(sBtn);
+
+    const itemsToShow=filterExpOnly||q?matchingItems:slide.items;
+    if(itemsToShow.length){
+      const wrap=document.createElement('div');
+      wrap.className='ol-items';
+      itemsToShow.forEach(it=>{
+        const ib=document.createElement('button');
+        ib.type='button';
+        ib.className='ol-item-btn'+(activeBaseKey()===it.key?' act':'');
+        const txt=document.createElement('span');
+        txt.className='ol-item-txt';
+        txt.textContent=it.label;
+        ib.appendChild(txt);
+        if(hasExpansion(it.key)){
+          const tag=document.createElement('span');
+          tag.className='ol-exp-tag';tag.textContent='📚';tag.title='يوجد توسع لهذا الموضع';
+          ib.appendChild(tag);
+        }
+        ib.onclick=()=>jumpToKey(it.key,slide.index);
+        wrap.appendChild(ib);
+      });
+      card.appendChild(wrap);
+    }
+    el.outlineList.appendChild(card);
+  });
+  el.sbStats.textContent='الشرائح: '+AR(state.outline.length)+' · القراءة: '+AR(readCount)+' · التوسع: '+AR(expCount);
+  const activeNode=el.outlineList.querySelector('.act');
+  if(activeNode&&activeNode.scrollIntoView)activeNode.scrollIntoView({block:'nearest'});
+}
+
+function rememberScroll(){
+  if(scrollKey)scrollPositions.set(scrollKey,(editing?el.scriptEditor:el.scriptReader).scrollTop);
+}
+function scrollView(){return editing?el.scriptEditor:el.scriptReader;}
+function refreshScrollbar(){
+  const view=scrollView(),visible=Math.max(0,view.clientHeight||0);
+  const total=Math.max(visible,view.scrollHeight||0),max=Math.max(0,total-visible);
+  const top=Math.max(0,Math.min(max,view.scrollTop||0));
+  const trackH=Math.max(0,el.scriptScrollTrack.clientHeight||0);
+  const thumbH=max>0?Math.min(trackH,Math.max(24,trackH*visible/total)):trackH;
+  el.scriptScrollThumb.style.height=thumbH+'px';
+  el.scriptScrollThumb.style.top=(max>0?top/max*(trackH-thumbH):0)+'px';
+  el.scriptScrollTrack.setAttribute('aria-controls',editing?'scriptEditor':'scriptReader');
+  el.scriptScrollTrack.setAttribute('aria-valuenow',String(max>0?Math.round(top/max*100):0));
+  el.scriptScrollTrack.setAttribute('aria-disabled',String(max===0));
+  el.scriptScrollUp.disabled=top<=0;
+  el.scriptScrollDown.disabled=max===0||top>=max;
+}
+function setScroll(v){
+  const view=scrollView(),max=Math.max(0,(view.scrollHeight||0)-(view.clientHeight||0));
+  view.scrollTop=Math.max(0,Math.min(max,v));
+  refreshScrollbar();
+}
+function moveScroll(dir){
+  setScroll((scrollView().scrollTop||0)+dir*Math.max(48,Math.round(state.settings.font*1.88)));
+}
+
+function updateExpandUi(){
+  const avail=hasExpansion(activeBaseKey());
+  el.readerCol.classList.toggle('exp-mode',expandMode);
+  el.scriptExpBanner.hidden=!expandMode;
+  el.scriptExpandBtn.classList.toggle('act',expandMode);
+  el.scriptExpandBtn.classList.toggle('has-exp',avail);
+  el.scriptExpandBtn.setAttribute('aria-pressed',String(expandMode));
+  const tip=expandMode
+    ?'العودة إلى نص القراءة — X'
+    :(avail?'التوسع في الشرح (متاح لهذا الموضع) — X':'التوسع في الشرح (لا يوجد توسع لهذا الموضع) — X');
+  el.scriptExpandBtn.title=tip;
+  el.scriptExpandBtn.setAttribute('aria-label',tip.replace(/\s*—\s*X$/,''));
+}
+
+function renderCurrent(){
+  const c=activeCue();
+  if(!c)return;
+  const totalSlides=state.outline.length;
+  el.scriptContext.textContent='شريحة '+AR(c.slideIndex+1)+' / '+AR(totalSlides)+' · '+c.sec;
+  if(c.detail){
+    el.scriptBadge.textContent=scopeMode==='detail'?c.detailName:'تمهيد الشريحة';
+    el.scriptBadge.hidden=false;
+    el.scriptScopeSeg.hidden=false;
+    el.scriptScopeDetailBtn.textContent=c.detailName;
+    const isDet=scopeMode==='detail';
+    el.scriptScopeDetailBtn.classList.toggle('act',isDet);
+    el.scriptScopeSlideBtn.classList.toggle('act',!isDet);
+  }else{
+    el.scriptBadge.hidden=true;
+    el.scriptScopeSeg.hidden=true;
+  }
+  updateExpandUi();
+  const baseKey=activeBaseKey();
+  el.scriptEditor.placeholder=expandMode?'اكتب أو الصق نص التوسع العلمي الموثّق هنا…':'اكتب أو الصق سكربت الشرح هنا…';
+  if(expandMode){
+    const expKey=baseKey+':exp';
+    const text=Object.prototype.hasOwnProperty.call(state.scripts,expKey)?state.scripts[expKey]:'';
+    el.scriptEditor.value=text;
+    el.scriptReader.replaceChildren();
+    if(text.trim()){
+      el.scriptReader.classList.remove('script-empty');
+      el.scriptReader.classList.add('exp-view');
+      renderExpansionDom(el.scriptReader,text);
+    }else{
+      el.scriptReader.classList.remove('exp-view');
+      el.scriptReader.classList.add('script-empty');
+      el.scriptReader.textContent='لا يوجد توسع لهذا الموضع.';
+    }
+  }else{
+    const own=Object.prototype.hasOwnProperty.call(state.scripts,baseKey);
+    let text=own?state.scripts[baseKey]:'';
+    if(!own){
+      const m=/^(\d+):answer:(\d+)$/.exec(baseKey);
+      if(m&&Object.prototype.hasOwnProperty.call(state.scripts,m[1]+':question:'+m[2]))text=state.scripts[m[1]+':question:'+m[2]];
+      else text=state.scripts[c.base]||'';
+    }
+    el.scriptEditor.value=text;
+    el.scriptReader.classList.remove('exp-view');
+    el.scriptReader.textContent=text||'اضغط «تعديل» لكتابة سكربت هذا الموضع.';
+    el.scriptReader.classList.toggle('script-empty',!text);
+  }
+  el.pbar.style.width=(((curCue+1)/Math.max(1,cues.length))*100)+'%';
+  el.cueCounter.textContent='موضع '+AR(curCue+1)+' من '+AR(cues.length)+'  ·  شريحة '+AR(c.slideIndex+1)+' / '+AR(totalSlides);
+  el.btnPrev.disabled=curCue<=0;
+  el.btnNext.disabled=curCue>=cues.length-1;
+  scrollKey=curScrollId();
+  scrollView().scrollTop=scrollPositions.get(scrollKey)||0;
+  renderOutline();
+  requestAnimationFrame(refreshScrollbar);
+}
+
+function goToCue(idx,opts={}){
+  if(!cues.length)return;
+  const nextIdx=Math.max(0,Math.min(cues.length-1,idx));
+  const nextCue=cues[nextIdx];
+  const slideChanged=nextCue.slideIndex!==lastSlideIndex;
+  rememberScroll();
+  if(slideChanged&&expandMode){
+    if(editing)saveState(true);
+    expandMode=false;
+  }
+  curCue=nextIdx;
+  lastSlideIndex=nextCue.slideIndex;
+  scopeMode=opts.scope||(nextCue.detail?'detail':'slide');
+  renderCurrent();
+}
+function jumpToKey(key,slideIndex){
+  const idx=cues.findIndex(c=>c.key===key);
+  if(idx!==-1){goToCue(idx);return;}
+  const slideIdx=cues.findIndex(c=>c.slideIndex===slideIndex);
+  if(slideIdx!==-1){
+    goToCue(slideIdx,{scope:key.endsWith(':slide')?'slide':'detail'});
+  }
+}
+function setExpand(on){
+  const next=!!on;
+  if(next===expandMode)return;
+  rememberScroll();
+  if(editing)saveState(true);
+  expandMode=next;
+  renderCurrent();
+}
+function setEditing(on){
+  rememberScroll();
+  editing=!!on;
+  el.scriptEditor.hidden=!editing;
+  el.scriptReader.hidden=editing;
+  el.scriptEdit.hidden=editing;
+  el.scriptRead.hidden=!editing;
+  setStyleMenu(false);setFileMenu(false);
+  if(editing)el.scriptEditor.focus({preventScroll:true});
+  else{saveState(true);el.scriptEditor.blur();el.scriptReader.focus({preventScroll:true});}
+  scrollKey=curScrollId();
+  scrollView().scrollTop=scrollPositions.get(scrollKey)||0;
+  requestAnimationFrame(refreshScrollbar);
+}
+
+/* Appearance & Layout Controls */
+el.scriptFontFamily.innerHTML=SCRIPT_FONTS.map(f=>`<option value="${f.id}">${f.name}</option>`).join('');
+function buildSwatches(container,list,kind){
+  const picker=container.querySelector('.sp-color-pick');
+  list.forEach(item=>{
+    const b=document.createElement('button');
+    b.type='button';b.className='sp-swatch';b.dataset.color=item.c.toUpperCase();
+    b.style.background=item.c;b.title=item.name;
+    b.onclick=()=>{
+      if(kind==='bg'){
+        const nb=item.c.toUpperCase();
+        let nf=state.settings.fg;
+        if(isLight(nb)===isLight(nf))nf=isLight(nb)?'#000000':'#F4F1E8';
+        applyAppearance({bg:nb,fg:nf},true);
+      }else applyAppearance({fg:item.c.toUpperCase()},true);
+    };
+    container.insertBefore(b,picker);
+  });
+}
+buildSwatches(el.scriptBgSwatches,BG_SWATCHES,'bg');
+buildSwatches(el.scriptFgSwatches,FG_SWATCHES,'fg');
+
+function applyAppearance(partial={},save=false){
+  const st=state.settings;
+  if(validHex(partial.bg))st.bg=partial.bg.trim().toUpperCase();
+  if(validHex(partial.fg))st.fg=partial.fg.trim().toUpperCase();
+  if(typeof partial.bold==='boolean')st.bold=partial.bold;
+  if(typeof partial.fontFamily==='string'&&SCRIPT_FONTS.some(f=>f.id===partial.fontFamily))st.fontFamily=partial.fontFamily;
+  if(Number.isFinite(partial.font))st.font=Math.round(Math.max(16,Math.min(56,partial.font)));
+  const fObj=SCRIPT_FONTS.find(f=>f.id===st.fontFamily)||SCRIPT_FONTS[0];
+  const root=document.documentElement.style;
+  root.setProperty('--sp-bg',st.bg);
+  root.setProperty('--sp-fg',st.fg);
+  root.setProperty('--sp-weight',st.bold?'800':'500');
+  root.setProperty('--sp-font-family',fObj.css);
+  root.setProperty('--sp-font-size',st.font+'px');
+  document.body.classList.toggle('script-dark',!isLight(st.bg));
+  el.scriptBold.classList.toggle('act',st.bold);
+  el.scriptBold.setAttribute('aria-pressed',String(st.bold));
+  el.scriptFontSizeVal.textContent=AR(st.font);
+  el.scriptSmaller.disabled=st.font<=16;
+  el.scriptLarger.disabled=st.font>=56;
+  el.scriptFontFamily.value=fObj.id;
+  el.scriptBgColor.value=st.bg.toLowerCase();
+  el.scriptFgColor.value=st.fg.toLowerCase();
+  el.scriptBgSwatches.querySelectorAll('.sp-swatch').forEach(b=>b.classList.toggle('act',b.dataset.color===st.bg));
+  el.scriptFgSwatches.querySelectorAll('.sp-swatch').forEach(b=>b.classList.toggle('act',b.dataset.color===st.fg));
+  requestAnimationFrame(refreshScrollbar);
+  if(save)saveState();
+}
+function applyLayout(save=false){
+  const st=state.settings;
+  document.body.classList.toggle('sidebar-collapsed',!st.sidebarOpen);
+  el.scriptSidebarBtn.classList.toggle('act',st.sidebarOpen);
+  el.scriptSidebarBtn.setAttribute('aria-pressed',String(st.sidebarOpen));
+  const isLeft=st.sidebarSide==='left';
+  document.body.classList.toggle('sidebar-left',isLeft);
+  el.scriptSideBtn.setAttribute('aria-pressed',String(isLeft));
+  el.scriptSideBtn.title=isLeft?'نقل الفهرس إلى اليمين':'نقل الفهرس إلى اليسار';
+  document.body.classList.toggle('narrow-col',st.narrowCol);
+  el.scriptWidthBtn.classList.toggle('act',st.narrowCol);
+  el.scriptWidthBtn.setAttribute('aria-pressed',String(st.narrowCol));
+  el.scriptSyncBtn.classList.toggle('act',st.liveSync);
+  el.scriptSyncBtn.classList.toggle('synced',st.liveSync);
+  el.scriptSyncBtn.setAttribute('aria-pressed',String(st.liveSync));
+  el.scriptSyncBtn.title=st.liveSync?'المزامنة التلقائية مع شرائح الدرس (مفعّلة)':'المزامنة التلقائية مع شرائح الدرس (متوقفة)';
+  if(save)saveState();
+}
+
+/* Popovers & Modals */
+function setStyleMenu(open){
+  if(open)setFileMenu(false);
+  el.scriptStyleMenu.hidden=!open;
+  el.scriptStyleBtn.setAttribute('aria-expanded',String(!!open));
+  el.scriptStyleBtn.classList.toggle('act',!!open);
+}
+function setFileMenu(open){
+  if(open)setStyleMenu(false);
+  el.scriptMenu.hidden=!open;
+  el.scriptOptions.setAttribute('aria-expanded',String(!!open));
+  el.scriptOptions.classList.toggle('act',!!open);
+}
+function toggleKeys(force){
+  const open=force===undefined?!el.keysModal.classList.contains('open'):!!force;
+  el.keysModal.classList.toggle('open',open);
+}
+function toggleFs(){
+  try{
+    if(!document.fullscreenElement)document.documentElement.requestFullscreen?.();
+    else document.exitFullscreen?.();
+  }catch(e){toast('ملء الشاشة غير متاح هنا');}
+}
+
+/* Export / Import / Print */
+function downloadFile(content,mime,filename){
+  const url=URL.createObjectURL(new Blob([content],{type:mime}));
+  const a=document.createElement('a');a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);setFileMenu(false);
+}
+function exportJson(){
+  saveState(true);
+  const payload={version:1,standalone:true,lesson:{...state.lesson},outline:state.outline,scripts:{...state.scripts},settings:{...state.settings}};
+  downloadFile(JSON.stringify(payload,null,2),'application/json;charset=utf-8','Zad_Lesson_Scripts.json');
+  toast('تم تصدير السكربتات والتوسع (JSON)');
+}
+function exportHtml(){
+  saveState(true);
+  const copy=document.documentElement.cloneNode(true);
+  copy.querySelector('#outlineList').replaceChildren();
+  copy.querySelector('#scriptReader').replaceChildren();
+  copy.querySelector('#scriptReader').classList.remove('exp-view','script-empty');
+  copy.querySelector('#scriptEditor').textContent='';
+  copy.querySelector('#scriptEditor').hidden=true;
+  copy.querySelector('#scriptReader').hidden=false;
+  copy.querySelector('#scriptEdit').hidden=false;
+  copy.querySelector('#scriptRead').hidden=true;
+  copy.querySelector('#readerCol').classList.remove('exp-mode');
+  copy.querySelector('#scriptExpBanner').hidden=true;
+  copy.querySelector('#scriptStyleMenu').hidden=true;
+  copy.querySelector('#scriptMenu').hidden=true;
+  copy.querySelector('#keysModal').classList.remove('open');
+  copy.querySelector('#printSheet').replaceChildren();
+  const payload={version:1,standalone:true,lesson:{...state.lesson},outline:state.outline,scripts:{...state.scripts},settings:{...state.settings}};
+  copy.querySelector('#presenterScriptData').textContent=JSON.stringify(payload,null,2).replace(/</g,'\\u003c');
+  downloadFile('<!doctype html>\n'+copy.outerHTML,'text/html;charset=utf-8','Zad_Script_Standalone.html');
+  toast('تم حفظ نسخة HTML بالسكربتات والتوسع');
+}
+async function importJson(file){
+  if(!file)return;
+  try{
+    if(file.size>4*1024*1024)throw Error('الملف أكبر من ٤ ميجابايت.');
+    const next=normalizeData(JSON.parse(await file.text()));
+    state=next;
+    buildCues();
+    curCue=0;lastSlideIndex=-1;expandMode=false;scrollPositions.clear();
+    renderHeaderMeta();
+    applyAppearance(state.settings,false);
+    applyLayout(false);
+    setEditing(false);
+    goToCue(0);
+    saveState(true);
+    toast('تم استيراد السكربتات بنجاح');
+  }catch(err){
+    toast(err.message||'تعذّر استيراد الملف');
+  }finally{
+    el.scriptFile.value='';
+  }
+}
+function printAll(){
+  setFileMenu(false);
+  el.printSheet.replaceChildren();
+  const h1=document.createElement('h1');h1.textContent='سكربت الدرس والتوسع — '+state.lesson.title;
+  const meta=document.createElement('div');meta.className='pr-meta';
+  meta.textContent=[state.lesson.channel,state.lesson.book,state.lesson.subject,state.lesson.grade].filter(Boolean).join(' · ');
+  el.printSheet.append(h1,meta);
+  state.outline.forEach(slide=>{
+    const sec=document.createElement('section');sec.className='pr-slide';
+    const h2=document.createElement('h2');h2.textContent='شريحة '+AR(slide.index+1)+' — '+slide.sec;
+    sec.appendChild(h2);
+    const keys=[{key:slide.index+':slide',label:'تمهيد الشريحة'},...slide.items];
+    keys.forEach(item=>{
+      const rd=(state.scripts[item.key]||'').trim();
+      const ex=(state.scripts[item.key+':exp']||'').trim();
+      if(!rd&&!ex)return;
+      const box=document.createElement('div');box.className='pr-cue';
+      if(slide.items.length){
+        const h3=document.createElement('h3');h3.textContent=item.label;box.appendChild(h3);
+      }
+      if(rd){const p=document.createElement('div');p.className='pr-read';p.textContent=rd;box.appendChild(p);}
+      if(ex){const e=document.createElement('div');e.className='pr-exp';e.textContent='📚 التوسع في الشرح:\n'+ex;box.appendChild(e);}
+      sec.appendChild(box);
+    });
+    el.printSheet.appendChild(sec);
+  });
+  window.print();
+}
+
+/* Live Sync Receiver from zad-lesson-template-v12.html */
+let lastSyncTs=0;
+function handleLiveSync(payload){
+  if(!state.settings.liveSync||!payload||payload.type!=='zad-sync')return;
+  if(payload.ts&&payload.ts<=lastSyncTs)return;
+  lastSyncTs=payload.ts||Date.now();
+  el.scriptSyncBtn.classList.remove('pulse');void el.scriptSyncBtn.offsetWidth;el.scriptSyncBtn.classList.add('pulse');
+  if(payload.key){
+    const idx=cues.findIndex(c=>c.key===payload.key);
+    if(idx!==-1){goToCue(idx);return;}
+  }
+  if(Number.isFinite(payload.slide)){
+    const idx=cues.findIndex(c=>c.slideIndex===payload.slide);
+    if(idx!==-1)goToCue(idx,{scope:payload.key&&payload.key.endsWith(':slide')?'slide':'detail'});
+  }
+}
+if(typeof BroadcastChannel!=='undefined'){
+  try{
+    const ch=new BroadcastChannel('zad-presenter-sync');
+    ch.onmessage=ev=>handleLiveSync(ev.data);
+  }catch(e){}
+}
+window.addEventListener('storage',ev=>{
+  if(ev.key==='zad-presenter-live-sync'&&ev.newValue){
+    try{handleLiveSync(JSON.parse(ev.newValue));}catch(e){}
+  }
+});
+
+/* Events */
+el.scriptEditor.addEventListener('input',()=>{
+  const k=activeTargetKey();
+  if(expandMode){
+    if(el.scriptEditor.value.trim())state.scripts[k]=el.scriptEditor.value;
+    else delete state.scripts[k];
+    el.scriptReader.replaceChildren();
+    if(el.scriptEditor.value.trim()){
+      el.scriptReader.classList.remove('script-empty');
+      el.scriptReader.classList.add('exp-view');
+      renderExpansionDom(el.scriptReader,el.scriptEditor.value);
+    }else{
+      el.scriptReader.classList.remove('exp-view');
+      el.scriptReader.classList.add('script-empty');
+      el.scriptReader.textContent='لا يوجد توسع لهذا الموضع.';
+    }
+    updateExpandUi();
+  }else{
+    state.scripts[k]=el.scriptEditor.value;
+    el.scriptReader.classList.remove('exp-view');
+    el.scriptReader.textContent=el.scriptEditor.value||'لا يوجد سكربت لهذا الموضع بعد.';
+    el.scriptReader.classList.toggle('script-empty',!el.scriptEditor.value);
+  }
+  saveState();
+  renderOutline();
+  requestAnimationFrame(refreshScrollbar);
+});
+el.scriptEditor.addEventListener('keydown',ev=>{
+  if(ev.key==='Escape'||((ev.ctrlKey||ev.metaKey)&&ev.key==='Enter')){
+    ev.preventDefault();ev.stopPropagation();setEditing(false);
+  }
+});
+el.scriptEdit.onclick=()=>setEditing(true);
+el.scriptRead.onclick=()=>setEditing(false);
+el.scriptExpandBtn.onclick=()=>setExpand(!expandMode);
+el.scriptExpBack.onclick=()=>setExpand(false);
+el.scriptSyncBtn.onclick=()=>{
+  state.settings.liveSync=!state.settings.liveSync;
+  applyLayout(true);
+  toast(state.settings.liveSync?'تم تفعيل المزامنة التلقائية مع الدرس':'تم إيقاف المزامنة التلقائية');
+};
+el.scriptSidebarBtn.onclick=()=>{state.settings.sidebarOpen=!state.settings.sidebarOpen;applyLayout(true);};
+el.scriptSideBtn.onclick=()=>{state.settings.sidebarSide=state.settings.sidebarSide==='left'?'right':'left';applyLayout(true);};
+el.scriptWidthBtn.onclick=()=>{state.settings.narrowCol=!state.settings.narrowCol;applyLayout(true);};
+el.scriptBold.onclick=()=>applyAppearance({bold:!state.settings.bold},true);
+el.scriptSmaller.onclick=()=>applyAppearance({font:state.settings.font-2},true);
+el.scriptLarger.onclick=()=>applyAppearance({font:state.settings.font+2},true);
+el.scriptStyleBtn.onclick=()=>setStyleMenu(el.scriptStyleMenu.hidden);
+el.scriptOptions.onclick=()=>setFileMenu(el.scriptMenu.hidden);
+el.scriptFontFamily.onchange=()=>applyAppearance({fontFamily:el.scriptFontFamily.value},true);
+el.scriptBgColor.addEventListener('input',()=>applyAppearance({bg:el.scriptBgColor.value},true));
+el.scriptFgColor.addEventListener('input',()=>applyAppearance({fg:el.scriptFgColor.value},true));
+el.scriptPresetLight.onclick=()=>applyAppearance({bg:'#FFFDF7',fg:'#000000',bold:true},true);
+el.scriptPresetDark.onclick=()=>applyAppearance({bg:'#0A1F2E',fg:'#F4F1E8',bold:true},true);
+el.scriptScopeDetailBtn.onclick=()=>{scopeMode='detail';renderCurrent();};
+el.scriptScopeSlideBtn.onclick=()=>{scopeMode='slide';renderCurrent();};
+el.filterAllBtn.onclick=()=>{filterExpOnly=false;el.filterAllBtn.classList.add('act');el.filterExpBtn.classList.remove('act');renderOutline();};
+el.filterExpBtn.onclick=()=>{filterExpOnly=true;el.filterExpBtn.classList.add('act');el.filterAllBtn.classList.remove('act');renderOutline();};
+el.outlineSearch.addEventListener('input',renderOutline);
+el.btnPrev.onclick=()=>goToCue(curCue-1);
+el.btnNext.onclick=()=>goToCue(curCue+1);
+el.scriptSaveHtml.onclick=exportHtml;
+el.scriptExport.onclick=exportJson;
+el.scriptImport.onclick=()=>{setFileMenu(false);el.scriptFile.click();};
+el.scriptPrint.onclick=printAll;
+el.scriptFile.onchange=()=>importJson(el.scriptFile.files[0]);
+el.scriptKeysBtn.onclick=()=>toggleKeys();
+el.scriptFsBtn.onclick=toggleFs;
+el.keysModal.addEventListener('click',ev=>{if(ev.target===el.keysModal)toggleKeys(false);});
+document.addEventListener('pointerdown',ev=>{
+  if(!el.scriptOptions.contains(ev.target)&&!el.scriptMenu.contains(ev.target))setFileMenu(false);
+  if(!el.scriptStyleBtn.contains(ev.target)&&!el.scriptStyleMenu.contains(ev.target))setStyleMenu(false);
+},true);
+
+/* Custom Scroll Rail */
+el.scriptScrollUp.onclick=()=>moveScroll(-1);
+el.scriptScrollDown.onclick=()=>moveScroll(1);
+[el.scriptReader,el.scriptEditor].forEach(v=>v.addEventListener('scroll',refreshScrollbar));
+let scrollDrag=null;
+function dragScroll(ev){
+  if(!scrollDrag||ev.pointerId!==scrollDrag.id)return;
+  const view=scrollView(),rect=el.scriptScrollTrack.getBoundingClientRect();
+  const thumbH=parseFloat(el.scriptScrollThumb.style.height)||0;
+  const travel=Math.max(0,rect.height-thumbH),max=Math.max(0,(view.scrollHeight||0)-(view.clientHeight||0));
+  if(travel>0)setScroll((ev.clientY-rect.top-scrollDrag.offset)/travel*max);
+}
+el.scriptScrollTrack.addEventListener('pointerdown',ev=>{
+  if(ev.button!==0||el.scriptScrollTrack.getAttribute('aria-disabled')==='true')return;
+  const rect=el.scriptScrollTrack.getBoundingClientRect(),top=parseFloat(el.scriptScrollThumb.style.top)||0;
+  const thumbH=parseFloat(el.scriptScrollThumb.style.height)||0;
+  scrollDrag={id:ev.pointerId,offset:ev.target===el.scriptScrollThumb?ev.clientY-rect.top-top:thumbH/2};
+  el.scriptScrollTrack.setPointerCapture(ev.pointerId);ev.preventDefault();dragScroll(ev);
+});
+el.scriptScrollTrack.addEventListener('pointermove',dragScroll);
+['pointerup','pointercancel','lostpointercapture'].forEach(t=>el.scriptScrollTrack.addEventListener(t,()=>{scrollDrag=null;}));
+
+/* Keyboard Shortcuts */
+function mapKey(e){
+  if(/^Key[A-Z]$/.test(e.code))return e.code.slice(3).toLowerCase();
+  const k=e.key.length===1?e.key.toLowerCase():e.key;
+  const ar={'ء':'x','ه':'i','ث':'e','ي':'d','ب':'f','ن':'k','؟':'?'};
+  return ar[k]||k;
+}
+addEventListener('keydown',e=>{
+  if(e.defaultPrevented||e.isComposing||e.ctrlKey||e.metaKey||e.altKey)return;
+  if(e.target?.closest?.('input,textarea,select'))return;
+  const k=mapKey(e);
+  if(el.keysModal.classList.contains('open')){if(k==='Escape'||k==='k'||k==='?'){e.preventDefault();toggleKeys(false);}return;}
+  if(k==='Escape'){setStyleMenu(false);setFileMenu(false);return;}
+  if((k===' '||k==='Enter')&&e.target?.closest?.('button'))return;
+  if(k==='ArrowUp'){e.preventDefault();moveScroll(-1);return;}
+  if(k==='ArrowDown'){e.preventDefault();moveScroll(1);return;}
+  if(k===' '||k==='ArrowLeft'||k==='PageDown'){e.preventDefault();goToCue(curCue+1);return;}
+  if(k==='ArrowRight'||k==='Backspace'||k==='PageUp'){e.preventDefault();goToCue(curCue-1);return;}
+  if(k==='Home'){e.preventDefault();goToCue(0);return;}
+  if(k==='End'){e.preventDefault();goToCue(cues.length-1);return;}
+  if(k==='x'){e.preventDefault();setExpand(!expandMode);return;}
+  if(k==='i'){e.preventDefault();state.settings.sidebarOpen=!state.settings.sidebarOpen;applyLayout(true);return;}
+  if(k==='e'){e.preventDefault();setEditing(!editing);return;}
+  if(k==='d'){
+    e.preventDefault();
+    const dark=isLight(state.settings.bg);
+    applyAppearance(dark?{bg:'#0A1F2E',fg:'#F4F1E8'}:{bg:'#FFFDF7',fg:'#000000'},true);
+    return;
+  }
+  if(e.code==='BracketRight'||k===']'||k==='+'||k==='='){e.preventDefault();applyAppearance({font:state.settings.font+2},true);return;}
+  if(e.code==='BracketLeft'||k==='['||k==='-'){e.preventDefault();applyAppearance({font:state.settings.font-2},true);return;}
+  if(k==='f'){e.preventDefault();toggleFs();return;}
+  if(k==='k'||k==='?'){e.preventDefault();toggleKeys();return;}
+});
+
+addEventListener('resize',refreshScrollbar);
+addEventListener('pagehide',()=>saveState(true));
+document.addEventListener('visibilitychange',()=>{if(document.hidden)saveState(true);});
+if(window.ResizeObserver)new ResizeObserver(refreshScrollbar).observe(el.scriptTextArea);
+
+/* Boot */
+buildCues();
+renderHeaderMeta();
+applyAppearance(state.settings,false);
+applyLayout(false);
+goToCue(0);
+</script>
+</body>
+</html>
